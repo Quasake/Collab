@@ -6,4 +6,8 @@ public static class Utils {
 	public static int GetRandomInteger (int min, int max) {
 		return Constants.RANDOM.Next(min, max + 1);
 	}
+
+	public static float GetRandomAngle (float min, float max) {
+		
+	}
 }

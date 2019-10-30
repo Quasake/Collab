@@ -12,6 +12,11 @@ public static class Constants {
 	public const float PLAYER_JUMPSPEED = 600f;
 	public const float PLAYER_SMOOTHING = 0.05f;
 	public const float PLAYER_MOVESPEED = 30f;
+	public const float BOOST_AMOUNT = 1.4f;
+	public const float PLAYER_RESPAWN_TIME = 3f;
+	public const float CHUNK_TIME = 4f;
+	public const int CHUNK_NUM = 6;
+	public const float CHUNK_FORCE = 700f;
 
 	public const float CHECK_RADIUS = 0.2f;
 	public const float DEADZONE = 0.05f;
