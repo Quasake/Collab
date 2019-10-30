@@ -12,21 +12,17 @@ public class Wire : MonoBehaviour {
 	public Sprite[ ] shortVariations;
 	public Sprite[ ] straightVariations;
 	public Sprite[ ] turnVariations;
+	Sprite[ ][ ] variations;
 
 	private SpriteRenderer spriteRenderer;
 
 	void Start ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
+		variations = new Sprite[ ][ ] {
+			shortVariations, straightVariations, turnVariations
+		};
 
-		int index = (isBackground ? 2 : 0) + (isActive ? 1 : 0);
-		if (formation == 0) {
-			spriteRenderer.sprite = shortVariations[index];
-		} else if (formation == 1) {
-			spriteRenderer.sprite = straightVariations[index];
-		} else if (formation == 2) {
-			spriteRenderer.sprite = turnVariations[index];
-		}
-
+		spriteRenderer.sprite = variations[formation][(isBackground ? 2 : 0) + (isActive ? 1 : 0)];
 		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
 	}
 }

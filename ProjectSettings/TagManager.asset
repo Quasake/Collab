@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - World
+  - Objects
+  - Ground
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Foreground Objects
     uniqueID: 3995715005
+    locked: 0
+  - name: Mini-UI
+    uniqueID: 80144281
     locked: 0
