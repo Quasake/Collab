@@ -3,35 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Chunk : MonoBehaviour {
-	float startTime;
-
 	SpriteRenderer spriteRenderer;
 
-	void Start ( ) {
-		spriteRenderer = GetComponent<SpriteRenderer>( );
+	float startTime;
+	float disappearTime;
 
+	void Awake ( ) {
+		spriteRenderer = GetComponent<SpriteRenderer>( );
+	}
+
+	void Start ( ) {
 		startTime = Time.time;
+		disappearTime = Utils.GetRandomFloat(Constants.CHUNK_TIME_MIN, Constants.CHUNK_TIME_MAX);
 	}
 	
 	void Update ( ) {
-		if (Time.time - startTime >= Constants.CHUNK_TIME) {
-			StartCoroutine(_Fade( ));
-		}
-
-		if (spriteRenderer.color.a == 0) {
-			Destroy(gameObject);
+		if (Time.time - startTime >= disappearTime) { 
+			StartCoroutine(FadeOut( ));
 		}
 	}
 
-	IEnumerator _Fade ( ) {
-		float ratio = (Time.time - startTime) / (Constants.CHUNK_TIME / 2);
+	IEnumerator FadeOut ( ) {
+		/* Fade out the chunk and then destroy it after a certain amount of time */
 
-		while (ratio < 1) {
-			spriteRenderer.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(0f, 1f, ratio));
+		float startTime = Time.time;
+
+		while (Time.time - startTime <= disappearTime / 2) {
+			float ratio = (Time.time - startTime) / (disappearTime / 2);
+			spriteRenderer.color = Color.Lerp(Constants.WHITE_FULL_ALPHA, Constants.WHITE_NO_ALPHA, ratio);
 
 			yield return null;
 		}
 
-		spriteRenderer.color = new Color(1f, 1f, 1f, 0f);
+		spriteRenderer.color = Constants.WHITE_NO_ALPHA;
+
+		Destroy(gameObject);
 	}
 }
