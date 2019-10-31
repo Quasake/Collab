@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Lever : MonoBehaviour {
-	public bool isActive;
-	public int id;
+	[Header("Variables")]
+	[SerializeField] private int groupID;
+	[SerializeField] private bool isActive;
 
-	public Sprite[ ] states;
+	[Header("Sprites")]
+	[SerializeField] private Sprite[ ] states;
 
 	private Vector3 connectionPos;
 
 	private SpriteRenderer spriteRenderer;
 
-	void Start ( ) {
+	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
-		spriteRenderer.sprite = states[isActive ? 1 : 0];
 		connectionPos = transform.position + Vector3.down;
+	}
+
+	private void Start ( ) {
+		spriteRenderer.sprite = states[isActive ? 1 : 0];
 	}
 }

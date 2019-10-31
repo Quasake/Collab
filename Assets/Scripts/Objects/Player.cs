@@ -86,14 +86,12 @@ public class Player : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D (Collision2D collision) {
-		Debug.Log(collision.gameObject.layer + ", " + LayerMask.NameToLayer("Hazards"));
-
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Hazards")) {
 			Death( );
 		}
 	}
 
-	void ModeSelection ( ) {
+	private void ModeSelection ( ) {
 		if (!modeChanged) {
 			float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
 			float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
@@ -175,6 +173,7 @@ public class Player : MonoBehaviour {
 	private void SetModeMenu (bool enabled) {
 		isModeSelect = enabled;
 		modeSelectObj.SetActive(enabled);
+		spriteRenderer.sortingLayerName = enabled ? "Mini-UI" : "Player";
 	}
 
 	private void SetEnabled (bool enabled) {
