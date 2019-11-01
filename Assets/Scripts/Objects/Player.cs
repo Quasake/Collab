@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] private Sprite[ ] shrinkChunks;
 	[SerializeField] private Sprite[ ] swapChunks;
 	private Sprite[ ][ ] chunks;
+	[SerializeField] private Sprite[ ] tags; // The tags for the players so the players know which one is which
 
 	[Header("Environment")]
 	[SerializeField] private GameObject chunkPrefab; // The prefab for the player chunks
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] private Transform modeSelectArrow; // The arrow in the mode selection state
 	[SerializeField] private LayerMask whatIsGround; // The object layer that is the ground duh
 	[SerializeField] private Transform groundCheck; // Ground collision detector
+	[SerializeField] private SpriteRenderer tagRenderer; // The player tag sprite renderer
 	private Rigidbody2D rBody2D; // Reference to the rigidbody of the player
 	private Animator animator; // Reference to the animator of the player
 	private SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
@@ -60,6 +62,8 @@ public class Player : MonoBehaviour {
 
 	private void Start ( ) {
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
+
+		tagRenderer.sprite = tags[playerID];
 	}
 
 	private void Update ( ) {
@@ -73,6 +77,14 @@ public class Player : MonoBehaviour {
 
 			if (Utils.GetButtonValue("B", playerID)) {
 				gameManager.Interact(collider);
+			}
+
+			if (Utils.GetButtonValue("X", playerID)) {
+				if (mode == Constants.PLAYER_SHRINK_MODE) {
+
+				} else if (mode == Constants.PLAYER_SWAP_MODE) {
+
+				}
 			}
 		} else {
 			ModeSelection( );
@@ -185,6 +197,7 @@ public class Player : MonoBehaviour {
 		isModeSelect = enabled;
 		modeSelectObj.SetActive(enabled);
 		spriteRenderer.sortingLayerName = enabled ? "Mini-UI" : "Player";
+		tagRenderer.enabled = !enabled;
 	}
 
 	private void SetEnabled (bool enabled) {

@@ -30,6 +30,5 @@ public class Door : Component {
 	private void Update ( ) {
 		Vector3 doorMove = (isActive ? -1 : 1) * new Vector3(0, (isConnectedTop ? 1 : -1) * Constants.DOOR_MOVESPEED);
 		door.position = new Vector3(door.position.x, Utils.Limit(door.position.y + doorMove.y, -1.5f, 1.5f));
-		Debug.Log(door.position.y + doorMove.y);
 	}
 }
