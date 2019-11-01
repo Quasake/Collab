@@ -5,8 +5,8 @@ using UnityEngine;
 public class Chunk : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 
-	float startTime;
-	float disappearTime;
+	float startTime; // The time that the chunk was spawned
+	float disappearTime; // The lifetime of the chunk
 
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );

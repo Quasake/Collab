@@ -204,4 +204,8 @@ public class Player : MonoBehaviour {
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
 		isDead = false;
 	}
+
+	public bool GetIsDead ( ) {
+		return isDead;
+	}
 }

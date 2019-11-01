@@ -13,6 +13,8 @@ public class Lever : Component {
 
 	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
+
+		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
 	}
 
 	protected override void UpdateSprites ( ) {

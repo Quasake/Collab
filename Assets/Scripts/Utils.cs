@@ -26,7 +26,16 @@ public static class Utils {
 		/* Convert an objects position in the world to a tile position on a tilemap */
 
 		return new Vector3Int((int) (vector.x - 0.5f), (int) (vector.y - 0.5f), 0);
- }
+	}
+
+	public static Vector3 GetMidpoint (Vector3 point1, Vector3 point2) {
+		/* Get the midpoint between two points */
+
+		float x = (point1.x + point2.x) / 2;
+		float y = (point1.y + point2.y) / 2;
+
+		return new Vector3(x, y);
+	}
 
 	public static void ChangeTileTexture (Tilemap tilemap, Vector3Int coord, Sprite sprite) {
 		/* Set the texture of a tile in a tilemap */

@@ -68,19 +68,7 @@ public class GameManager : MonoBehaviour {
 
 	public void SetTileTexture (Component component, bool isActive) {
 		int formation = (int) ((Mathf.Deg2Rad * (component.transform.rotation.z + (component is Door ? 270 : 0))) / Constants.HALF_PI);
-
 		Vector3Int tileCoord = Utils.WorldPosToTilemapPos(component.transform.position + component.GetConnectionPos());
-		/*
-		if (formation == Constants.UP) {
-			tileCoord -= Vector3Int.up;
-		} else if (formation == Constants.RIGHT) {
-			tileCoord -= Vector3Int.right;
-		} else if (formation == Constants.DOWN) {
-			tileCoord -= Vector3Int.down;
-		} else if (formation == Constants.LEFT) {
-			tileCoord -= Vector3Int.left;
-		}
-		*/
 
 		Utils.ChangeTileTexture(groundMap, tileCoord, connections[formation][isActive ? 1 : 0]);
 	}
