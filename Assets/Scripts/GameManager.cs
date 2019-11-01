@@ -59,12 +59,18 @@ public class GameManager : MonoBehaviour {
 				wires[i].SetIsActive(isActive);
 			}
 		}
+		for (int i = 0; i < doors.Count; i++) {
+			if (doors[i].GetID( ) == groupID) {
+				doors[i].SetIsActive(isActive);
+			}
+		}
 	}
 
 	public void SetTileTexture (Component component, bool isActive) {
-		int formation = (int) ((Mathf.Deg2Rad * component.transform.rotation.z) / Constants.HALF_PI);
+		int formation = (int) ((Mathf.Deg2Rad * (component.transform.rotation.z + (component is Door ? 270 : 0))) / Constants.HALF_PI);
 
-		Vector3Int tileCoord = Utils.WorldPosToTilemapPos(component.transform.position);
+		Vector3Int tileCoord = Utils.WorldPosToTilemapPos(component.transform.position + component.GetConnectionPos());
+		/*
 		if (formation == Constants.UP) {
 			tileCoord -= Vector3Int.up;
 		} else if (formation == Constants.RIGHT) {
@@ -74,6 +80,7 @@ public class GameManager : MonoBehaviour {
 		} else if (formation == Constants.LEFT) {
 			tileCoord -= Vector3Int.left;
 		}
+		*/
 
 		Utils.ChangeTileTexture(groundMap, tileCoord, connections[formation][isActive ? 1 : 0]);
 	}

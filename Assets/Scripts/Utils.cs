@@ -37,6 +37,25 @@ public static class Utils {
 		tilemap.SetTile(coord, tile);
 	}
 
+	public static Vector3Int Vec3ToVec3Int (Vector3 vector) {
+		/* Convert a regular Vector3 to a Vector3Int */
+
+		return new Vector3Int((int) vector.x, (int) vector.y, (int) vector.z);
+	}
+
+	public static float Limit (float value, float min, float max) {
+		/* Limit a value to be inside a specific range */
+
+		if (value < min) {
+			value = min;
+		}
+		if (value > max) {
+			value = max;
+		}
+
+		return value;
+	}
+
 	public static bool GetButtonValue (string name, int playerID) {
 		/* Get joystick button value */
 

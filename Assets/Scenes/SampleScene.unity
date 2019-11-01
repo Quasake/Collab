@@ -4441,13 +4441,18 @@ PrefabInstance:
     - target: {fileID: 7995114569681459551, guid: db0f56104cf2b374bbd345986ffd3e05,
         type: 3}
       propertyPath: connectionPos.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7995114569681459551, guid: db0f56104cf2b374bbd345986ffd3e05,
         type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 909612274}
+    - target: {fileID: 7995114569681459551, guid: db0f56104cf2b374bbd345986ffd3e05,
+        type: 3}
+      propertyPath: isConnectedTop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7995114568893670791, guid: db0f56104cf2b374bbd345986ffd3e05,
         type: 3}
       propertyPath: m_Layer

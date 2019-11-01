@@ -39,6 +39,8 @@ public static class Constants {
 	public const float THREE_FOURTH_PI = Mathf.PI * 3 / 4;
 	public const float TWO_PI = Mathf.PI * 2;
 
+	public const float DOOR_MOVESPEED = 0.1f;
+
 	public const int UP = 0;
 	public const int RIGHT = 1;
 	public const int DOWN = 2;
