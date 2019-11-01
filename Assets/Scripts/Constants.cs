@@ -7,7 +7,7 @@ public static class Constants {
 
 	public static Vector3 SPAWNPOINT_OFFSET = new Vector3(0, 1);
 	public static Vector3 DEATH_POS = new Vector3(0, 15);
-	
+
 	public const float GAP_FIX_NUMBER = 0.0001f;
 	public const float CHECK_RADIUS = 0.2f;
 	public const float DEADZONE = 0.05f;
@@ -38,4 +38,9 @@ public static class Constants {
 	public const float PI = Mathf.PI;
 	public const float THREE_FOURTH_PI = Mathf.PI * 3 / 4;
 	public const float TWO_PI = Mathf.PI * 2;
+
+	public const int UP = 0;
+	public const int RIGHT = 1;
+	public const int DOWN = 2;
+	public const int LEFT = 3;
 }

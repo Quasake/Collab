@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
 	[Header("Environment")]
 	[SerializeField] private GameObject chunkPrefab; // The prefab for the player chunks
 	[SerializeField] private Transform spawnpoint; // The position of the spawnpoint in the level
+	[SerializeField] private GameManager gameManager; // The manager object of the game
 
 	[Header("Children")]
 	[SerializeField] private GameObject modeSelectObj; // An object that holds the mode selection state objects
@@ -39,10 +40,12 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D rBody2D; // Reference to the rigidbody of the player
 	private Animator animator; // Reference to the animator of the player
 	private SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
+	private Collider2D collider; // Reference to the collider of the player
 
 	private void Awake ( ) {
 		rBody2D = GetComponent<Rigidbody2D>( );
 		animator = GetComponent<Animator>( );
+		collider = GetComponent<Collider2D>( );
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		chunks = new Sprite[ ][ ] {
@@ -63,6 +66,14 @@ public class Player : MonoBehaviour {
 		if (!isModeSelect) {
 			xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
 			doJump = Utils.GetButtonValue("A", playerID);
+
+			if (Utils.GetButtonValue("Start", playerID)) {
+				Death( );
+			}
+
+			if (Utils.GetButtonValue("B", playerID)) {
+				gameManager.Interact(collider);
+			}
 		} else {
 			ModeSelection( );
 		}

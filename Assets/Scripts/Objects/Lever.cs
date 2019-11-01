@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : MonoBehaviour {
-	[Header("Variables")]
-	[SerializeField] private int groupID;
-	[SerializeField] private bool isActive;
-
+public class Lever : Component {
 	[Header("Sprites")]
-	[SerializeField] private Sprite[ ] states;
-
-	private Vector3 connectionPos;
+	[SerializeField] private Sprite[ ] variations;
 
 	private SpriteRenderer spriteRenderer;
 
 	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
-
-		connectionPos = transform.position + Vector3.down;
 	}
 
-	private void Start ( ) {
-		spriteRenderer.sprite = states[isActive ? 1 : 0];
+	protected override void UpdateSprites ( ) {
+		spriteRenderer.sprite = variations[isActive ? 1 : 0];
+	}
+
+	public void Toggle ( ) {
+		SetIsActive(!isActive);
 	}
 }

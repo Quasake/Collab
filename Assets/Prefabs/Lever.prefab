@@ -121,8 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6784c68da6ed85144950c765d16928d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groupID: 0
   isActive: 0
-  id: 0
-  states:
+  connectionPos: {x: 0, y: 0, z: 0}
+  variations:
   - {fileID: 1753205982242350755, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 5069650035751226587, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}

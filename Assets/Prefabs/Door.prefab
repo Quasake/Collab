@@ -509,13 +509,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5d14e6e7a4efd4fbce32ba6bfb4aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isExtended: 0
-  id: 0
-  hasTopConnection: 0
-  hasBottomConnection: 0
+  groupID: 0
+  isActive: 0
+  connectionPos: {x: 0, y: 0, z: 0}
   isActiveTop: 0
-  isActiveBottom: 0
-  connections:
+  variations:
   - {fileID: 318953615281452700, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -9053378900703536071, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}

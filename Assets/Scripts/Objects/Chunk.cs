@@ -18,7 +18,7 @@ public class Chunk : MonoBehaviour {
 	}
 	
 	void Update ( ) {
-		if (Time.time - startTime >= disappearTime) { 
+		if (Time.time - startTime >= disappearTime) {
 			StartCoroutine(FadeOut( ));
 		}
 	}
