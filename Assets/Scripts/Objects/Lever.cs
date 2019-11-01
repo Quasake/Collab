@@ -6,6 +6,9 @@ public class Lever : Component {
 	[Header("Sprites")]
 	[SerializeField] private Sprite[ ] variations;
 
+	[Header("Environment")]
+	[SerializeField] private GameManager gameManager;
+
 	private SpriteRenderer spriteRenderer;
 
 	private void Awake ( ) {
@@ -14,6 +17,8 @@ public class Lever : Component {
 
 	protected override void UpdateSprites ( ) {
 		spriteRenderer.sprite = variations[isActive ? 1 : 0];
+
+		gameManager.SetTileTexture(this, isActive);
 	}
 
 	public void Toggle ( ) {

@@ -15,16 +15,13 @@ public class Wire : Component {
 	private Sprite[ ][ ] variations;
 
 	private SpriteRenderer spriteRenderer;
-
 	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		variations = new Sprite[ ][ ] {
 			shortVariations, straightVariations, turnVariations
 		};
-	}
 
-	private void Start ( ) {
 		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
 
 		if (isBackground) {

@@ -1179,11 +1179,19 @@ MonoBehaviour:
   leverParent: {fileID: 740387610}
   doorParent: {fileID: 2020171968}
   wireParent: {fileID: 394604850}
-  groundMap: {fileID: 0}
-  topConnections: []
-  rightConnections: []
-  bottomConnections: []
-  leftConnections: []
+  groundMap: {fileID: 1945721056}
+  topConnections:
+  - {fileID: -7558813910551078293, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  - {fileID: -1818471815025934768, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  rightConnections:
+  - {fileID: -6752742663028313277, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  - {fileID: 7011031381842572287, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  bottomConnections:
+  - {fileID: 5607536982464415025, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  - {fileID: -8080529573846114213, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  leftConnections:
+  - {fileID: 394476876285259791, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
+  - {fileID: 5431564800866718645, guid: 839e0fa95f37b2f4587729a8ed42d09f, type: 3}
 --- !u!4 &909612275
 Transform:
   m_ObjectHideFlags: 0
@@ -4331,6 +4339,11 @@ PrefabInstance:
       propertyPath: connectionPos.y
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 5378234114487593761, guid: fa459cefbae092e44968233687f6c1b0,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 909612274}
     - target: {fileID: 4614255364246635663, guid: fa459cefbae092e44968233687f6c1b0,
         type: 3}
       propertyPath: m_UsedByEffector
@@ -4430,6 +4443,11 @@ PrefabInstance:
       propertyPath: connectionPos.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7995114569681459551, guid: db0f56104cf2b374bbd345986ffd3e05,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 909612274}
     - target: {fileID: 7995114568893670791, guid: db0f56104cf2b374bbd345986ffd3e05,
         type: 3}
       propertyPath: m_Layer

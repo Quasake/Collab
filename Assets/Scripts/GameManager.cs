@@ -21,11 +21,13 @@ public class GameManager : MonoBehaviour {
 	private List<Door> doors;
 	private List<Wire> wires;
 
-	private void Start ( ) {
+	private void Awake ( ) {
 		connections = new Sprite[ ][ ] {
 			topConnections, rightConnections, bottomConnections, leftConnections
 		};
+	}
 
+	private void Start ( ) {
 		levers = new List<Lever>( );
 		doors = new List<Door>( );
 		wires = new List<Wire>( );
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour {
 			wires.Add(wireParent.GetChild(i).GetComponent<Wire>( ));
 		}
 	}
+
 
 	public void Interact (Collider2D collider) {
 		for (int i = 0; i < levers.Count; i++) {
@@ -61,15 +64,15 @@ public class GameManager : MonoBehaviour {
 	public void SetTileTexture (Component component, bool isActive) {
 		int formation = (int) ((Mathf.Deg2Rad * component.transform.rotation.z) / Constants.HALF_PI);
 
-		Vector3Int tileCoord = Vector3Int.zero;
+		Vector3Int tileCoord = Utils.WorldPosToTilemapPos(component.transform.position);
 		if (formation == Constants.UP) {
-			tileCoord = Vector3Int.up;
+			tileCoord -= Vector3Int.up;
 		} else if (formation == Constants.RIGHT) {
-			tileCoord = Vector3Int.right;
+			tileCoord -= Vector3Int.right;
 		} else if (formation == Constants.DOWN) {
-			tileCoord = Vector3Int.down;
+			tileCoord -= Vector3Int.down;
 		} else if (formation == Constants.LEFT) {
-			tileCoord = Vector3Int.left;
+			tileCoord -= Vector3Int.left;
 		}
 
 		Utils.ChangeTileTexture(groundMap, tileCoord, connections[formation][isActive ? 1 : 0]);

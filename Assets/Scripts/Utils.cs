@@ -22,6 +22,12 @@ public static class Utils {
 		return GetRandomFloat(0, Constants.TWO_PI);
 	}
 
+	public static Vector3Int WorldPosToTilemapPos (Vector3 vector) {
+		/* Convert an objects position in the world to a tile position on a tilemap */
+
+		return new Vector3Int((int) (vector.x - 0.5f), (int) (vector.y - 0.5f), 0);
+ }
+
 	public static void ChangeTileTexture (Tilemap tilemap, Vector3Int coord, Sprite sprite) {
 		/* Set the texture of a tile in a tilemap */
 

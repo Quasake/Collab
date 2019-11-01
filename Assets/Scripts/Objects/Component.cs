@@ -12,7 +12,7 @@ public abstract class Component : MonoBehaviour {
 		SetIsActive(isActive);
 	}
 
-	protected abstract void UpdateSprites ();
+	protected abstract void UpdateSprites ( );
 
 	public void SetIsActive (bool isActive) {
 		this.isActive = isActive;
