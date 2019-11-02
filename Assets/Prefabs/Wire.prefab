@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: -299252291
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+  m_Sprite: {fileID: -2069660456029034469, guid: 7acfb4b235c9f1a45949a890eec69fc7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -94,22 +94,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be93a49f2afd6ee4793adf60ba1c8343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  groupID: 0
   isActive: 0
+  connectionPos: {x: 0, y: 0, z: 0}
   isBackground: 0
   formation: 0
   shortVariations:
-  - {fileID: -4430392651179603617, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: 4455232240493665095, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 4444980147945960928, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: -6580861909127892675, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: -4922617476772045510, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: -8841936248928892492, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  straightVariations:
+  - {fileID: -2069660456029034469, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: -6883905864151536645, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 5849325189442884660, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 7495320969501026803, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  turnVariations:
   - {fileID: -5843391103799036864, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 7206194005228167239, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  straightVariations:
-  - {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: 2269949439249822484, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: -3727842135710763035, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: -4922617476772045510, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  turnVariations:
-  - {fileID: -3276687688264177478, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: 6639657697291588988, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: -6050296909894318094, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: 5849325189442884660, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 8753186556605219898, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 2002165265138813586, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}

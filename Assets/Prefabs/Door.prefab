@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: -102530261
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+  m_Sprite: {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -150,7 +150,7 @@ SpriteRenderer:
   m_SortingLayerID: -102530261
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1336440320741484319, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+  m_Sprite: {fileID: -3276687688264177478, guid: 7acfb4b235c9f1a45949a890eec69fc7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -231,7 +231,7 @@ SpriteRenderer:
   m_SortingLayerID: -102530261
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+  m_Sprite: {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -312,7 +312,8 @@ SpriteRenderer:
   m_SortingLayerID: -102530261
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -93750458980389090, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  m_Sprite: {fileID: 5069650035751226587, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -452,7 +453,8 @@ SpriteRenderer:
   m_SortingLayerID: -102530261
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -93750458980389090, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  m_Sprite: {fileID: 5069650035751226587, guid: 7acfb4b235c9f1a45949a890eec69fc7,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -512,7 +514,8 @@ MonoBehaviour:
   groupID: 0
   isActive: 0
   connectionPos: {x: 0, y: 0, z: 0}
-  isActiveTop: 0
+  gameManager: {fileID: 0}
+  isConnectedTop: 0
   variations:
   - {fileID: 318953615281452700, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -9053378900703536071, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
