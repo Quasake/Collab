@@ -14,10 +14,7 @@ public class Wire : Component {
 	[SerializeField] private Sprite[ ] turnVariations;
 	private Sprite[ ][ ] variations;
 
-	private SpriteRenderer spriteRenderer;
-	private void Awake ( ) {
-		spriteRenderer = GetComponent<SpriteRenderer>( );
-
+	private void Start ( ) {
 		variations = new Sprite[ ][ ] {
 			shortVariations, straightVariations, turnVariations
 		};
@@ -27,6 +24,8 @@ public class Wire : Component {
 		if (isBackground) {
 			spriteRenderer.sortingLayerName = "Background Objects";
 		}
+
+		SetIsActive(isActive);
 	}
 
 	protected override void UpdateSprites ( ) {

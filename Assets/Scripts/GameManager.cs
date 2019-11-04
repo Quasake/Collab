@@ -9,23 +9,9 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private Transform doorParent;
 	[SerializeField] private Transform wireParent;
 
-	[Header("Tilemap Connections")]
-	[SerializeField] private Tilemap groundMap;
-	[SerializeField] private Sprite[ ] topConnections;
-	[SerializeField] private Sprite[ ] rightConnections;
-	[SerializeField] private Sprite[ ] bottomConnections;
-	[SerializeField] private Sprite[ ] leftConnections;
-	private Sprite[ ][ ] connections;
-
 	private List<Lever> levers;
 	private List<Door> doors;
 	private List<Wire> wires;
-
-	private void Awake ( ) {
-		connections = new Sprite[ ][ ] {
-			topConnections, rightConnections, bottomConnections, leftConnections
-		};
-	}
 
 	private void Start ( ) {
 		levers = new List<Lever>( );
@@ -64,12 +50,5 @@ public class GameManager : MonoBehaviour {
 				doors[i].SetIsActive(isActive);
 			}
 		}
-	}
-
-	public void SetTileTexture (Component component, bool isActive) {
-		int formation = (int) ((Mathf.Deg2Rad * (component.transform.rotation.z + (component is Door ? 270 : 0))) / Constants.HALF_PI);
-		Vector3Int tileCoord = Utils.WorldPosToTilemapPos(component.transform.position + component.GetConnectionPos());
-
-		Utils.ChangeTileTexture(groundMap, tileCoord, connections[formation][isActive ? 1 : 0]);
 	}
 }

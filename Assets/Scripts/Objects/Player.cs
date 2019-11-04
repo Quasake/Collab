@@ -42,12 +42,12 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D rBody2D; // Reference to the rigidbody of the player
 	private Animator animator; // Reference to the animator of the player
 	private SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
-	private Collider2D collider; // Reference to the collider of the player
+	private Collider2D coll2D; // Reference to the collider of the player
 
 	private void Awake ( ) {
 		rBody2D = GetComponent<Rigidbody2D>( );
 		animator = GetComponent<Animator>( );
-		collider = GetComponent<Collider2D>( );
+		coll2D = GetComponent<Collider2D>( );
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		chunks = new Sprite[ ][ ] {
@@ -67,41 +67,43 @@ public class Player : MonoBehaviour {
 	}
 
 	private void Update ( ) {
-		if (!isModeSelect) {
-			xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
-			doJump = Utils.GetButtonValue("A", playerID);
+		if (!isDead) {
+			if (!isModeSelect) {
+				xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
+				doJump = Utils.GetButtonValue("A", playerID);
 
-			if (Utils.GetButtonValue("Start", playerID)) {
-				Death( );
-			}
-
-			if (Utils.GetButtonValue("B", playerID)) {
-				gameManager.Interact(collider);
-			}
-
-			if (Utils.GetButtonValue("X", playerID)) {
-				if (mode == Constants.PLAYER_SHRINK_MODE) {
-
-				} else if (mode == Constants.PLAYER_SWAP_MODE) {
-
+				if (Utils.GetButtonValue("Start", playerID)) {
+					Death( );
 				}
+
+				if (Utils.GetButtonValue("B", playerID)) {
+					gameManager.Interact(coll2D);
+				}
+
+				if (Utils.GetButtonValue("X", playerID)) {
+					if (mode == Constants.PLAYER_SHRINK_MODE) {
+
+					} else if (mode == Constants.PLAYER_SWAP_MODE) {
+
+					}
+				}
+			} else {
+				ModeSelection( );
 			}
-		} else {
-			ModeSelection( );
-		}
 
-		if (Utils.GetButtonValue("Y", playerID)) {
-			if (isModeSelect) { // If the mode was originally true, the player is in the mode selection screen
-				SetMode(selectedMode); // Set the mode of the player
-			} else { // If the mode was false, they are going into the mode selection screen
-				xMove = 0; // Stop the player from moving
+			if (Utils.GetButtonValue("Y", playerID)) {
+				if (isModeSelect) { // If the mode was originally true, the player is in the mode selection screen
+					SetMode(selectedMode); // Set the mode of the player
+				} else { // If the mode was false, they are going into the mode selection screen
+					xMove = 0; // Stop the player from moving
+				}
+
+				SetModeMenu(!isModeSelect);
 			}
 
-			SetModeMenu(!isModeSelect);
+			animator.SetFloat("xMove", Mathf.Abs(xMove));
+			animator.SetBool("isJumping", !isGrounded);
 		}
-
-		animator.SetFloat("xMove", Mathf.Abs(xMove));
-		animator.SetBool("isJumping", !isGrounded);
 	}
 
 	private void FixedUpdate ( ) {
@@ -155,6 +157,7 @@ public class Player : MonoBehaviour {
 			}
 
 			transform.position = Constants.DEATH_POS;
+			rBody2D.velocity = Vector3.zero;
 			StartCoroutine(Respawn( ));
 
 			isDead = true;
@@ -203,7 +206,10 @@ public class Player : MonoBehaviour {
 	private void SetEnabled (bool enabled) {
 		rBody2D.isKinematic = !enabled;
 		spriteRenderer.enabled = enabled;
+
 		SetModeMenu(false);
+
+		tagRenderer.enabled = enabled;
 	}
 
 	private IEnumerator Respawn ( ) {

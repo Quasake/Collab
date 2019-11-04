@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Component : MonoBehaviour {
-	[Header("Variables")]
+	[Header("Component Class")]
 	[SerializeField] protected int groupID;
 	[SerializeField] protected bool isActive;
-	[SerializeField] protected Vector3 connectionPos;
+	[SerializeField] protected Connection connection;
+	protected SpriteRenderer spriteRenderer;
 
-	private void Start ( ) {
-		SetIsActive(isActive);
+	private void Awake ( ) {
+		spriteRenderer = GetComponent<SpriteRenderer>( );
 	}
 
 	protected abstract void UpdateSprites ( );
 
 	public void SetIsActive (bool isActive) {
 		this.isActive = isActive;
+		if (connection != null) {
+			connection.SetIsActive(isActive);
+		}
 
 		UpdateSprites( );
 	}
@@ -26,9 +30,5 @@ public abstract class Component : MonoBehaviour {
 
 	public int GetID ( ) {
 		return groupID;
-	}
-
-	public Vector3 GetConnectionPos ( ) {
-		return connectionPos;
 	}
 }
