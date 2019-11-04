@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	private float xMove; // How much the player should move each frame
 	private bool doJump; // Whether or not the player should jump
 	private bool isGrounded; // If the player is on the ground
+	private bool isSmall; // Whether the player is shrunk or not
 
 	private bool isModeSelect; // If the player is selecting a power-up mode
 	private int selectedMode; // The currently selected mode in the mode selection state
@@ -35,10 +36,10 @@ public class Player : MonoBehaviour {
 
 	[Header("Children")]
 	[SerializeField] private GameObject modeSelectObj; // An object that holds the mode selection state objects
-	[SerializeField] private Transform modeSelectArrow; // The arrow in the mode selection state
 	[SerializeField] private LayerMask whatIsGround; // The object layer that is the ground duh
 	[SerializeField] private Transform groundCheck; // Ground collision detector
 	[SerializeField] private SpriteRenderer tagRenderer; // The player tag sprite renderer
+	[SerializeField] private Animator arrowAnimator; // The arrow animator thing idk these comments are getting annoying to write oof
 	private Rigidbody2D rBody2D; // Reference to the rigidbody of the player
 	private Animator animator; // Reference to the animator of the player
 	private SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
@@ -82,13 +83,28 @@ public class Player : MonoBehaviour {
 
 				if (Utils.GetButtonValue("X", playerID)) {
 					if (mode == Constants.PLAYER_SHRINK_MODE) {
-
+						isSmall = !isSmall;
 					} else if (mode == Constants.PLAYER_SWAP_MODE) {
 
 					}
 				}
 			} else {
-				ModeSelection( );
+				float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
+				float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
+				if (horiAxis > Constants.DEADZONE) { // Right
+					selectedMode = Constants.PLAYER_BOOST_MODE;
+				} else if (horiAxis < -Constants.DEADZONE) { // Left
+					selectedMode = Constants.PLAYER_SWAP_MODE;
+				} else if (vertAxis > Constants.DEADZONE) { // Up
+					selectedMode = Constants.PLAYER_NORM_MODE;
+				} else if (vertAxis < -Constants.DEADZONE) { // Down
+					selectedMode = Constants.PLAYER_SHRINK_MODE;
+
+					isSmall = false;
+					animator.SetBool("isSmall", isSmall);
+				}
+
+				arrowAnimator.SetInteger("selectedMode", selectedMode);
 			}
 
 			if (Utils.GetButtonValue("Y", playerID)) {
@@ -103,6 +119,7 @@ public class Player : MonoBehaviour {
 
 			animator.SetFloat("xMove", Mathf.Abs(xMove));
 			animator.SetBool("isJumping", !isGrounded);
+			animator.SetBool("isSmall", isSmall);
 		}
 	}
 
@@ -117,33 +134,6 @@ public class Player : MonoBehaviour {
 	}
 
 	private void ModeSelection ( ) {
-		if (!modeChanged) {
-			float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
-			float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
-			if (horiAxis > Constants.DEADZONE) { // Right
-				selectedMode = Constants.PLAYER_BOOST_MODE;
-			} else if (horiAxis < -Constants.DEADZONE) { // Left
-				selectedMode = Constants.PLAYER_SWAP_MODE;
-			} else if (vertAxis > Constants.DEADZONE) { // Up
-				selectedMode = Constants.PLAYER_NORM_MODE;
-			} else if (vertAxis < -Constants.DEADZONE) { // Down
-				selectedMode = Constants.PLAYER_SHRINK_MODE;
-			}
-
-			if (!Utils.InRangePM(horiAxis, Constants.DEADZONE) || !Utils.InRangePM(vertAxis, Constants.DEADZONE)) {
-				// Rotate and position arrow based on the mode selected
-				modeSelectArrow.transform.eulerAngles = Utils.Rotate2D(modeSelectArrow.transform.eulerAngles, -Constants.HALF_PI * selectedMode);
-				float x = (selectedMode % 2 == 1) ? (selectedMode - 2) * -0.75f : 0;
-				float y = (selectedMode % 2 == 0) ? (selectedMode - 1) * -0.75f : 0;
-				modeSelectArrow.transform.localPosition = new Vector3(x, y);
-
-				modeChanged = true;
-			}
-		} else {
-			if (Utils.InRangePM(Utils.GetAxisRawValue("Horizontal", playerID), Constants.DEADZONE)) {
-				modeChanged = false;
-			}
-		}
 	}
 
 	private void Death ( ) {
