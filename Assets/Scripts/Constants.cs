@@ -9,7 +9,7 @@ public static class Constants {
 	public static Vector3 DEATH_POS = new Vector3(0, 20);
 
 	public const float GAP_FIX_NUMBER = 0.0001f;
-	public const float CHECK_RADIUS = 0.2f;
+	public const float CHECK_RADIUS = 0.1f;
 	public const float DEADZONE = 0.05f;
 
 	public const int PLAYER_1_ID = 0;
@@ -23,8 +23,8 @@ public static class Constants {
 	public const int PLAYER_SHRINK_MODE = 2;
 	public const int PLAYER_SWAP_MODE = 3;
 
-	public const float CHUNK_TIME_MIN = 3f;
-	public const float CHUNK_TIME_MAX = 5f;
+	public const float CHUNK_TIME_MIN = 2f;
+	public const float CHUNK_TIME_MAX = 4f;
 	public const float CHUNK_FORCE_MIN = 20f;
 	public const float CHUNK_FORCE_MAX = 30f;
 	public const int CHUNK_COUNT = 6;

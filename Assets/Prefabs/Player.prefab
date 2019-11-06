@@ -583,7 +583,6 @@ MonoBehaviour:
   spawnpoint: {fileID: 0}
   gameManager: {fileID: 0}
   modeSelectObj: {fileID: 3488026113311082907}
-  modeSelectArrow: {fileID: 3488026113945429045}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2561

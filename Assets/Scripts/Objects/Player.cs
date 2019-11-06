@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
 					gameManager.Interact(coll2D);
 				}
 
-				if (Utils.GetButtonValue("X", playerID)) {
+				if (Utils.GetButtonValue("X", playerID) && isGrounded) {
 					if (mode == Constants.PLAYER_SHRINK_MODE) {
 						isSmall = !isSmall;
 					} else if (mode == Constants.PLAYER_SWAP_MODE) {
