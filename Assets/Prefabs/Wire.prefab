@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupID: 0
   isActive: 0
-  connectionPos: {x: 0, y: 0, z: 0}
+  connection: {fileID: 0}
   isBackground: 0
   formation: 0
   shortVariations:

@@ -30,6 +30,7 @@ public static class Constants {
 	public const int CHUNK_COUNT = 6;
 
 	public const float BOOST_AMOUNT = 1.4f;
+	public const float SHRINK_SMALL_AMOUNT = 0.6f;
 
 	public static Color WHITE_FULL_ALPHA = new Color(1f, 1f, 1f, 1f);
 	public static Color WHITE_NO_ALPHA = new Color(1f, 1f, 1f, 0f);

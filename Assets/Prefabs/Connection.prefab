@@ -96,6 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupID: 0
   isActive: 0
+  connection: {fileID: 0}
   variations:
   - {fileID: -6050296909894318094, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -3727842135710763035, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}

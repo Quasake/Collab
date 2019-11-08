@@ -84,6 +84,8 @@ public class Player : MonoBehaviour {
 				if (Utils.GetButtonValue("X", playerID) && isGrounded) {
 					if (mode == Constants.PLAYER_SHRINK_MODE) {
 						isSmall = !isSmall;
+
+						jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
 					} else if (mode == Constants.PLAYER_SWAP_MODE) {
 
 					}
