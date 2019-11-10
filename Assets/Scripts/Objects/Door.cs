@@ -9,8 +9,6 @@ public class Door : Component {
 	public Transform door;
 
 	private void Start ( ) {
-		spriteRenderer.transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
-
 		SetIsActive(isActive);
 	}
 

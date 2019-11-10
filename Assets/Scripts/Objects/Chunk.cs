@@ -5,16 +5,28 @@ using UnityEngine;
 public class Chunk : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 
+	[SerializeField] Sprite[ ] normalChunks;
+	[SerializeField] Sprite[ ] boostChunks;
+	[SerializeField] Sprite[ ] shrinkChunks;
+	[SerializeField] Sprite[ ] swapChunks;
+	Sprite[ ][ ] chunks;
+
 	float startTime; // The time that the chunk was spawned
 	float disappearTime; // The lifetime of the chunk
+	int type;
 
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
+
+		chunks = new Sprite[ ][ ] {
+			normalChunks, boostChunks, shrinkChunks, swapChunks
+		};
 	}
 
 	void Start ( ) {
 		startTime = Time.time;
 		disappearTime = Utils.GetRandomFloat(Constants.CHUNK_TIME_MIN, Constants.CHUNK_TIME_MAX);
+		spriteRenderer.sprite = chunks[type][Utils.GetRandomInteger(0, Constants.CHUNK_COUNT)];
 	}
 	
 	void Update ( ) {
@@ -38,5 +50,9 @@ public class Chunk : MonoBehaviour {
 		spriteRenderer.color = Constants.WHITE_NO_ALPHA;
 
 		Destroy(gameObject);
+	}
+
+	public void SetType (int type) {
+		this.type = type;
 	}
 }

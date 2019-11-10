@@ -7,8 +7,6 @@ public class Lever : Component {
 	[SerializeField] private Sprite[ ] variations;
 
 	private void Start ( ) {
-		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
-
 		SetIsActive(isActive);
 	}
 

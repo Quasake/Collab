@@ -72,7 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 489488767
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 7296885102122048703, guid: 6290985486dd1e54abfe116778ac278a,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &2183190527887127770
@@ -132,3 +133,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673a26cb233f90640af629856219f5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalChunks:
+  - {fileID: 4632162789738711065, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -7988790998778120937, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 7296885102122048703, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -4051220040068673144, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 8764389555691897809, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 3928956127277876480, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  boostChunks:
+  - {fileID: -106031088937598039, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -681186471873333175, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -8842147908213942247, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 609987392588128063, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -5286109003278012345, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -7713258957468857500, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  shrinkChunks:
+  - {fileID: -4772641124560259836, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 844512157573929773, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 4652821041415064442, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -6739379408616444616, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -232999512818808444, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 9202651195105038132, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  swapChunks:
+  - {fileID: -8865711834979543784, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -4385238072682607558, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 7624164744617793158, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -8006757703225544290, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 48425475313981100, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 1288828979178291985, guid: 6290985486dd1e54abfe116778ac278a, type: 3}

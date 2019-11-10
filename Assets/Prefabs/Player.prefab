@@ -547,41 +547,12 @@ MonoBehaviour:
   playerID: 0
   mode: 0
   isDead: 0
-  normalChunks:
-  - {fileID: 7296885102122048703, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -4051220040068673144, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 8764389555691897809, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 3928956127277876480, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -4471668167906440293, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 8641568295424926104, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  boostChunks:
-  - {fileID: -106031088937598039, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -681186471873333175, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -8842147908213942247, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 609987392588128063, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -5286109003278012345, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -7713258957468857500, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  shrinkChunks:
-  - {fileID: 4652821041415064442, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -6739379408616444616, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -232999512818808444, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 9202651195105038132, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -8865711834979543784, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -4385238072682607558, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  swapChunks:
-  - {fileID: 7624164744617793158, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -8006757703225544290, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 48425475313981100, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 1288828979178291985, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 4632162789738711065, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -7988790998778120937, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  isAtEnd: 0
   tags:
-  - {fileID: -4772641124560259836, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 844512157573929773, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 5197925540072060383, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 1423833454339779461, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   chunkPrefab: {fileID: 2183190527887127589, guid: 3abb95c8a4327074f861c23bb00a54ef,
     type: 3}
-  spawnpoint: {fileID: 0}
-  gameManager: {fileID: 0}
   modeSelectObj: {fileID: 3488026113311082907}
   whatIsGround:
     serializedVersion: 2

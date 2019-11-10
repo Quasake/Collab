@@ -19,8 +19,6 @@ public class Wire : Component {
 			shortVariations, straightVariations, turnVariations
 		};
 
-		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
-
 		if (isBackground) {
 			spriteRenderer.sortingLayerName = "Background Objects";
 		}

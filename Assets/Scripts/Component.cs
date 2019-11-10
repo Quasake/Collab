@@ -11,6 +11,7 @@ public abstract class Component : MonoBehaviour {
 
 	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
+		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
 	}
 
 	protected abstract void UpdateSprites ( );

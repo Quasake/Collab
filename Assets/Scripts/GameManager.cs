@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-
 	public void Interact (Collider2D collider) {
 		for (int i = 0; i < levers.Count; i++) {
 			if (collider.bounds.Intersects(levers[i].GetComponent<Collider2D>( ).bounds)) {

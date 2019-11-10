@@ -4,6 +4,18 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class Utils {
+	public static bool AlmostEqual (Vector3 position, Vector3 target, float allowedDiff) {
+		/* Get whether 2 positions are almost, but not exactly, equal */
+
+		return GetDistance(position, target) <= allowedDiff;
+	}
+
+	public static float GetDistance (Vector2 point1, Vector2 point2) {
+		/* Get the distance between 2 points */
+
+		return Mathf.Sqrt(Mathf.Pow(point2.y - point1.y, 2) + Mathf.Pow(point2.x - point1.x, 2));
+	}
+
 	public static int GetRandomInteger (int min, int max) {
 		/* Get a random integer between 2 values */
 

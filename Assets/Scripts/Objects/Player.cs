@@ -6,54 +6,48 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	[Header("Variables")]
-	[SerializeField] private int playerID; // The id of the player
-	[SerializeField] private int mode; // The power-up mode of the player
-	[SerializeField] private bool isDead; // Whether the player is deceased or not
-	private float jumpSpeed; // How high the player jumps
-	private float moveSpeed; // How fast the player moves
-	private float xMove; // How much the player should move each frame
-	private bool doJump; // Whether or not the player should jump
-	private bool isGrounded; // If the player is on the ground
-	private bool isSmall; // Whether the player is shrunk or not
+	[SerializeField] int playerID; // The id of the player
+	[SerializeField] int mode; // The power-up mode of the player
+	[SerializeField] bool isDead; // Whether the player is deceased or not
+	[SerializeField] bool isAtEnd; // Whether the player is at the end of the level or not
+	[SerializeField] bool isEnabled; // Whether the player is enabled duh
+	float jumpSpeed; // How high the player jumps
+	float moveSpeed; // How fast the player moves
+	float xMove; // How much the player should move each frame
+	bool doJump; // Whether or not the player should jump
+	bool isGrounded; // If the player is on the ground
+	bool isSmall; // Whether the player is shrunk or not
 
-	private bool isModeSelect; // If the player is selecting a power-up mode
-	private int selectedMode; // The currently selected mode in the mode selection state
-	private bool modeChanged; // Whether the player has changed the mode that was highlighted in the mode selection state
+	bool isModeSelect; // If the player is selecting a power-up mode
+	int selectedMode; // The currently selected mode in the mode selection state
 
-	// Arrays for the chunks for each of the player modes
-	[Header("Sprites")]
-	[SerializeField] private Sprite[ ] normalChunks;
-	[SerializeField] private Sprite[ ] boostChunks;
-	[SerializeField] private Sprite[ ] shrinkChunks;
-	[SerializeField] private Sprite[ ] swapChunks;
-	private Sprite[ ][ ] chunks;
-	[SerializeField] private Sprite[ ] tags; // The tags for the players so the players know which one is which
+	[Space(20)]
+	[SerializeField] Sprite[ ] tags; // The tags for the players so the players know which one is which
+	[SerializeField] GameObject chunkPrefab; // The prefab for the player chunks
+	[SerializeField] GameObject modeSelectObj; // An object that holds the mode selection state objects
+	[SerializeField] LayerMask whatIsGround; // The object layer that is the ground duh
+	[SerializeField] Transform groundCheck; // Ground collision detector
+	[SerializeField] SpriteRenderer tagRenderer; // The player tag sprite renderer
+	[SerializeField] Animator arrowAnimator; // The arrow animator thing idk these comments are getting annoying to write oof
 
-	[Header("Environment")]
-	[SerializeField] private GameObject chunkPrefab; // The prefab for the player chunks
-	[SerializeField] private Transform spawnpoint; // The position of the spawnpoint in the level
-	[SerializeField] private GameManager gameManager; // The manager object of the game
+	Rigidbody2D rBody2D; // Reference to the rigidbody of the player
+	Animator animator; // Reference to the animator of the player
+	SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
+	Collider2D coll2D; // Reference to the collider of the player
 
-	[Header("Children")]
-	[SerializeField] private GameObject modeSelectObj; // An object that holds the mode selection state objects
-	[SerializeField] private LayerMask whatIsGround; // The object layer that is the ground duh
-	[SerializeField] private Transform groundCheck; // Ground collision detector
-	[SerializeField] private SpriteRenderer tagRenderer; // The player tag sprite renderer
-	[SerializeField] private Animator arrowAnimator; // The arrow animator thing idk these comments are getting annoying to write oof
-	private Rigidbody2D rBody2D; // Reference to the rigidbody of the player
-	private Animator animator; // Reference to the animator of the player
-	private SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
-	private Collider2D coll2D; // Reference to the collider of the player
+	Transform spawnpoint; // The position of the spawnpoint in the level
+	GameManager gameManager; // The manager object of the game
+	Transform objective; // The end of the level
 
-	private void Awake ( ) {
+	void Awake ( ) {
 		rBody2D = GetComponent<Rigidbody2D>( );
 		animator = GetComponent<Animator>( );
 		coll2D = GetComponent<Collider2D>( );
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
-		chunks = new Sprite[ ][ ] {
-			normalChunks, boostChunks, shrinkChunks, swapChunks
-		};
+		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
+		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
+		objective = GameObject.Find("Objective").GetComponent<Transform>( );
 
 		moveSpeed = Constants.PLAYER_DEF_MOVESPEED;
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
@@ -61,91 +55,106 @@ public class Player : MonoBehaviour {
 		SetMode(Constants.PLAYER_NORM_MODE);
 	}
 
-	private void Start ( ) {
+	void Start ( ) {
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
 
 		tagRenderer.sprite = tags[playerID];
+
+		SetEnabled(true);
 	}
 
-	private void Update ( ) {
+	void Update ( ) {
 		if (!isDead) {
-			if (!isModeSelect) {
-				xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
-				doJump = Utils.GetButtonValue("A", playerID);
+			if (!isAtEnd) {
+				if (!isModeSelect) {
+					xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
+					doJump = Utils.GetButtonValue("A", playerID);
 
-				if (Utils.GetButtonValue("Start", playerID)) {
-					Death( );
-				}
-
-				if (Utils.GetButtonValue("B", playerID)) {
-					gameManager.Interact(coll2D);
-				}
-
-				if (Utils.GetButtonValue("X", playerID) && isGrounded) {
-					if (mode == Constants.PLAYER_SHRINK_MODE) {
-						isSmall = !isSmall;
-
-						jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
-					} else if (mode == Constants.PLAYER_SWAP_MODE) {
-
+					if (Utils.GetButtonValue("Start", playerID)) {
+						Death( );
 					}
+
+					if (Utils.GetButtonValue("B", playerID)) {
+						gameManager.Interact(coll2D);
+					}
+
+					if (Utils.GetButtonValue("X", playerID) && isGrounded) {
+						if (mode == Constants.PLAYER_SHRINK_MODE) {
+							isSmall = !isSmall;
+
+							jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
+						} else if (mode == Constants.PLAYER_SWAP_MODE) {
+							// DO THIS
+						}
+					}
+
+					if (Utils.GetDistance(transform.position, objective.position) < 2f) {
+						isAtEnd = true;
+						xMove = 0;
+						rBody2D.gravityScale = 0;
+					}
+				} else {
+					float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
+					float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
+					if (horiAxis > Constants.DEADZONE) { // Right
+						selectedMode = Constants.PLAYER_BOOST_MODE;
+					} else if (horiAxis < -Constants.DEADZONE) { // Left
+						selectedMode = Constants.PLAYER_SWAP_MODE;
+					} else if (vertAxis > Constants.DEADZONE) { // Up
+						selectedMode = Constants.PLAYER_NORM_MODE;
+					} else if (vertAxis < -Constants.DEADZONE) { // Down
+						selectedMode = Constants.PLAYER_SHRINK_MODE;
+
+						isSmall = false;
+						animator.SetBool("isSmall", isSmall);
+					}
+
+					arrowAnimator.SetInteger("selectedMode", selectedMode);
 				}
-			} else {
-				float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
-				float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
-				if (horiAxis > Constants.DEADZONE) { // Right
-					selectedMode = Constants.PLAYER_BOOST_MODE;
-				} else if (horiAxis < -Constants.DEADZONE) { // Left
-					selectedMode = Constants.PLAYER_SWAP_MODE;
-				} else if (vertAxis > Constants.DEADZONE) { // Up
-					selectedMode = Constants.PLAYER_NORM_MODE;
-				} else if (vertAxis < -Constants.DEADZONE) { // Down
-					selectedMode = Constants.PLAYER_SHRINK_MODE;
 
-					isSmall = false;
-					animator.SetBool("isSmall", isSmall);
+				if (Utils.GetButtonValue("Y", playerID)) {
+					if (isModeSelect) { // If the mode was originally true, the player is in the mode selection screen
+						SetMode(selectedMode); // Set the mode of the player
+					} else { // If the mode was false, they are going into the mode selection screen
+						xMove = 0; // Stop the player from moving
+					}
+
+					SetModeMenu(!isModeSelect);
 				}
+			} else if (isEnabled) {
+				transform.position = Vector3.Lerp(transform.position, objective.position, Constants.PLAYER_SMOOTHING);
+				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, Constants.TWO_PI * Mathf.Rad2Deg), Constants.PLAYER_SMOOTHING);
 
-				arrowAnimator.SetInteger("selectedMode", selectedMode);
-			}
-
-			if (Utils.GetButtonValue("Y", playerID)) {
-				if (isModeSelect) { // If the mode was originally true, the player is in the mode selection screen
-					SetMode(selectedMode); // Set the mode of the player
-				} else { // If the mode was false, they are going into the mode selection screen
-					xMove = 0; // Stop the player from moving
+				if (Utils.AlmostEqual(transform.position, objective.position, 0.05f)) {
+					SetEnabled(false);
 				}
-
-				SetModeMenu(!isModeSelect);
 			}
 
 			animator.SetFloat("xMove", Mathf.Abs(xMove));
 			animator.SetBool("isJumping", !isGrounded);
 			animator.SetBool("isSmall", isSmall);
+			animator.SetBool("isAtEnd", isAtEnd);
 		}
 	}
 
-	private void FixedUpdate ( ) {
+	void FixedUpdate ( ) {
 		Move( );
 	}
 
-	private void OnCollisionEnter2D (Collision2D collision) {
+	void OnCollisionEnter2D (Collision2D collision) {
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Hazards")) {
 			Death( );
 		}
 	}
 
-	private void ModeSelection ( ) {
-	}
-
-	private void Death ( ) {
+	void Death ( ) {
 		if (!isDead) {
 			SetEnabled(false);
 
 			for (int i = 0; i < Constants.CHUNK_COUNT; i++) {
 				GameObject chunk = Instantiate(chunkPrefab, transform.position, new Quaternion(0, 0, Utils.GetRandomAngle( ), 0));
-				chunk.GetComponent<SpriteRenderer>( ).sprite = chunks[mode][i];
 				chunk.GetComponent<Rigidbody2D>( ).velocity = Random.onUnitSphere * Utils.GetRandomFloat(Constants.CHUNK_FORCE_MIN, Constants.CHUNK_FORCE_MAX);
+				chunk.GetComponent<Chunk>( ).SetType(mode);
 			}
 
 			transform.position = Constants.DEATH_POS;
@@ -156,7 +165,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private void Move ( ) {
+	void Move ( ) {
 		// Check for ground
 		Collider2D[ ] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Constants.CHECK_RADIUS, whatIsGround);
 		for (int i = 0; i < colliders.Length; i++) {
@@ -180,7 +189,7 @@ public class Player : MonoBehaviour {
 		doJump = false;
 	}
 
-	private void SetMode (int mode) {
+	void SetMode (int mode) {
 		this.mode = mode;
 		animator.SetInteger("mode", mode);
 
@@ -188,14 +197,16 @@ public class Player : MonoBehaviour {
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
 	}
 
-	private void SetModeMenu (bool enabled) {
+	void SetModeMenu (bool enabled) {
 		isModeSelect = enabled;
 		modeSelectObj.SetActive(enabled);
 		spriteRenderer.sortingLayerName = enabled ? "Mini-UI" : "Player";
 		tagRenderer.enabled = !enabled;
 	}
 
-	private void SetEnabled (bool enabled) {
+	void SetEnabled (bool enabled) {
+		isEnabled = enabled;
+
 		rBody2D.isKinematic = !enabled;
 		spriteRenderer.enabled = enabled;
 
@@ -204,7 +215,7 @@ public class Player : MonoBehaviour {
 		tagRenderer.enabled = enabled;
 	}
 
-	private IEnumerator Respawn ( ) {
+	IEnumerator Respawn ( ) {
 		float startTime = Time.time;
 
 		while (Time.time - startTime <= Constants.PLAYER_RESPAWN_TIME) {
