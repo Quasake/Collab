@@ -125,7 +125,7 @@ public class Player : MonoBehaviour {
 				transform.position = Vector3.Lerp(transform.position, objective.position, Constants.PLAYER_SMOOTHING);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, Constants.TWO_PI * Mathf.Rad2Deg), Constants.PLAYER_SMOOTHING);
 
-				if (Utils.AlmostEqual(transform.position, objective.position, 0.05f)) {
+				if (Utils.AlmostEqual(transform.position, objective.position, 0.1f)) {
 					SetEnabled(false);
 				}
 			}

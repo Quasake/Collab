@@ -548,6 +548,7 @@ MonoBehaviour:
   mode: 0
   isDead: 0
   isAtEnd: 0
+  isEnabled: 0
   tags:
   - {fileID: 5197925540072060383, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 1423833454339779461, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
