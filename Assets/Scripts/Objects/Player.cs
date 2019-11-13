@@ -10,9 +10,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] int mode; // The power-up mode of the player
 	[SerializeField] bool isDead; // Whether the player is deceased or not
 	[SerializeField] bool isAtEnd; // Whether the player is at the end of the level or not
-	[SerializeField] bool isEnabled; // Whether the player is enabled duh
 	float jumpSpeed; // How high the player jumps
-	float moveSpeed; // How fast the player moves
 	float xMove; // How much the player should move each frame
 	bool doJump; // Whether or not the player should jump
 	bool isGrounded; // If the player is on the ground
@@ -48,17 +46,16 @@ public class Player : MonoBehaviour {
 		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
 		objective = GameObject.Find("Objective").GetComponent<Transform>( );
-
-		moveSpeed = Constants.PLAYER_DEF_MOVESPEED;
+		
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 
 		SetMode(Constants.PLAYER_NORM_MODE);
+
+		tagRenderer.sprite = tags[playerID];
 	}
 
 	void Start ( ) {
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
-
-		tagRenderer.sprite = tags[playerID];
 
 		SetEnabled(true);
 	}
@@ -67,7 +64,7 @@ public class Player : MonoBehaviour {
 		if (!isDead) {
 			if (!isAtEnd) {
 				if (!isModeSelect) {
-					xMove = Utils.GetAxisRawValue("Horizontal", playerID) * moveSpeed;
+					xMove = Utils.GetAxisRawValue("Horizontal", playerID) * Constants.PLAYER_DEF_MOVESPEED;
 					doJump = Utils.GetButtonValue("A", playerID);
 
 					if (Utils.GetButtonValue("Start", playerID)) {
@@ -121,12 +118,12 @@ public class Player : MonoBehaviour {
 
 					SetModeMenu(!isModeSelect);
 				}
-			} else if (isEnabled) {
+			} else {
 				transform.position = Vector3.Lerp(transform.position, objective.position, Constants.PLAYER_SMOOTHING);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, Constants.TWO_PI * Mathf.Rad2Deg), Constants.PLAYER_SMOOTHING);
 
 				if (Utils.AlmostEqual(transform.position, objective.position, 0.1f)) {
-					SetEnabled(false);
+					Destroy(this);
 				}
 			}
 
@@ -194,25 +191,36 @@ public class Player : MonoBehaviour {
 		animator.SetInteger("mode", mode);
 
 		// Set variables based on modes
-		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
+		if (mode == Constants.PLAYER_NORM_MODE) {
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
+		} else if (mode == Constants.PLAYER_BOOST_MODE) {
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * Constants.BOOST_AMOUNT;
+		} else if (mode == Constants.PLAYER_SHRINK_MODE) {
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * Constants.SHRINK_SMALL_AMOUNT;
+		} else if (mode == Constants.PLAYER_SWAP_MODE) {
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
+		}
+	}
+
+	void SetTagEnabled (bool enabled) {
+		tagRenderer.enabled = enabled;
 	}
 
 	void SetModeMenu (bool enabled) {
 		isModeSelect = enabled;
 		modeSelectObj.SetActive(enabled);
 		spriteRenderer.sortingLayerName = enabled ? "Mini-UI" : "Player";
-		tagRenderer.enabled = !enabled;
+
+		SetTagEnabled(!enabled);
 	}
 
 	void SetEnabled (bool enabled) {
-		isEnabled = enabled;
-
 		rBody2D.isKinematic = !enabled;
 		spriteRenderer.enabled = enabled;
+		coll2D.isTrigger = !enabled;
 
 		SetModeMenu(false);
-
-		tagRenderer.enabled = enabled;
+		SetTagEnabled(enabled);
 	}
 
 	IEnumerator Respawn ( ) {

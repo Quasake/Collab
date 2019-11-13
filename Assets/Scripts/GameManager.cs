@@ -9,11 +9,14 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private Transform doorParent;
 	[SerializeField] private Transform wireParent;
 
-	private List<Lever> levers;
-	private List<Door> doors;
-	private List<Wire> wires;
+	[Header("Level")]
+	[SerializeField] int numMoves;
 
-	private void Start ( ) {
+	List<Lever> levers;
+	List<Door> doors;
+	List<Wire> wires;
+
+	void Start ( ) {
 		levers = new List<Lever>( );
 		doors = new List<Door>( );
 		wires = new List<Wire>( );
@@ -38,7 +41,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void SetWireGroup (bool isActive, int groupID) {
+	void SetWireGroup (bool isActive, int groupID) {
 		for (int i = 0; i < wires.Count; i++) {
 			if (wires[i].GetID( ) == groupID) {
 				wires[i].SetIsActive(isActive);
