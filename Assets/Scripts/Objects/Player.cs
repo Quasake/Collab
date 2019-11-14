@@ -5,37 +5,38 @@ using UnityEngine;
 // https://github.com/Brackeys/2D-Character-Controller
 
 public class Player : MonoBehaviour {
+	float jumpSpeed;
+	float xMove;
+	bool doJump;
+	bool isGrounded;
+	bool isSmall;
+	bool isModeSelect;
+	int selectedMode;
+
 	[Header("Variables")]
-	[SerializeField] int playerID; // The id of the player
-	[SerializeField] int mode; // The power-up mode of the player
-	[SerializeField] bool isDead; // Whether the player is deceased or not
-	[SerializeField] bool isAtEnd; // Whether the player is at the end of the level or not
-	float jumpSpeed; // How high the player jumps
-	float xMove; // How much the player should move each frame
-	bool doJump; // Whether or not the player should jump
-	bool isGrounded; // If the player is on the ground
-	bool isSmall; // Whether the player is shrunk or not
+	[SerializeField] int playerID;
+	[SerializeField] int mode;
+	public bool isDead;
+	public bool isAtEnd;
+	[Header("Sprites")]
+	[SerializeField] Sprite[ ] tags;
+	[Header("Environment")]
+	[SerializeField] GameObject chunkPrefab;
+	[SerializeField] LayerMask whatIsGround;
+	[Header("Children")]
+	[SerializeField] Transform groundCheck;
+	[SerializeField] SpriteRenderer tagRenderer;
+	[SerializeField] GameObject modeSelectObj;
+	[SerializeField] Animator arrowAnimator;
 
-	bool isModeSelect; // If the player is selecting a power-up mode
-	int selectedMode; // The currently selected mode in the mode selection state
+	Rigidbody2D rBody2D;
+	Animator animator;
+	SpriteRenderer spriteRenderer;
+	Collider2D coll2D;
 
-	[Space(20)]
-	[SerializeField] Sprite[ ] tags; // The tags for the players so the players know which one is which
-	[SerializeField] GameObject chunkPrefab; // The prefab for the player chunks
-	[SerializeField] GameObject modeSelectObj; // An object that holds the mode selection state objects
-	[SerializeField] LayerMask whatIsGround; // The object layer that is the ground duh
-	[SerializeField] Transform groundCheck; // Ground collision detector
-	[SerializeField] SpriteRenderer tagRenderer; // The player tag sprite renderer
-	[SerializeField] Animator arrowAnimator; // The arrow animator thing idk these comments are getting annoying to write oof
-
-	Rigidbody2D rBody2D; // Reference to the rigidbody of the player
-	Animator animator; // Reference to the animator of the player
-	SpriteRenderer spriteRenderer; // Reference to the sprite renderer of the player
-	Collider2D coll2D; // Reference to the collider of the player
-
-	Transform spawnpoint; // The position of the spawnpoint in the level
-	GameManager gameManager; // The manager object of the game
-	Transform objective; // The end of the level
+	Transform spawnpoint;
+	GameManager gameManager;
+	Transform objective;
 
 	void Awake ( ) {
 		rBody2D = GetComponent<Rigidbody2D>( );
@@ -46,17 +47,14 @@ public class Player : MonoBehaviour {
 		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
 		objective = GameObject.Find("Objective").GetComponent<Transform>( );
-		
-		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
-
-		SetMode(Constants.PLAYER_NORM_MODE);
-
-		tagRenderer.sprite = tags[playerID];
 	}
 
 	void Start ( ) {
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
+		tagRenderer.sprite = tags[playerID];
+		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 
+		SetMode(Constants.PLAYER_NORM_MODE);
 		SetEnabled(true);
 	}
 
@@ -64,28 +62,9 @@ public class Player : MonoBehaviour {
 		if (!isDead) {
 			if (!isAtEnd) {
 				if (!isModeSelect) {
-					xMove = Utils.GetAxisRawValue("Horizontal", playerID) * Constants.PLAYER_DEF_MOVESPEED;
-					doJump = Utils.GetButtonValue("A", playerID);
+					UpdateInput( );
 
-					if (Utils.GetButtonValue("Start", playerID)) {
-						Death( );
-					}
-
-					if (Utils.GetButtonValue("B", playerID)) {
-						gameManager.Interact(coll2D);
-					}
-
-					if (Utils.GetButtonValue("X", playerID) && isGrounded) {
-						if (mode == Constants.PLAYER_SHRINK_MODE) {
-							isSmall = !isSmall;
-
-							jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
-						} else if (mode == Constants.PLAYER_SWAP_MODE) {
-							// DO THIS
-						}
-					}
-
-					if (Utils.GetDistance(transform.position, objective.position) < 2f) {
+					if (Utils.GetDistance(transform.position, objective.position) < Constants.OBJECTIVE_DIST) {
 						isAtEnd = true;
 						xMove = 0;
 						rBody2D.gravityScale = 0;
@@ -93,6 +72,7 @@ public class Player : MonoBehaviour {
 				} else {
 					float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
 					float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
+
 					if (horiAxis > Constants.DEADZONE) { // Right
 						selectedMode = Constants.PLAYER_BOOST_MODE;
 					} else if (horiAxis < -Constants.DEADZONE) { // Left
@@ -110,10 +90,14 @@ public class Player : MonoBehaviour {
 				}
 
 				if (Utils.GetButtonValue("Y", playerID)) {
-					if (isModeSelect) { // If the mode was originally true, the player is in the mode selection screen
-						SetMode(selectedMode); // Set the mode of the player
-					} else { // If the mode was false, they are going into the mode selection screen
-						xMove = 0; // Stop the player from moving
+					if (isModeSelect) {
+						if (selectedMode != mode) {
+							gameManager.DecrementMoves( );
+						}
+
+						SetMode(selectedMode);
+					} else {
+						xMove = 0;
 					}
 
 					SetModeMenu(!isModeSelect);
@@ -123,14 +107,11 @@ public class Player : MonoBehaviour {
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, Constants.TWO_PI * Mathf.Rad2Deg), Constants.PLAYER_SMOOTHING);
 
 				if (Utils.AlmostEqual(transform.position, objective.position, 0.1f)) {
-					Destroy(this);
+					SetEnabled(false);
 				}
 			}
 
-			animator.SetFloat("xMove", Mathf.Abs(xMove));
-			animator.SetBool("isJumping", !isGrounded);
-			animator.SetBool("isSmall", isSmall);
-			animator.SetBool("isAtEnd", isAtEnd);
+			UpdateAnimator( );
 		}
 	}
 
@@ -186,6 +167,52 @@ public class Player : MonoBehaviour {
 		doJump = false;
 	}
 
+	void UpdateAnimator ( ) {
+		animator.SetFloat("xMove", Mathf.Abs(xMove));
+		animator.SetBool("isJumping", !isGrounded);
+		animator.SetBool("isSmall", isSmall);
+		animator.SetBool("isAtEnd", isAtEnd);
+	}
+
+	void UpdateInput ( ) {
+		xMove = Utils.GetAxisRawValue("Horizontal", playerID) * Constants.PLAYER_DEF_MOVESPEED;
+		doJump = Utils.GetButtonValue("A", playerID);
+
+		if (Utils.GetButtonValue("Select", playerID)) {
+			Death( );
+		}
+
+		if (Utils.GetButtonValue("Start", playerID)) {
+			gameManager.TogglePause(playerID);
+		}
+
+		if (Utils.GetButtonValue("B", playerID)) {
+			gameManager.Interact(coll2D);
+		}
+
+		if (Utils.GetButtonValue("X", playerID) && isGrounded) {
+			if (mode == Constants.PLAYER_SHRINK_MODE) {
+				isSmall = !isSmall;
+				jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
+			} else if (mode == Constants.PLAYER_SWAP_MODE) {
+				// DO THIS
+			}
+		}
+	}
+
+	IEnumerator Respawn ( ) {
+		float startTime = Time.time;
+
+		while (Time.time - startTime <= Constants.PLAYER_RESPAWN_TIME) {
+			yield return null;
+		}
+
+		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
+		isDead = false;
+
+		SetEnabled(true);
+	}
+
 	void SetMode (int mode) {
 		this.mode = mode;
 		animator.SetInteger("mode", mode);
@@ -196,7 +223,7 @@ public class Player : MonoBehaviour {
 		} else if (mode == Constants.PLAYER_BOOST_MODE) {
 			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * Constants.BOOST_AMOUNT;
 		} else if (mode == Constants.PLAYER_SHRINK_MODE) {
-			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * Constants.SHRINK_SMALL_AMOUNT;
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 		} else if (mode == Constants.PLAYER_SWAP_MODE) {
 			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 		}
@@ -223,19 +250,7 @@ public class Player : MonoBehaviour {
 		SetTagEnabled(enabled);
 	}
 
-	IEnumerator Respawn ( ) {
-		float startTime = Time.time;
-
-		while (Time.time - startTime <= Constants.PLAYER_RESPAWN_TIME) {
-			yield return null;
-		}
-
-		SetEnabled(true);
-		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
-		isDead = false;
-	}
-
-	public bool GetIsDead ( ) {
+	public bool IsDead ( ) {
 		return isDead;
 	}
 }

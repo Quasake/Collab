@@ -14,9 +14,9 @@ public class CameraMovement : MonoBehaviour {
 
 	private void Update ( ) {
 		Vector3 toPos = spawnpoint.position;
-		if (!player1.GetIsDead( ) || !player2.GetIsDead( )) {
-			Vector3 player1Pos = (player1.GetIsDead( ) ? player2.transform.position : player1.transform.position);
-			Vector3 player2Pos = (player2.GetIsDead( ) ? player1.transform.position : player2.transform.position);
+		if (!player1.IsDead( ) || !player2.IsDead( )) {
+			Vector3 player1Pos = (player1.IsDead( ) ? player2.transform.position : player1.transform.position);
+			Vector3 player2Pos = (player2.IsDead( ) ? player1.transform.position : player2.transform.position);
 			toPos = Utils.GetMidpoint(player1Pos, player2Pos);
 		}
 

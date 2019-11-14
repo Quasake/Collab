@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Chunk : MonoBehaviour {
-	SpriteRenderer spriteRenderer;
-
 	[SerializeField] Sprite[ ] normalChunks;
 	[SerializeField] Sprite[ ] boostChunks;
 	[SerializeField] Sprite[ ] shrinkChunks;
 	[SerializeField] Sprite[ ] swapChunks;
 	Sprite[ ][ ] chunks;
+
+	SpriteRenderer spriteRenderer;
 
 	float startTime; // The time that the chunk was spawned
 	float disappearTime; // The lifetime of the chunk

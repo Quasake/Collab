@@ -9,7 +9,7 @@ public static class Constants {
 	public static Vector3 DEATH_POS = new Vector3(0, 20);
 
 	public const float GAP_FIX_NUMBER = 0.0001f;
-	public const float CHECK_RADIUS = 0.1f;
+	public const float CHECK_RADIUS = 0.05f;
 	public const float DEADZONE = 0.05f;
 
 	public const int PLAYER_1_ID = 0;
@@ -42,8 +42,5 @@ public static class Constants {
 
 	public const float DOOR_MOVESPEED = 0.1f;
 
-	public const int UP = 0;
-	public const int RIGHT = 1;
-	public const int DOWN = 2;
-	public const int LEFT = 3;
+	public const float OBJECTIVE_DIST = 2f;
 }
