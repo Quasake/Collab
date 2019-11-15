@@ -88,14 +88,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void TogglePause (int playerID) {
-		playerPaused = playerID;
 		isPaused = !isPaused;
+		playerPaused = playerID;
+
+		pauseMenu.SetActive(isPaused);
+		inGameUI.SetActive(!isPaused);
 
 		if (isPaused) {
 			SetInputs(playerID, pauseFirstObject);
-		} else if (playerID == playerPaused) {
-			pauseMenu.SetActive(isPaused);
-			inGameUI.SetActive(!isPaused);
 		}
 	}
 
@@ -131,6 +131,5 @@ public class GameManager : MonoBehaviour {
 		inputModule.cancelButton = "B-" + playerID;
 
 		eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
-		Debug.Log(eventSystem.firstSelectedGameObject);
 	}
 }
