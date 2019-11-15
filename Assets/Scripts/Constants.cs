@@ -43,4 +43,8 @@ public static class Constants {
 	public const float DOOR_MOVESPEED = 0.1f;
 
 	public const float OBJECTIVE_DIST = 2f;
+
+	public const float CAMERA_ZOOM_LIMITER = 50f;
+	public const float CAMERA_ZOOM_MIN = 4f;
+	public const float CAMERA_ZOOM_MAX = 8f;
 }

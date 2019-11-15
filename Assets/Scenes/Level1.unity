@@ -11975,6 +11975,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7061437341092314123, guid: 17eadaff75570804192b18da60040297,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7061437341092314120, guid: 17eadaff75570804192b18da60040297,
         type: 3}
       propertyPath: leverParent

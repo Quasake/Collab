@@ -77,6 +77,15 @@ public static class Utils {
 		return value;
 	}
 
+	public static float GetHorizontalDistance (Vector3 pos1, Vector3 pos2) {
+		/* Get the x distance that the objects are apart */
+
+		Bounds bounds = new Bounds(pos1, Vector3.zero);
+		bounds.Encapsulate(pos2);
+
+		return bounds.size.x;
+	}
+
 	public static bool GetButtonValue (string name, int playerID) {
 		/* Get joystick button value */
 
