@@ -9,19 +9,19 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] Transform leverParent;
 	[SerializeField] Transform doorParent;
 	[SerializeField] Transform wireParent;
+	[Header("Children")]
+	[SerializeField] GameObject pauseMenu;
+	[SerializeField] GameObject completedMenu;
+	[SerializeField] GameObject inGameUI;
+	[SerializeField] GameObject pauseFirstObject;
+	[SerializeField] GameObject completedFirstObject;
 	[Header("Level")]
 	[SerializeField] int numMoves;
-	[Header("Children")]
 	[SerializeField] Text remainingMoves;
-	[SerializeField] Canvas pauseMenu;
-	[SerializeField] Canvas completedMenu;
-	[SerializeField] Canvas inGameMenu;
-	[SerializeField] GameObject firstPauseButton;
-	[SerializeField] GameObject firstCompletedButton;
 
+	public bool isPaused;
+	public bool isCompleted;
 	bool isOutOfMoves;
-	bool isCompleted;
-	bool isPaused;
 	int playerPaused;
 
 	List<Lever> levers;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
 	EventSystem eventSystem;
 	StandaloneInputModule inputModule;
 
-	void Start ( ) {
+	void Awake ( ) {
 		levers = new List<Lever>( );
 		doors = new List<Door>( );
 		wires = new List<Wire>( );
@@ -44,7 +44,9 @@ public class GameManager : MonoBehaviour {
 
 		eventSystem = EventSystem.current;
 		inputModule = eventSystem.GetComponent<StandaloneInputModule>( );
+	}
 
+	void Start ( ) {
 		for (int i = 0; i < leverParent.childCount; i++) {
 			levers.Add(leverParent.GetChild(i).GetComponent<Lever>( ));
 		}
@@ -55,9 +57,9 @@ public class GameManager : MonoBehaviour {
 			wires.Add(wireParent.GetChild(i).GetComponent<Wire>( ));
 		}
 
-		inGameMenu.enabled = true;
-		completedMenu.enabled = false;
-		pauseMenu.enabled = false;
+		completedMenu.SetActive(false);
+		pauseMenu.SetActive(false);
+		inGameUI.SetActive(true);
 	}
 
 	void Update ( ) {
@@ -65,11 +67,13 @@ public class GameManager : MonoBehaviour {
 
 		if (player1.isAtEnd && player2.isAtEnd) {
 			if (!isCompleted) {
-				SetInputs(Constants.PLAYER_1_ID, firstCompletedButton);
-
-				completedMenu.enabled = true;
-				inGameMenu.enabled = false;
 				isCompleted = true;
+				completedMenu.SetActive(true);
+				inGameUI.SetActive(false);
+
+				if (isCompleted) {
+					SetInputs(Constants.PLAYER_1_ID, completedFirstObject);
+				}
 			}
 		}
 	}
@@ -83,35 +87,26 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void TogglePause (int playerID) {
+		playerPaused = playerID;
+		isPaused = !isPaused;
+
+		if (isPaused) {
+			SetInputs(playerID, pauseFirstObject);
+		} else if (playerID == playerPaused) {
+			pauseMenu.SetActive(isPaused);
+			inGameUI.SetActive(!isPaused);
+		}
+	}
+
 	public void DecrementMoves ( ) {
 		if (!isOutOfMoves) {
 			numMoves--;
+
 			if (numMoves == 0) {
 				isOutOfMoves = true;
 			}
 		}
-	}
-
-	public void TogglePause (int playerID) {
-		if (!isCompleted) {
-			isPaused = !isPaused;
-			playerPaused = playerID;
-
-			SetInputs(playerPaused, firstPauseButton);
-
-			pauseMenu.enabled = isPaused;
-			inGameMenu.enabled = !isPaused;
-		}
-	}
-
-	void SetInputs (int playerID, GameObject firstObject) {
-		playerID++;
-		inputModule.horizontalAxis = "Horizontal-" + playerID;
-		inputModule.verticalAxis = "Vertical-" + playerID;
-		inputModule.submitButton = "A-" + playerID;
-		inputModule.cancelButton = "B-" + playerID;
-
-		eventSystem.SetSelectedGameObject(firstObject);
 	}
 
 	void SetWireGroup (bool isActive, int groupID) {
@@ -125,5 +120,17 @@ public class GameManager : MonoBehaviour {
 				doors[i].SetIsActive(isActive);
 			}
 		}
+	}
+
+	void SetInputs (int playerID, GameObject firstButton) {
+		playerID++;
+
+		inputModule.horizontalAxis = "Horizontal-" + playerID;
+		inputModule.verticalAxis = "Vertical-" + playerID;
+		inputModule.submitButton = "A-" + playerID;
+		inputModule.cancelButton = "B-" + playerID;
+
+		eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
+		Debug.Log(eventSystem.firstSelectedGameObject);
 	}
 }
