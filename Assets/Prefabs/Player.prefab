@@ -548,19 +548,18 @@ MonoBehaviour:
   mode: 0
   isDead: 0
   isAtEnd: 0
-  isEnabled: 0
   tags:
   - {fileID: 5197925540072060383, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 1423833454339779461, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  chunkPrefab: {fileID: 2183190527887127589, guid: 3abb95c8a4327074f861c23bb00a54ef,
+  chunkPref: {fileID: 2183190527887127589, guid: 3abb95c8a4327074f861c23bb00a54ef,
     type: 3}
-  modeSelectObj: {fileID: 3488026113311082907}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2561
   groundCheck: {fileID: 3488026114760241110}
   tagRenderer: {fileID: 8662230130766479237}
-  arrowAnimator: {fileID: 3583541662643721576}
+  modeSelectObj: {fileID: 3488026113311082907}
+  arrowAnim: {fileID: 3583541662643721576}
 --- !u!1 &3488026114551613631
 GameObject:
   m_ObjectHideFlags: 0

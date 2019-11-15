@@ -438,10 +438,8 @@ MonoBehaviour:
   inGameUI: {fileID: 8808827264018787522}
   pauseFirstObject: {fileID: 7305605902749590802}
   completedFirstObject: {fileID: 5187257203187706452}
-  numMoves: 0
-  remainingMoves: {fileID: 7061437342153809751}
-  isPaused: 0
-  isCompleted: 0
+  movesLeft: 0
+  movesText: {fileID: 7061437342153809751}
 --- !u!1 &7061437342153809745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,6 +1244,41 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8731492103595383006, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7061437341092314120}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UnPause
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410909591603953264, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8713863158556747305, guid: b8dd3dbff386cb24194593fb79e2725e,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -1260,11 +1293,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: Resume
-      objectReference: {fileID: 0}
-    - target: {fileID: 8731492103595383006, guid: b8dd3dbff386cb24194593fb79e2725e,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8dd3dbff386cb24194593fb79e2725e, type: 3}

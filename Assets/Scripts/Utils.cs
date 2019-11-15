@@ -1,9 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class Utils {
+	public static GameObject[ ] GetAllChildren (Transform transform) {
+		/* Get an array with all the children of a transform */
+
+		GameObject[ ] objects = new GameObject[transform.childCount];
+		for (int i = 0; i < objects.Length; i++) {
+			objects[i] = transform.GetChild(i).gameObject;
+		}
+
+		return objects;
+	}
+
 	public static bool AlmostEqual (Vector3 position, Vector3 target, float allowedDiff) {
 		/* Get whether 2 positions are almost, but not exactly, equal */
 
@@ -31,7 +43,7 @@ public static class Utils {
 	public static float GetRandomAngle ( ) {
 		/* Get a random angle in radians */
 
-		return GetRandomFloat(0, Constants.TWO_PI);
+		return GetRandomFloat(0, 360);
 	}
 
 	public static Vector3Int WorldPosToTilemapPos (Vector3 vector) {

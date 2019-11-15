@@ -5,69 +5,67 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-	[Header("Environment")]
-	[SerializeField] Transform leverParent;
-	[SerializeField] Transform doorParent;
-	[SerializeField] Transform wireParent;
-	[Header("Children")]
-	[SerializeField] GameObject pauseMenu;
-	[SerializeField] GameObject completedMenu;
-	[SerializeField] GameObject inGameUI;
-	[SerializeField] GameObject pauseFirstObject;
-	[SerializeField] GameObject completedFirstObject;
-	[Header("Level")]
-	[SerializeField] int numMoves;
-	[SerializeField] Text remainingMoves;
+	[Header("Environment")] // Environment GameObjects
+	[SerializeField] Transform leverParent = null;
+	[SerializeField] Transform doorParent = null;
+	[SerializeField] Transform wireParent = null;
+	[Header("Children")] // Children GameObjects
+	[SerializeField] GameObject pauseMenu = null;
+	[SerializeField] GameObject completedMenu = null;
+	[SerializeField] GameObject inGameUI = null;
+	[SerializeField] GameObject pauseFirstObject = null;
+	[SerializeField] GameObject completedFirstObject = null;
+	[Header("Level")] // Level variables
+	[SerializeField] int movesLeft = 0;
+	[SerializeField] Text movesText = null;
 
-	public bool isPaused;
-	public bool isCompleted;
-	bool isOutOfMoves;
-	int playerPaused;
+	bool isPaused = false; // If the game is paused
+	bool isCompleted = false; // If both players has reached the end
+	int playerPaused = -1; // The player that has paused the game
 
-	List<Lever> levers;
-	List<Door> doors;
-	List<Wire> wires;
+	GameObject[ ] levers = null;
+	GameObject[ ] doors = null;
+	GameObject[ ] wires = null;
 
-	Player player1;
-	Player player2;
+	Player player1 = null;
+	Player player2 = null;
+	Transform spawnpoint = null;
+	Transform objective = null;
 
-	EventSystem eventSystem;
-	StandaloneInputModule inputModule;
+	EventSystem eventSystem = null;
+	StandaloneInputModule inputModule = null;
+
+	#region Unity Methods
 
 	void Awake ( ) {
-		levers = new List<Lever>( );
-		doors = new List<Door>( );
-		wires = new List<Wire>( );
+		levers = Utils.GetAllChildren(leverParent);
+		doors = Utils.GetAllChildren(doorParent);
+		wires = Utils.GetAllChildren(wireParent);
 
 		player1 = GameObject.Find("Player 1").GetComponent<Player>( );
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
+		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
+		objective = GameObject.Find("Objective").GetComponent<Transform>( );
 
 		eventSystem = EventSystem.current;
 		inputModule = eventSystem.GetComponent<StandaloneInputModule>( );
 	}
 
 	void Start ( ) {
-		for (int i = 0; i < leverParent.childCount; i++) {
-			levers.Add(leverParent.GetChild(i).GetComponent<Lever>( ));
-		}
-		for (int i = 0; i < doorParent.childCount; i++) {
-			doors.Add(doorParent.GetChild(i).GetComponent<Door>( ));
-		}
-		for (int i = 0; i < wireParent.childCount; i++) {
-			wires.Add(wireParent.GetChild(i).GetComponent<Wire>( ));
-		}
-
 		completedMenu.SetActive(false);
 		pauseMenu.SetActive(false);
 		inGameUI.SetActive(true);
 	}
 
 	void Update ( ) {
-		remainingMoves.text = numMoves + "";
+		// Update the moves left text
+		movesText.text = movesLeft + "";
 
-		if (player1.isAtEnd && player2.isAtEnd) {
+		// Check if the players have completed the level
+		if (player1.IsAtEnd( ) && player2.IsAtEnd( )) {
 			if (!isCompleted) {
 				isCompleted = true;
+
 				completedMenu.SetActive(true);
 				inGameUI.SetActive(false);
 
@@ -78,46 +76,66 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	#endregion
+
+	#region Methods
+
 	public void Interact (Collider2D collider) {
-		for (int i = 0; i < levers.Count; i++) {
+		for (int i = 0; i < levers.Length; i++) {
 			if (collider.bounds.Intersects(levers[i].GetComponent<Collider2D>( ).bounds)) {
-				levers[i].Toggle( );
-				SetWireGroup(levers[i].GetIsActive( ), levers[i].GetID( ));
+				Lever lever = levers[i].GetComponent<Lever>( );
+
+				lever.Toggle( );
+				SetWireGroup(lever.GetIsActive( ), lever.GetID( ));
 			}
 		}
 	}
 
-	public void TogglePause (int playerID) {
-		isPaused = !isPaused;
-		playerPaused = playerID;
+	public void Pause (int playerID) {
+		if (!isPaused) {
+			isPaused = true;
+			playerPaused = playerID;
 
-		pauseMenu.SetActive(isPaused);
-		inGameUI.SetActive(!isPaused);
+			pauseMenu.SetActive(isPaused);
+			inGameUI.SetActive(!isPaused);
 
-		if (isPaused) {
 			SetInputs(playerID, pauseFirstObject);
 		}
 	}
 
-	public void DecrementMoves ( ) {
-		if (!isOutOfMoves) {
-			numMoves--;
+	public void UnPause ( ) {
+		isPaused = false;
+		playerPaused = -1;
 
-			if (numMoves == 0) {
-				isOutOfMoves = true;
-			}
+		pauseMenu.SetActive(isPaused);
+		inGameUI.SetActive(!isPaused);
+	}
+
+	public void DecrementMoves ( ) {
+		if (movesLeft > 0) {
+			movesLeft--;
+		}
+
+		if (movesLeft == 0) {
+			player1.SetModeMenu(false);
+			player2.SetModeMenu(false);
 		}
 	}
 
 	void SetWireGroup (bool isActive, int groupID) {
-		for (int i = 0; i < wires.Count; i++) {
-			if (wires[i].GetID( ) == groupID) {
-				wires[i].SetIsActive(isActive);
+		for (int i = 0; i < wires.Length; i++) {
+			Wire wire = wires[i].GetComponent<Wire>( );
+
+			if (wire.GetID( ) == groupID) {
+				wire.SetIsActive(isActive);
 			}
 		}
-		for (int i = 0; i < doors.Count; i++) {
-			if (doors[i].GetID( ) == groupID) {
-				doors[i].SetIsActive(isActive);
+
+		for (int i = 0; i < doors.Length; i++) {
+			Door door = doors[i].GetComponent<Door>( );
+
+			if (door.GetID( ) == groupID) {
+				door.SetIsActive(isActive);
 			}
 		}
 	}
@@ -132,4 +150,44 @@ public class GameManager : MonoBehaviour {
 
 		eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
 	}
+
+	#endregion
+
+	#region Setters
+
+
+
+	#endregion
+
+	#region Getters
+
+	public Transform GetSpawnpoint ( ) {
+		return spawnpoint;
+	}
+
+	public Transform GetObjective ( ) {
+		return objective;
+	}
+
+	public GameObject GetPlayer1 ( ) {
+		return player1.gameObject;
+	}
+
+	public GameObject GetPlayer2 ( ) {
+		return player2.gameObject;
+	}
+
+	public bool IsPaused ( ) {
+		return isPaused;
+	}
+
+	public bool IsOutOfMoves ( ) {
+		return movesLeft == 0;
+	}
+
+	public int GetMovesLeft ( ) {
+		return movesLeft;
+	}
+
+	#endregion
 }

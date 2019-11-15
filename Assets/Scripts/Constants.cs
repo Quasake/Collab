@@ -35,11 +35,6 @@ public static class Constants {
 	public static Color WHITE_FULL_ALPHA = new Color(1f, 1f, 1f, 1f);
 	public static Color WHITE_NO_ALPHA = new Color(1f, 1f, 1f, 0f);
 
-	public const float HALF_PI = Mathf.PI / 2;
-	public const float PI = Mathf.PI;
-	public const float THREE_FOURTH_PI = Mathf.PI * 3 / 4;
-	public const float TWO_PI = Mathf.PI * 2;
-
 	public const float DOOR_MOVESPEED = 0.1f;
 
 	public const float OBJECTIVE_DIST = 2f;
