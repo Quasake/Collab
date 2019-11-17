@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : Component {
+public class Lever : WireComponent {
 	[Header("Sprites")]
-	[SerializeField] private Sprite[ ] variations;
+	[SerializeField] private Sprite[ ] variations = null;
 
 	private void Start ( ) {
-		SetIsActive(isActive);
+		SetActive(isActive);
 	}
 
 	protected override void UpdateSprites ( ) {
@@ -15,6 +15,6 @@ public class Lever : Component {
 	}
 
 	public void Toggle ( ) {
-		SetIsActive(!isActive);
+		SetActive(!isActive);
 	}
 }

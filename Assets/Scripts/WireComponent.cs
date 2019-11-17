@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Component : MonoBehaviour {
-	[Header("Component Class")]
+public abstract class WireComponent : MonoBehaviour {
+	[Header("Component [Class]")]
 	[SerializeField] protected int groupID;
 	[SerializeField] protected bool isActive;
 	[SerializeField] protected Connection connection;
+
 	protected SpriteRenderer spriteRenderer;
 
 	private void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
-		transform.localScale += Constants.GAP_FIX_NUMBER * new Vector3(1, 1);
 	}
 
 	protected abstract void UpdateSprites ( );
 
-	public void SetIsActive (bool isActive) {
+	public void SetActive (bool isActive) {
 		this.isActive = isActive;
 		if (connection != null) {
-			connection.SetIsActive(isActive);
+			connection.SetActive(isActive);
 		}
 
 		UpdateSprites( );
 	}
 
-	public bool GetIsActive ( ) {
+	public bool IsActive ( ) {
 		return isActive;
 	}
 

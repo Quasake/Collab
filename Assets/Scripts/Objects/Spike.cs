@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spike : MonoBehaviour {
-	public Sprite[ ] variations;
+	[Header("Sprites")]
+	[SerializeField] Sprite[ ] variations = null;
 
-	private SpriteRenderer spriteRenderer;
+	SpriteRenderer spriteRenderer;
+
+	void Awake ( ) {
+		spriteRenderer = GetComponent<SpriteRenderer>( );
+	}
 
 	void Start ( ) {
-		spriteRenderer = GetComponent<SpriteRenderer>( );
-
 		spriteRenderer.sprite = variations[Utils.GetRandomInteger(0, variations.Length - 1)];
 	}
 }

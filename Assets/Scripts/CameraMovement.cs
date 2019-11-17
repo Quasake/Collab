@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
+	[Header("Environment")]
+	[SerializeField] Transform spawnpoint = null;
 	[Header("Player")]
-	[SerializeField] private Player player1;
-	[SerializeField] private Player player2;
-	[SerializeField] private Transform spawnpoint;
+	[SerializeField] Player player1 = null;
+	[SerializeField] Player player2 = null;
 
-	private void Start ( ) {
+	void Start ( ) {
 		transform.position = new Vector3(spawnpoint.position.x, spawnpoint.position.y, transform.position.z);
 	}
 
-	private void Update ( ) {
+	void Update ( ) {
 		Vector3 player1Pos = (player1.IsDead( ) ? player2.transform.position : player1.transform.position);
 		Vector3 player2Pos = (player2.IsDead( ) ? player1.transform.position : player2.transform.position);
 

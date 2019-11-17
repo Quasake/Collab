@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wire : Component {
-	[Header("Variables")]
-	[SerializeField] private bool isBackground;
-	[SerializeField] private int formation; // 0 = short, 1 = straight, 2 = turn
-
+public class Wire : WireComponent {
 	[Header("Sprites")]
-	// 0 = off foreground, 1 = on foreground, 2 = off background, 3 = on background
-	[SerializeField] private Sprite[ ] shortVariations;
-	[SerializeField] private Sprite[ ] straightVariations;
-	[SerializeField] private Sprite[ ] turnVariations;
-	private Sprite[ ][ ] variations;
+	[SerializeField] Sprite[ ] shortVariations = null; // 0 = off foreground, 1 = on foreground, 2 = off background, 3 = on background
+	[SerializeField] Sprite[ ] straightVariations = null;
+	[SerializeField] Sprite[ ] turnVariations = null;
+	[Header("Variables")]
+	[SerializeField] bool isBackground = false;
+	[SerializeField] int formation = -1; // 0 = short, 1 = straight, 2 = turn
 
-	private void Start ( ) {
+	Sprite[ ][ ] variations;
+
+	void Start ( ) {
 		variations = new Sprite[ ][ ] {
 			shortVariations, straightVariations, turnVariations
 		};
@@ -23,7 +22,7 @@ public class Wire : Component {
 			spriteRenderer.sortingLayerName = "Background Objects";
 		}
 
-		SetIsActive(isActive);
+		SetActive(isActive);
 	}
 
 	protected override void UpdateSprites ( ) {

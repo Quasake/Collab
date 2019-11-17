@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	[Header("Variables")] // Player variables
-	[SerializeField] int playerID;
-	[SerializeField] int mode;
-	[SerializeField] bool isDead;
-	[SerializeField] bool isAtEnd;
+	[SerializeField] int playerID = -1;
+	[SerializeField] int mode = Constants.PLAYER_NORM_MODE;
+	[SerializeField] bool isDead = false;
+	[SerializeField] bool isAtEnd = false;
 	[Header("Sprites")] // Sprites for the player
-	[SerializeField] Sprite[ ] tags;
+	[SerializeField] Sprite[ ] tags = null;
 	[Header("Environment")] // Environment GameObjects
-	[SerializeField] GameObject chunkPref;
-	[SerializeField] LayerMask whatIsGround;
+	[SerializeField] GameObject chunkPref = null;
+	[SerializeField] LayerMask whatIsGround = -1;
 	[Header("Children")] // Children GameObjects
-	[SerializeField] Transform groundCheck;
-	[SerializeField] SpriteRenderer tagRenderer;
-	[SerializeField] GameObject modeSelectObj;
-	[SerializeField] Animator arrowAnim;
+	[SerializeField] Transform groundCheck = null;
+	[SerializeField] SpriteRenderer tagRenderer = null;
+	[SerializeField] GameObject modeSelectObj = null;
+	[SerializeField] Animator arrowAnim = null;
 
 	float jumpSpeed;
 	float xMove;
@@ -45,12 +45,11 @@ public class Player : MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
-		tagRenderer.sprite = tags[playerID];
-
-		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 	}
 
 	void Start ( ) {
+		tagRenderer.sprite = tags[playerID];
+		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 		transform.position = gameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
 
 		SetMode(Constants.PLAYER_NORM_MODE);
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour {
 
 					UpdateModeSelection( ); // Update the mode selection menu
 				}
-				
+
 				// If the game is not paused, not out of moves, and the Y button is pressed
 				if (!gameManager.IsPaused( ) && !gameManager.IsOutOfMoves( ) && Utils.GetButtonValue("Y", playerID)) {
 					if (isModeSelect) {
@@ -86,8 +85,8 @@ public class Player : MonoBehaviour {
 					SetModeMenu(!isModeSelect);
 				}
 			} else {
-				transform.position = Vector3.Lerp(transform.position, gameManager.GetObjective( ).position, Time.deltaTime);
-				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime);
+				transform.position = Vector3.Lerp(transform.position, gameManager.GetObjective( ).position, Time.deltaTime * 3);
+				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime * 3);
 
 				if (Utils.AlmostEqual(transform.position, gameManager.GetObjective( ).position, Constants.OBJECTIVE_DIST / 20f)) {
 					SetEnabled(false);

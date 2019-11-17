@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Chunk : MonoBehaviour {
-	[SerializeField] Sprite[ ] normalChunks;
-	[SerializeField] Sprite[ ] boostChunks;
-	[SerializeField] Sprite[ ] shrinkChunks;
-	[SerializeField] Sprite[ ] swapChunks;
-	Sprite[ ][ ] chunks;
+	[Header("Sprites")]
+	[SerializeField] Sprite[ ] normalChunks = null;
+	[SerializeField] Sprite[ ] boostChunks = null;
+	[SerializeField] Sprite[ ] shrinkChunks = null;
+	[SerializeField] Sprite[ ] swapChunks = null;
 
 	SpriteRenderer spriteRenderer;
+	Sprite[ ][ ] chunks;
 
 	float startTime; // The time that the chunk was spawned
 	float disappearTime; // The lifetime of the chunk
@@ -17,15 +18,16 @@ public class Chunk : MonoBehaviour {
 
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
-
-		chunks = new Sprite[ ][ ] {
-			normalChunks, boostChunks, shrinkChunks, swapChunks
-		};
 	}
 
 	void Start ( ) {
+		chunks = new Sprite[ ][ ] {
+			normalChunks, boostChunks, shrinkChunks, swapChunks
+		};
+
 		startTime = Time.time;
 		disappearTime = Utils.GetRandomFloat(Constants.CHUNK_TIME_MIN, Constants.CHUNK_TIME_MAX);
+
 		spriteRenderer.sprite = chunks[type][Utils.GetRandomInteger(0, Constants.CHUNK_COUNT)];
 	}
 	

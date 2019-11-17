@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Connection : Component {
+public class Connection : WireComponent {
 	[Header("Sprites")]
-	[SerializeField] private Sprite[ ] variations; // 0 = off, 1 = on, 2 = none, 3 = special
+	[SerializeField] private Sprite[ ] variations = null; // 0 = off, 1 = on, 2 = none, 3 = special
 
 	private void Start ( ) {
-		SetIsActive(isActive);
+		SetActive(isActive);
 	}
 
 	protected override void UpdateSprites ( ) {

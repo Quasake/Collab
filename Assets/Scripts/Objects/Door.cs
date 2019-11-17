@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : Component {
+public class Door : WireComponent {
 	[Header("Sprites")]
-	public Sprite[ ] variations; // 0 = off, 1 = on
-
-	public Transform door;
+	[SerializeField] Sprite[ ] variations = null; // 0 = off, 1 = on
+	[Header("Children")]
+	[SerializeField] Transform door = null;
 
 	private void Start ( ) {
-		SetIsActive(isActive);
+		SetActive(isActive);
 	}
 
 	protected override void UpdateSprites ( ) {

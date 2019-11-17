@@ -7,6 +7,7 @@ public static class Constants {
 
 	public static Vector3 SPAWNPOINT_OFFSET = new Vector3(0, 0.5f);
 	public static Vector3 DEATH_POS = new Vector3(0, 20);
+	public static Vector3 GAP_FIX = new Vector3(0.001f, 0.001f);
 
 	public const float GAP_FIX_NUMBER = 0.0001f;
 	public const float CHECK_RADIUS = 0.05f;

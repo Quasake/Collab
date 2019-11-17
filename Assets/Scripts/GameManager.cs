@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
 				Lever lever = levers[i].GetComponent<Lever>( );
 
 				lever.Toggle( );
-				SetWireGroup(lever.GetIsActive( ), lever.GetID( ));
+				SetWireGroup(lever.IsActive( ), lever.GetID( ));
 			}
 		}
 	}
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour {
 			Wire wire = wires[i].GetComponent<Wire>( );
 
 			if (wire.GetID( ) == groupID) {
-				wire.SetIsActive(isActive);
+				wire.SetActive(isActive);
 			}
 		}
 
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour {
 			Door door = doors[i].GetComponent<Door>( );
 
 			if (door.GetID( ) == groupID) {
-				door.SetIsActive(isActive);
+				door.SetActive(isActive);
 			}
 		}
 	}
