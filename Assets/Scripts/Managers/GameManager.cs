@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject inGameUI = null;
 	[SerializeField] GameObject pauseFirstObject = null;
 	[SerializeField] GameObject completedFirstObject = null;
-	[SerializeField] Animator anim = null;
 	[Header("Level")] // Level variables
 	[SerializeField] int movesLeft = 0;
 	[SerializeField] Text movesText = null;
@@ -24,7 +23,6 @@ public class GameManager : MonoBehaviour {
 	bool isPaused = false; // If the game is paused
 	bool isCompleted = false; // If both players has reached the end
 	int playerPaused = -1; // The player that has paused the game
-	int sceneToLoad = 0; // The scene to load after transition
 
 	GameObject[ ] levers = null;
 	GameObject[ ] doors = null;
@@ -44,8 +42,6 @@ public class GameManager : MonoBehaviour {
 		levers = Utils.GetAllChildren(leverParent);
 		doors = Utils.GetAllChildren(doorParent);
 		wires = Utils.GetAllChildren(wireParent);
-
-		anim = GetComponent<Animator>( );
 
 		player1 = GameObject.Find("Player 1").GetComponent<Player>( );
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
@@ -84,20 +80,6 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Methods
-
-	public void RestartScene ( ) {
-		FadeToScene(SceneManager.GetActiveScene( ).name);
-	}
-
-	public void FadeToScene (string scene) {
-		sceneToLoad = SceneManager.GetSceneByName(scene).buildIndex;
-
-		anim.SetTrigger("fade");
-	}
-
-	void LoadScene ( ) {
-		SceneManager.LoadScene(sceneToLoad);
-	}
 
 	public void Interact (Collider2D collider) {
 		for (int i = 0; i < levers.Length; i++) {
