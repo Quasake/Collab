@@ -13,6 +13,11 @@ public static class Constants {
 	public const float CHECK_RADIUS = 0.05f;
 	public const float DEADZONE = 0.05f;
 
+	public const int MENU_TITLESCREEN = 0;
+	public const int MENU_LEVELSELECT = 1;
+	public const int MENU_OPTIONS = 2;
+	public const int MENU_CREDTIS = 3;
+
 	public const int PLAYER_1_ID = 0;
 	public const int PLAYER_2_ID = 1;
 	public const float PLAYER_DEF_JUMPSPEED = 600f;

@@ -10,10 +10,11 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] Transform leverParent = null;
 	[SerializeField] Transform doorParent = null;
 	[SerializeField] Transform wireParent = null;
-	[Header("Children")] // Children GameObjects
+	[Header("UI")] // UI Canvases
 	[SerializeField] GameObject pauseMenu = null;
 	[SerializeField] GameObject completedMenu = null;
 	[SerializeField] GameObject inGameUI = null;
+	[Header("First Buttons")] // The buttons to be selected first when changing menus
 	[SerializeField] GameObject pauseFirstObject = null;
 	[SerializeField] GameObject completedFirstObject = null;
 	[Header("Level")] // Level variables
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour {
 				inGameUI.SetActive(false);
 
 				if (isCompleted) {
-					SetInputs(Constants.PLAYER_1_ID, completedFirstObject);
+					MenuManager.SetInputs(Constants.PLAYER_1_ID, completedFirstObject);
 				}
 			}
 		}
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour {
 			pauseMenu.SetActive(isPaused);
 			inGameUI.SetActive(!isPaused);
 
-			SetInputs(playerID, pauseFirstObject);
+			MenuManager.SetInputs(playerID, pauseFirstObject);
 		}
 	}
 
@@ -139,17 +140,6 @@ public class GameManager : MonoBehaviour {
 				door.SetActive(isActive);
 			}
 		}
-	}
-
-	void SetInputs (int playerID, GameObject firstButton) {
-		playerID++;
-
-		inputModule.horizontalAxis = "Horizontal-" + playerID;
-		inputModule.verticalAxis = "Vertical-" + playerID;
-		inputModule.submitButton = "A-" + playerID;
-		inputModule.cancelButton = "B-" + playerID;
-
-		eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
 	}
 
 	#endregion

@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour {
 		inputModule = GetComponent<StandaloneInputModule>( );
 	}
 
-	static void SetInputs (int playerID, GameObject firstButton) {
+	public static void SetInputs (int playerID, GameObject firstButton) {
 		playerID++;
 
 		inputModule.horizontalAxis = "Horizontal-" + playerID;
