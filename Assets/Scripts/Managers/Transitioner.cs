@@ -13,11 +13,11 @@ public class Transitioner : MonoBehaviour {
 	}
 
 	public void RestartScene ( ) {
-		FadeToScene(SceneManager.GetActiveScene( ).name);
+		FadeToScene(SceneManager.GetActiveScene( ).buildIndex);
 	}
 
-	public void FadeToScene (string scene) {
-		sceneToLoad = SceneManager.GetSceneByName(scene).buildIndex;
+	public void FadeToScene (int sceneToLoad) {
+		this.sceneToLoad = sceneToLoad;
 
 		anim.SetTrigger("fade");
 	}

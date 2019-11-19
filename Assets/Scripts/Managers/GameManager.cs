@@ -82,6 +82,10 @@ public class GameManager : MonoBehaviour {
 
 	#region Methods
 
+	public void CompleteLevel (int index) {
+		SaveManager.CompleteLevel(index);
+	}
+
 	public void Interact (Collider2D collider) {
 		for (int i = 0; i < levers.Length; i++) {
 			if (collider.bounds.Intersects(levers[i].GetComponent<Collider2D>( ).bounds)) {

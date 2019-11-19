@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class Utils {
+	public static int TITLESCREEN_STATE = Constants.MENU_TITLESCREEN;
+
 	public static GameObject[ ] GetAllChildren (Transform transform) {
 		/* Get an array with all the children of a transform */
 
@@ -17,7 +19,7 @@ public static class Utils {
 	}
 
 	public static bool AlmostEqual (Vector3 position, Vector3 target, float allowedDiff) {
-		/* Get whether 2 positions are almost, but not exactly, equal */
+		/* Get whether 2 positions are not exactly equal, but fairly close */
 
 		return GetDistance(position, target) <= allowedDiff;
 	}
