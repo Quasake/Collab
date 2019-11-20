@@ -82,8 +82,8 @@ public class GameManager : MonoBehaviour {
 
 	#region Methods
 
-	public void CompleteLevel (int index) {
-		SaveManager.CompleteLevel(index);
+	public void CompleteLevel () {
+		SaveManager.CompleteLevel(SceneManager.GetActiveScene().buildIndex - 1);
 	}
 
 	public void Interact (Collider2D collider) {
