@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Transitioner : MonoBehaviour {
+public class TransitionManager : MonoBehaviour {
 	Animator anim;
 
 	int sceneToLoad = 0; // The scene to load after transition

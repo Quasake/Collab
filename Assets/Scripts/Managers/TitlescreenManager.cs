@@ -8,7 +8,7 @@ public class TitlescreenManager : MonoBehaviour {
 	public static int TITLESCREEN_STATE = Constants.MENU_TITLESCREEN;
 
 	[Header("Environment")]
-	[SerializeField] Transitioner transitioner = null;
+	[SerializeField] TransitionManager transitionManager = null;
 	[Header("UI")]
 	[SerializeField] TitleMenu titleMenu = null;
 	[SerializeField] LevelMenu levelMenu = null;
@@ -37,7 +37,7 @@ public class TitlescreenManager : MonoBehaviour {
 	public void GoToState (int menuState) {
 		TITLESCREEN_STATE = menuState;
 
-		transitioner.RestartScene( );
+		transitionManager.RestartScene( );
 	}
 
 	public void UpdateMenu ( ) {

@@ -13,6 +13,8 @@ public static class Constants {
 	public const float CHECK_RADIUS = 0.05f;
 	public const float DEADZONE = 0.05f;
 
+	public const float CHUNK_CANNON_TIME = 0.2f;
+
 	public const int MENU_TITLESCREEN = 0;
 	public const int MENU_LEVELSELECT = 1;
 	public const int MENU_OPTIONS = 2;

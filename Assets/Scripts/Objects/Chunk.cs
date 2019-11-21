@@ -28,7 +28,7 @@ public class Chunk : MonoBehaviour {
 		startTime = Time.time;
 		disappearTime = Utils.GetRandomFloat(Constants.CHUNK_TIME_MIN, Constants.CHUNK_TIME_MAX);
 
-		spriteRenderer.sprite = chunks[type][Utils.GetRandomInteger(0, Constants.CHUNK_COUNT)];
+		spriteRenderer.sprite = chunks[type][Utils.GetRandomInteger(0, Constants.CHUNK_COUNT - 1)];
 	}
 	
 	void Update ( ) {

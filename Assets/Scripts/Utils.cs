@@ -31,7 +31,7 @@ public static class Utils {
 	public static int GetRandomInteger (int min, int max) {
 		/* Get a random integer between 2 values */
 
-		return Constants.RANDOM.Next(min, max);
+		return Constants.RANDOM.Next(min, max + 1);
 	}
 
 	public static float GetRandomFloat (float min, float max) {
@@ -44,6 +44,12 @@ public static class Utils {
 		/* Get a random angle in radians */
 
 		return GetRandomFloat(0, 360);
+	}
+
+	public static float GetAngle (float minAngle, float maxAngle) {
+		/* Get a random angle between 2 values */
+
+		return GetRandomFloat(minAngle, maxAngle);
 	}
 
 	public static Vector3Int WorldPosToTilemapPos (Vector3 vector) {

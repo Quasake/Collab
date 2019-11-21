@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour {
 		transform.position = new Vector3(spawnpoint.position.x, spawnpoint.position.y, transform.position.z);
 	}
 
-	void Update ( ) {
+	void LateUpdate ( ) {
 		Vector3 player1Pos = (player1.IsDead( ) ? player2.transform.position : player1.transform.position);
 		Vector3 player2Pos = (player2.IsDead( ) ? player1.transform.position : player2.transform.position);
 

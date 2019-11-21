@@ -152,6 +152,7 @@ public class Player : MonoBehaviour {
 
 				chunk.GetComponent<Rigidbody2D>( ).velocity = Random.onUnitSphere * Utils.GetRandomFloat(Constants.CHUNK_FORCE_MIN, Constants.CHUNK_FORCE_MAX);
 				chunk.GetComponent<Chunk>( ).SetType(mode);
+				chunk.transform.SetParent(transform, true);
 			}
 
 			transform.position = Constants.DEATH_POS;

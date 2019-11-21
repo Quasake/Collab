@@ -1508,7 +1508,7 @@ PrefabInstance:
     - target: {fileID: 6335758902398861246, guid: c7d71142214271847bbbb759bb1d4401,
         type: 3}
       propertyPath: m_Name
-      value: Transitioner
+      value: TransitionManager
       objectReference: {fileID: 0}
     - target: {fileID: 6335758902398861246, guid: c7d71142214271847bbbb759bb1d4401,
         type: 3}
