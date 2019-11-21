@@ -16,6 +16,12 @@ public static class Utils {
 		return objects;
 	}
 
+	public static int BoolToInt (bool boolean) {
+		/* Convert a boolean to an int */
+
+		return boolean ? 1 : 0;
+	}
+
 	public static bool AlmostEqual (Vector3 position, Vector3 target, float allowedDiff) {
 		/* Get whether 2 positions are not exactly equal, but fairly close */
 

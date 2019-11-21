@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour {
 
 	static Player player1;
 	static Player player2;
-	static Transform spawnpoint;
-	static Transform objective;
 
 	#region Unity Methods
 
@@ -32,8 +30,6 @@ public class GameManager : MonoBehaviour {
 
 		player1 = GameObject.Find("Player 1").GetComponent<Player>( );
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
-		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
-		objective = GameObject.Find("Objective").GetComponent<Transform>( );
 	}
 
 	#endregion
@@ -98,14 +94,6 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Getters
-
-	public static Transform GetSpawnpoint ( ) {
-		return spawnpoint;
-	}
-
-	public static Transform GetObjective ( ) {
-		return objective;
-	}
 
 	public static Player GetPlayer1 ( ) {
 		return player1;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // https://github.com/Brackeys/2D-Character-Controller
 
@@ -15,6 +16,9 @@ public class Player : MonoBehaviour {
 	[SerializeField] bool canChangeSwap = false;
 	[Header("Sprites")] // Sprites for the player
 	[SerializeField] Sprite[ ] tags = null;
+	[SerializeField] Sprite[ ] jump = null;
+	[SerializeField] Sprite[ ] shrink = null;
+	[SerializeField] Sprite[ ] swap = null;
 	[Header("Environment")] // Environment GameObjects
 	[SerializeField] GameObject chunkPref = null;
 	[SerializeField] LayerMask whatIsGround = -1;
@@ -23,6 +27,9 @@ public class Player : MonoBehaviour {
 	[SerializeField] SpriteRenderer tagRenderer = null;
 	[SerializeField] GameObject modeSelectObj = null;
 	[SerializeField] Animator arrowAnim = null;
+	[SerializeField] SpriteRenderer jumpRenderer = null;
+	[SerializeField] SpriteRenderer shrinkRenderer = null;
+	[SerializeField] SpriteRenderer swapRenderer = null;
 
 	float jumpSpeed;
 	float xMove;
@@ -36,7 +43,10 @@ public class Player : MonoBehaviour {
 	Animator anim;
 	SpriteRenderer spriteRenderer;
 	Collider2D coll2D;
+
 	GameManager gameManager;
+	Transform spawnpoint;
+	Transform objective;
 
 	#region Unity Methods
 
@@ -47,12 +57,14 @@ public class Player : MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
+		spawnpoint = GameObject.Find("Spawnpoint " + (playerID + 1)).transform;
+		objective = GameObject.Find("Objective").transform;
 	}
 
 	void Start ( ) {
 		tagRenderer.sprite = tags[playerID];
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
-		transform.position = GameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
+		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
 
 		SetMode(Constants.PLAYER_NORM_MODE);
 		SetEnabled(true);
@@ -82,15 +94,19 @@ public class Player : MonoBehaviour {
 						SetMode(selectedMode);
 					} else {
 						xMove = 0;
+
+						jumpRenderer.sprite = jump[Utils.BoolToInt(canChangeJump)];
+						shrinkRenderer.sprite = shrink[Utils.BoolToInt(canChangeShrink)];
+						swapRenderer.sprite = swap[Utils.BoolToInt(canChangeSwap)];
 					}
 
 					SetModeMenu(!isModeSelect);
 				}
 			} else {
-				transform.position = Vector3.Lerp(transform.position, GameManager.GetObjective( ).position, Time.deltaTime * 3);
+				transform.position = Vector3.Lerp(transform.position, objective.position, Time.deltaTime * 3);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime * 3);
 
-				if (Utils.AlmostEqual(transform.position, GameManager.GetObjective( ).position, Constants.OBJECTIVE_DIST / 20f)) {
+				if (Utils.AlmostEqual(transform.position, objective.position, Constants.OBJECTIVE_DIST / 20f)) {
 					SetEnabled(false);
 				}
 			}
@@ -114,7 +130,7 @@ public class Player : MonoBehaviour {
 	#region Methods
 
 	void CheckAtEnd ( ) {
-		if (Utils.GetDistance(transform.position, GameManager.GetObjective( ).position) < Constants.OBJECTIVE_DIST) {
+		if (Utils.GetDistance(transform.position, objective.position) < Constants.OBJECTIVE_DIST) {
 			isAtEnd = true;
 
 			xMove = 0;
@@ -233,7 +249,7 @@ public class Player : MonoBehaviour {
 			yield return null;
 		}
 
-		transform.position = GameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
+		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
 		isDead = false;
 
 		SetEnabled(true);
