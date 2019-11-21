@@ -7,19 +7,9 @@ using UnityEngine;
 
 public static class SaveManager {
 	public static void UpdateLevel (int index) {
-		bool[ ] completedLevels;
-
-		try {
-			completedLevels = LoadGame( ).completedLevels;
-		} catch (Exception) {
-			completedLevels = new bool[Constants.NUM_LEVELS];
-		}
+		bool[ ] completedLevels = LoadGame( );
 
 		completedLevels[index] = true;
-
-		for (int i = 0; i < completedLevels.Length; i++) {
-			Debug.Log(completedLevels[i]);
-		}
 
 		SaveGame(completedLevels);
 	}
@@ -30,28 +20,26 @@ public static class SaveManager {
 		BinaryFormatter formatter = new BinaryFormatter( );
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		GameData data = new GameData(completedLevels);
-
-		formatter.Serialize(stream, data);
+		formatter.Serialize(stream, completedLevels);
 		stream.Close( );
 	}
 
-	public static GameData LoadGame ( ) {
+	public static bool[ ] LoadGame ( ) {
 		string path = Application.persistentDataPath + "/gamedata.collab";
 
 		if (File.Exists(path)) {
 			BinaryFormatter formatter = new BinaryFormatter( );
 			FileStream stream = new FileStream(path, FileMode.Open);
 
-			GameData data = formatter.Deserialize(stream) as GameData;
+			bool[ ] completedLevels = formatter.Deserialize(stream) as bool[ ];
 
 			stream.Close( );
 
-			return data;
+			return completedLevels;
 		} else {
 			Debug.Log("Save file not found at: " + path);
 
-			return null;
+			return new bool[Constants.NUM_LEVELS];
 		}
 	}
 

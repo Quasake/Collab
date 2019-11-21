@@ -10,6 +10,9 @@ public class Player : MonoBehaviour {
 	[SerializeField] int mode = Constants.PLAYER_NORM_MODE;
 	[SerializeField] bool isDead = false;
 	[SerializeField] bool isAtEnd = false;
+	[SerializeField] bool canChangeJump = false;
+	[SerializeField] bool canChangeShrink = false;
+	[SerializeField] bool canChangeSwap = false;
 	[Header("Sprites")] // Sprites for the player
 	[SerializeField] Sprite[ ] tags = null;
 	[Header("Environment")] // Environment GameObjects

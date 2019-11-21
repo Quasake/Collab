@@ -13,14 +13,13 @@ public class TitlescreenManager : MonoBehaviour {
 	[SerializeField] TitleMenu titleMenu = null;
 	[SerializeField] LevelMenu levelMenu = null;
 	[SerializeField] OptionsMenu optionsMenu = null;
-	[SerializeField] CreditsMenu CreditsMenu = null;
+	[SerializeField] CreditsMenu creditsMenu = null;
 
 	Menu enabledMenu;
 
 	#region Unity Methods
 
 	void Start ( ) {
-		// UpdateCompletedLevels( );
 		UpdateMenu( );
 	}
 
@@ -44,27 +43,12 @@ public class TitlescreenManager : MonoBehaviour {
 		titleMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_TITLESCREEN);
 		levelMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_LEVELSELECT);
 		optionsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_OPTIONS);
-		CreditsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_CREDTIS);
+		creditsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_CREDTIS);
 
-		enabledMenu = titleMenu.IsEnabled( ) ? titleMenu : (levelMenu.IsEnabled( ) ? levelMenu : (optionsMenu.IsEnabled( ) ? optionsMenu : (CreditsMenu.IsEnabled( ) ? (Menu) CreditsMenu : null)));
+		enabledMenu = titleMenu.IsEnabled( ) ? titleMenu : (levelMenu.IsEnabled( ) ? levelMenu : (optionsMenu.IsEnabled( ) ? optionsMenu : (creditsMenu.IsEnabled( ) ? (Menu) creditsMenu : null)));
 
 		Menu.SetInputs(Constants.PLAYER_1_ID, enabledMenu.GetFirstButton( ));
 	}
-
-	/*
-	public void UpdateCompletedLevels ( ) {
-		try {
-			bool[ ] completedLevels = SaveManager.LoadGame( ).completedLevels;
-
-			for (int i = 0; i < completedLevels.Length; i++) {
-				levels.GetChild(i).GetComponent<Image>( ).color = completedLevels[i] ? Color.yellow : Color.white;
-			}
-		} catch (Exception) {
-			bool[ ] completedLevels = new bool[Constants.NUM_LEVELS];
-			SaveManager.SaveGame(completedLevels);
-		}
-	}
-	*/
 
 	#endregion
 

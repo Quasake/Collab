@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChunkCannon : MonoBehaviour {
-	[SerializeField] GameObject chunkPref;
+	[SerializeField] GameObject chunkPref = null;
 
 	float timer;
 
