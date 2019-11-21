@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class Utils {
-	public static int TITLESCREEN_STATE = Constants.MENU_TITLESCREEN;
-
 	public static GameObject[ ] GetAllChildren (Transform transform) {
 		/* Get an array with all the children of a transform */
 

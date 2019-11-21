@@ -5,30 +5,28 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TitlescreenManager : MonoBehaviour {
+	public static int TITLESCREEN_STATE = Constants.MENU_TITLESCREEN;
+
 	[Header("Environment")]
 	[SerializeField] Transitioner transitioner = null;
 	[Header("UI")]
-	[SerializeField] GameObject titlescreen = null;
-	[SerializeField] GameObject levelSelect = null;
-	[SerializeField] GameObject options = null;
-	[SerializeField] GameObject credits = null;
-	[SerializeField] Transform levels = null;
-	[Header("First Buttons")]
-	[SerializeField] GameObject titlescreenFirstButton = null;
-	[SerializeField] GameObject levelSelectFirstButton = null;
-	[SerializeField] GameObject optionsFirstButton = null;
-	[SerializeField] GameObject creditsFirstButton = null;
+	[SerializeField] TitleMenu titleMenu = null;
+	[SerializeField] LevelMenu levelMenu = null;
+	[SerializeField] OptionsMenu optionsMenu = null;
+	[SerializeField] CreditsMenu CreditsMenu = null;
+
+	Menu enabledMenu;
 
 	#region Unity Methods
 
 	void Start ( ) {
-		UpdateCompletedLevels( );
-		UpdateMenuState( );
+		// UpdateCompletedLevels( );
+		UpdateMenu( );
 	}
 
 	void Update ( ) {
 		if (Utils.GetButtonValue("Start", Constants.PLAYER_1_ID)) {
-			UpdateInputs( );
+			UpdateMenu( );
 		}
 	}
 
@@ -37,20 +35,23 @@ public class TitlescreenManager : MonoBehaviour {
 	#region Methods
 
 	public void GoToState (int menuState) {
-		Utils.TITLESCREEN_STATE = menuState;
+		TITLESCREEN_STATE = menuState;
 
 		transitioner.RestartScene( );
 	}
 
-	public void UpdateMenuState ( ) {
-		titlescreen.SetActive(Utils.TITLESCREEN_STATE == Constants.MENU_TITLESCREEN);
-		levelSelect.SetActive(Utils.TITLESCREEN_STATE == Constants.MENU_LEVELSELECT);
-		options.SetActive(Utils.TITLESCREEN_STATE == Constants.MENU_OPTIONS);
-		credits.SetActive(Utils.TITLESCREEN_STATE == Constants.MENU_CREDTIS);
+	public void UpdateMenu ( ) {
+		titleMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_TITLESCREEN);
+		levelMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_LEVELSELECT);
+		optionsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_OPTIONS);
+		CreditsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_CREDTIS);
 
-		UpdateInputs( );
+		enabledMenu = titleMenu.IsEnabled( ) ? titleMenu : (levelMenu.IsEnabled( ) ? levelMenu : (optionsMenu.IsEnabled( ) ? optionsMenu : (CreditsMenu.IsEnabled( ) ? (Menu) CreditsMenu : null)));
+
+		Menu.SetInputs(Constants.PLAYER_1_ID, enabledMenu.GetFirstButton( ));
 	}
 
+	/*
 	public void UpdateCompletedLevels ( ) {
 		try {
 			bool[ ] completedLevels = SaveManager.LoadGame( ).completedLevels;
@@ -63,26 +64,7 @@ public class TitlescreenManager : MonoBehaviour {
 			SaveManager.SaveGame(completedLevels);
 		}
 	}
-
-	void UpdateInputs ( ) {
-		if (Utils.TITLESCREEN_STATE == Constants.MENU_TITLESCREEN) {
-			MenuManager.SetInputs(Constants.PLAYER_1_ID, titlescreenFirstButton);
-		} else if (Utils.TITLESCREEN_STATE == Constants.MENU_LEVELSELECT) {
-			MenuManager.SetInputs(Constants.PLAYER_1_ID, levelSelectFirstButton);
-		} else if (Utils.TITLESCREEN_STATE == Constants.MENU_OPTIONS) {
-			MenuManager.SetInputs(Constants.PLAYER_1_ID, optionsFirstButton);
-		} else if (Utils.TITLESCREEN_STATE == Constants.MENU_CREDTIS) {
-			MenuManager.SetInputs(Constants.PLAYER_1_ID, creditsFirstButton);
-		}
-	}
-
-	public void Quit ( ) {
-		Application.Quit( );
-	}
-
-	public void OpenURL (string url) {
-		Application.OpenURL(url);
-	}
+	*/
 
 	#endregion
 

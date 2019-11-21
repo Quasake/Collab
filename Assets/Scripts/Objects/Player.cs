@@ -33,7 +33,6 @@ public class Player : MonoBehaviour {
 	Animator anim;
 	SpriteRenderer spriteRenderer;
 	Collider2D coll2D;
-
 	GameManager gameManager;
 
 	#region Unity Methods
@@ -50,7 +49,7 @@ public class Player : MonoBehaviour {
 	void Start ( ) {
 		tagRenderer.sprite = tags[playerID];
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
-		transform.position = gameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
+		transform.position = GameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
 
 		SetMode(Constants.PLAYER_NORM_MODE);
 		SetEnabled(true);
@@ -85,10 +84,10 @@ public class Player : MonoBehaviour {
 					SetModeMenu(!isModeSelect);
 				}
 			} else {
-				transform.position = Vector3.Lerp(transform.position, gameManager.GetObjective( ).position, Time.deltaTime * 3);
+				transform.position = Vector3.Lerp(transform.position, GameManager.GetObjective( ).position, Time.deltaTime * 3);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime * 3);
 
-				if (Utils.AlmostEqual(transform.position, gameManager.GetObjective( ).position, Constants.OBJECTIVE_DIST / 20f)) {
+				if (Utils.AlmostEqual(transform.position, GameManager.GetObjective( ).position, Constants.OBJECTIVE_DIST / 20f)) {
 					SetEnabled(false);
 				}
 			}
@@ -112,7 +111,7 @@ public class Player : MonoBehaviour {
 	#region Methods
 
 	void CheckAtEnd ( ) {
-		if (Utils.GetDistance(transform.position, gameManager.GetObjective( ).position) < Constants.OBJECTIVE_DIST) {
+		if (Utils.GetDistance(transform.position, GameManager.GetObjective( ).position) < Constants.OBJECTIVE_DIST) {
 			isAtEnd = true;
 
 			xMove = 0;
@@ -230,7 +229,7 @@ public class Player : MonoBehaviour {
 			yield return null;
 		}
 
-		transform.position = gameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
+		transform.position = GameManager.GetSpawnpoint( ).position + Constants.SPAWNPOINT_OFFSET;
 		isDead = false;
 
 		SetEnabled(true);

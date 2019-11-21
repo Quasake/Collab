@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 3757009731935468508}
   - component: {fileID: 7410909591603953264}
   - component: {fileID: 8731492103595383006}
+  - component: {fileID: 5971576791493376110}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -215,3 +216,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5971576791493376110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872492367955749521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+  m_EffectDistance: {x: 24, y: -24}
+  m_UseGraphicAlpha: 1

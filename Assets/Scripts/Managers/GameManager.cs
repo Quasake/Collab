@@ -10,32 +10,18 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] Transform leverParent = null;
 	[SerializeField] Transform doorParent = null;
 	[SerializeField] Transform wireParent = null;
-	[Header("UI")] // UI Canvases
-	[SerializeField] GameObject pauseMenu = null;
-	[SerializeField] GameObject completedMenu = null;
-	[SerializeField] GameObject inGameUI = null;
-	[Header("First Buttons")] // The buttons to be selected first when changing menus
-	[SerializeField] GameObject pauseFirstObject = null;
-	[SerializeField] GameObject completedFirstObject = null;
-	[Header("Level")] // Level variables
-	[SerializeField] int movesLeft = 0;
-	[SerializeField] Text movesText = null;
+	[Header("Menus")]
+	[SerializeField] PauseMenu pauseMenu = null;
+	[SerializeField] InGameUI inGameUI = null;
 
-	bool isPaused = false; // If the game is paused
-	bool isCompleted = false; // If both players has reached the end
-	int playerPaused = -1; // The player that has paused the game
+	GameObject[ ] levers;
+	GameObject[ ] doors;
+	GameObject[ ] wires;
 
-	GameObject[ ] levers = null;
-	GameObject[ ] doors = null;
-	GameObject[ ] wires = null;
-
-	Player player1 = null;
-	Player player2 = null;
-	Transform spawnpoint = null;
-	Transform objective = null;
-
-	EventSystem eventSystem = null;
-	StandaloneInputModule inputModule = null;
+	static Player player1;
+	static Player player2;
+	static Transform spawnpoint;
+	static Transform objective;
 
 	#region Unity Methods
 
@@ -48,43 +34,31 @@ public class GameManager : MonoBehaviour {
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
 		spawnpoint = GameObject.Find("Spawnpoint").GetComponent<Transform>( );
 		objective = GameObject.Find("Objective").GetComponent<Transform>( );
-
-		eventSystem = EventSystem.current;
-		inputModule = eventSystem.GetComponent<StandaloneInputModule>( );
-	}
-
-	void Start ( ) {
-		completedMenu.SetActive(false);
-		pauseMenu.SetActive(false);
-		inGameUI.SetActive(true);
-	}
-
-	void Update ( ) {
-		// Update the moves left text
-		movesText.text = movesLeft + "";
-
-		// Check if the players have completed the level
-		if (player1.IsAtEnd( ) && player2.IsAtEnd( )) {
-			if (!isCompleted) {
-				isCompleted = true;
-
-				completedMenu.SetActive(true);
-				inGameUI.SetActive(false);
-
-				if (isCompleted) {
-					MenuManager.SetInputs(Constants.PLAYER_1_ID, completedFirstObject);
-				}
-			}
-		}
 	}
 
 	#endregion
 
 	#region Methods
 
-	public void CompleteLevel () {
-		SaveManager.CompleteLevel(SceneManager.GetActiveScene().buildIndex - 1);
+	#region Menu Methods
+
+	public void Pause (int playerID) {
+		pauseMenu.Pause(playerID);
 	}
+
+	public bool IsPaused ( ) {
+		return pauseMenu.IsPaused( );
+	}
+
+	public bool IsOutOfMoves ( ) {
+		return inGameUI.IsOutOfMoves( );
+	}
+
+	public void DecrementMoves ( ) {
+		inGameUI.DecrementMoves( );
+	}
+
+	#endregion
 
 	public void Interact (Collider2D collider) {
 		for (int i = 0; i < levers.Length; i++) {
@@ -94,37 +68,6 @@ public class GameManager : MonoBehaviour {
 				lever.Toggle( );
 				SetWireGroup(lever.IsActive( ), lever.GetID( ));
 			}
-		}
-	}
-
-	public void Pause (int playerID) {
-		if (!isPaused) {
-			isPaused = true;
-			playerPaused = playerID;
-
-			pauseMenu.SetActive(isPaused);
-			inGameUI.SetActive(!isPaused);
-
-			MenuManager.SetInputs(playerID, pauseFirstObject);
-		}
-	}
-
-	public void UnPause ( ) {
-		isPaused = false;
-		playerPaused = -1;
-
-		pauseMenu.SetActive(isPaused);
-		inGameUI.SetActive(!isPaused);
-	}
-
-	public void DecrementMoves ( ) {
-		if (movesLeft > 0) {
-			movesLeft--;
-		}
-
-		if (movesLeft == 0) {
-			player1.SetModeMenu(false);
-			player2.SetModeMenu(false);
 		}
 	}
 
@@ -156,32 +99,20 @@ public class GameManager : MonoBehaviour {
 
 	#region Getters
 
-	public Transform GetSpawnpoint ( ) {
+	public static Transform GetSpawnpoint ( ) {
 		return spawnpoint;
 	}
 
-	public Transform GetObjective ( ) {
+	public static Transform GetObjective ( ) {
 		return objective;
 	}
 
-	public GameObject GetPlayer1 ( ) {
-		return player1.gameObject;
+	public static Player GetPlayer1 ( ) {
+		return player1;
 	}
 
-	public GameObject GetPlayer2 ( ) {
-		return player2.gameObject;
-	}
-
-	public bool IsPaused ( ) {
-		return isPaused;
-	}
-
-	public bool IsOutOfMoves ( ) {
-		return movesLeft == 0;
-	}
-
-	public int GetMovesLeft ( ) {
-		return movesLeft;
+	public static Player GetPlayer2 ( ) {
+		return player2;
 	}
 
 	#endregion
