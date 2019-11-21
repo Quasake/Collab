@@ -11,33 +11,21 @@ public class Player : MonoBehaviour {
 	[SerializeField] int mode = Constants.PLAYER_NORM_MODE;
 	[SerializeField] bool isDead = false;
 	[SerializeField] bool isAtEnd = false;
-	[SerializeField] bool canChangeJump = false;
+	[SerializeField] bool canChangeBoost = false;
 	[SerializeField] bool canChangeShrink = false;
 	[SerializeField] bool canChangeSwap = false;
-	[Header("Sprites")] // Sprites for the player
-	[SerializeField] Sprite[ ] tags = null;
-	[SerializeField] Sprite[ ] jump = null;
-	[SerializeField] Sprite[ ] shrink = null;
-	[SerializeField] Sprite[ ] swap = null;
 	[Header("Environment")] // Environment GameObjects
 	[SerializeField] GameObject chunkPref = null;
 	[SerializeField] LayerMask whatIsGround = -1;
 	[Header("Children")] // Children GameObjects
 	[SerializeField] Transform groundCheck = null;
-	[SerializeField] SpriteRenderer tagRenderer = null;
-	[SerializeField] GameObject modeSelectObj = null;
-	[SerializeField] Animator arrowAnim = null;
-	[SerializeField] SpriteRenderer jumpRenderer = null;
-	[SerializeField] SpriteRenderer shrinkRenderer = null;
-	[SerializeField] SpriteRenderer swapRenderer = null;
+	[SerializeField] ModeSelectionMenu modeSelectMenu = null;
 
 	float jumpSpeed;
 	float xMove;
 	bool doJump;
 	bool isGrounded;
 	bool isSmall;
-	bool isModeSelect;
-	int selectedMode;
 
 	Rigidbody2D rBody2D;
 	Animator anim;
@@ -62,7 +50,6 @@ public class Player : MonoBehaviour {
 	}
 
 	void Start ( ) {
-		tagRenderer.sprite = tags[playerID];
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED;
 		transform.position = spawnpoint.position + Constants.SPAWNPOINT_OFFSET;
 
@@ -73,34 +60,9 @@ public class Player : MonoBehaviour {
 	void Update ( ) {
 		if (!isDead) {
 			if (!isAtEnd) {
-				if (!isModeSelect) {
-					UpdateInput( ); // Update Input
+				if (!modeSelectMenu.IsEnabled( )) {
+					UpdateInput( ); // Update input
 					CheckAtEnd( ); // Check if the player has reached the end of the level
-				} else {
-					if (gameManager.IsOutOfMoves( )) {
-						SetModeMenu(false);
-					}
-
-					UpdateModeSelection( ); // Update the mode selection menu
-				}
-
-				// If the game is not paused, not out of moves, and the Y button is pressed
-				if (!gameManager.IsPaused( ) && !gameManager.IsOutOfMoves( ) && Utils.GetButtonValue("Y", playerID)) {
-					if (isModeSelect) {
-						if (selectedMode != mode) {
-							gameManager.DecrementMoves( );
-						}
-
-						SetMode(selectedMode);
-					} else {
-						xMove = 0;
-
-						jumpRenderer.sprite = jump[Utils.BoolToInt(canChangeJump)];
-						shrinkRenderer.sprite = shrink[Utils.BoolToInt(canChangeShrink)];
-						swapRenderer.sprite = swap[Utils.BoolToInt(canChangeSwap)];
-					}
-
-					SetModeMenu(!isModeSelect);
 				}
 			} else {
 				transform.position = Vector3.Lerp(transform.position, objective.position, Time.deltaTime * 3);
@@ -132,32 +94,8 @@ public class Player : MonoBehaviour {
 	void CheckAtEnd ( ) {
 		if (Utils.GetDistance(transform.position, objective.position) < Constants.OBJECTIVE_DIST) {
 			isAtEnd = true;
-
-			xMove = 0;
 			rBody2D.gravityScale = 0;
-
-			SetModeMenu(false);
 		}
-	}
-
-	void UpdateModeSelection ( ) {
-		float horiAxis = Utils.GetAxisRawValue("Horizontal", playerID);
-		float vertAxis = Utils.GetAxisRawValue("Vertical", playerID);
-
-		if (horiAxis > Constants.DEADZONE) { // Right
-			selectedMode = Constants.PLAYER_BOOST_MODE;
-		} else if (horiAxis < -Constants.DEADZONE) { // Left
-			selectedMode = Constants.PLAYER_SWAP_MODE;
-		} else if (vertAxis > Constants.DEADZONE) { // Up
-			selectedMode = Constants.PLAYER_NORM_MODE;
-		} else if (vertAxis < -Constants.DEADZONE) { // Down
-			selectedMode = Constants.PLAYER_SHRINK_MODE;
-
-			isSmall = false;
-			anim.SetBool("isSmall", isSmall);
-		}
-
-		arrowAnim.SetInteger("selectedMode", selectedMode);
 	}
 
 	void Death ( ) {
@@ -171,14 +109,13 @@ public class Player : MonoBehaviour {
 
 				chunk.GetComponent<Rigidbody2D>( ).velocity = Random.onUnitSphere * Utils.GetRandomFloat(Constants.CHUNK_FORCE_MIN, Constants.CHUNK_FORCE_MAX);
 				chunk.GetComponent<Chunk>( ).SetType(mode);
-				chunk.transform.SetParent(transform, true);
+				// chunk.transform.SetParent(transform, true);
 			}
 
 			transform.position = Constants.DEATH_POS;
+			isDead = true;
 
 			StartCoroutine(Respawn( ));
-
-			isDead = true;
 		}
 	}
 
@@ -192,7 +129,7 @@ public class Player : MonoBehaviour {
 		}
 
 		// Move horizontally
-		Vector3 targetVelocity = new Vector2(((!isModeSelect) ? xMove : 0) * Time.fixedDeltaTime * 10f, rBody2D.velocity.y);
+		Vector3 targetVelocity = new Vector2(xMove * Time.fixedDeltaTime * 10f, rBody2D.velocity.y);
 		Vector3 zero = Vector3.zero;
 		rBody2D.velocity = Vector3.SmoothDamp(rBody2D.velocity, targetVelocity, ref zero, Constants.PLAYER_SMOOTHING);
 
@@ -202,8 +139,9 @@ public class Player : MonoBehaviour {
 			rBody2D.AddForce(new Vector2(0f, jumpSpeed));
 		}
 
-		// Reset jump so that the player don't infinitly jump
+		// Reset moving variables so the player doesnt move indefinitely
 		doJump = false;
+		xMove = 0;
 	}
 
 	void UpdateAnimator ( ) {
@@ -229,7 +167,6 @@ public class Player : MonoBehaviour {
 			if (Utils.GetButtonValue("X", playerID) && isGrounded) {
 				if (mode == Constants.PLAYER_SHRINK_MODE) {
 					isSmall = !isSmall;
-
 					jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
 				} else if (mode == Constants.PLAYER_SWAP_MODE) {
 					// DO THIS
@@ -259,35 +196,25 @@ public class Player : MonoBehaviour {
 
 	#region Setters
 
-	void SetMode (int mode) {
+	public void SetMode (int mode) {
 		this.mode = mode;
 		anim.SetInteger("mode", mode);
 
 		// Set variables based on modes
+		isSmall = false;
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
 	}
 
-	void SetTagEnabled (bool enabled) {
-		tagRenderer.enabled = enabled;
-	}
-
-	public void SetModeMenu (bool enabled) {
-		isModeSelect = enabled;
-
-		modeSelectObj.SetActive(enabled);
-		spriteRenderer.sortingLayerName = enabled ? "Mini-UI" : "Player";
-
-		SetTagEnabled(!enabled);
-	}
-
-	void SetEnabled (bool enabled) {
-		rBody2D.isKinematic = !enabled;
-		spriteRenderer.enabled = enabled;
-		coll2D.isTrigger = !enabled;
+	void SetEnabled (bool isEnabled) {
+		rBody2D.isKinematic = !isEnabled;
+		spriteRenderer.enabled = isEnabled;
+		coll2D.isTrigger = !isEnabled;
 		rBody2D.velocity = Vector3.zero;
 
-		SetModeMenu(false);
-		SetTagEnabled(enabled);
+		if (!isEnabled) {
+			modeSelectMenu.SetEnabled(false);
+		}
+		modeSelectMenu.SetTagEnabled(isEnabled);
 	}
 
 	#endregion
@@ -300,6 +227,26 @@ public class Player : MonoBehaviour {
 
 	public bool IsAtEnd ( ) {
 		return isAtEnd;
+	}
+
+	public int GetID ( ) {
+		return playerID;
+	}
+
+	public int GetMode ( ) {
+		return mode;
+	}
+
+	public bool CanChangeBoost ( ) {
+		return canChangeBoost;
+	}
+
+	public bool CanChangeShrink ( ) {
+		return canChangeShrink;
+	}
+
+	public bool CanChangeSwap ( ) {
+		return canChangeSwap;
 	}
 
 	#endregion

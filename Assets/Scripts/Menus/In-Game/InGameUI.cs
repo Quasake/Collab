@@ -15,11 +15,6 @@ public class InGameUI : MonoBehaviour {
 		if (movesLeft > 0) {
 			movesLeft--;
 		}
-
-		if (IsOutOfMoves( )) {
-			GameManager.GetPlayer1( ).SetModeMenu(false);
-			GameManager.GetPlayer2( ).SetModeMenu(false);
-		}
 	}
 
 	public bool IsOutOfMoves ( ) {

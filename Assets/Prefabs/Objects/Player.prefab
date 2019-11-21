@@ -89,13 +89,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3488026113311082906}
+  - component: {fileID: 2867185345087485013}
   m_Layer: 8
   m_Name: Mode Selection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3488026113311082906
 Transform:
   m_ObjectHideFlags: 0
@@ -115,6 +116,36 @@ Transform:
   m_Father: {fileID: 3488026114501387954}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2867185345087485013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488026113311082907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09e8163244b244b4892032d0579eef76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - {fileID: 5197925540072060383, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  - {fileID: 1423833454339779461, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  boost:
+  - {fileID: -341946052410799712, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -7067176810482676727, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  shrink:
+  - {fileID: 8641568295424926104, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: -7784120483335166376, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  swap:
+  - {fileID: -4471668167906440293, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  - {fileID: 5169088989095445609, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
+  player: {fileID: 3488026114501387967}
+  boostRenderer: {fileID: 3488026113973127063}
+  shrinkRenderer: {fileID: 3488026114825132728}
+  swapRenderer: {fileID: 3488026114191178850}
+  tagRenderer: {fileID: 8662230130766479237}
+  arrowAnim: {fileID: 3583541662643721576}
 --- !u!1 &3488026113945429066
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,33 +579,16 @@ MonoBehaviour:
   mode: 0
   isDead: 0
   isAtEnd: 0
-  canChangeJump: 0
+  canChangeBoost: 0
   canChangeShrink: 0
   canChangeSwap: 0
-  tags:
-  - {fileID: 5197925540072060383, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  - {fileID: 1423833454339779461, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  jump:
-  - {fileID: -341946052410799712, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -7067176810482676727, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  shrink:
-  - {fileID: 8641568295424926104, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: -7784120483335166376, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  swap:
-  - {fileID: -4471668167906440293, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
-  - {fileID: 5169088989095445609, guid: 6290985486dd1e54abfe116778ac278a, type: 3}
   chunkPref: {fileID: 2183190527887127589, guid: 3abb95c8a4327074f861c23bb00a54ef,
     type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2561
   groundCheck: {fileID: 3488026114760241110}
-  tagRenderer: {fileID: 8662230130766479237}
-  modeSelectObj: {fileID: 3488026113311082907}
-  arrowAnim: {fileID: 3583541662643721576}
-  jumpRenderer: {fileID: 3488026113973127063}
-  shrinkRenderer: {fileID: 3488026114825132728}
-  swapRenderer: {fileID: 3488026114191178850}
+  modeSelectMenu: {fileID: 2867185345087485013}
 --- !u!1 &3488026114551613631
 GameObject:
   m_ObjectHideFlags: 0
