@@ -64,6 +64,14 @@ public class Player : MonoBehaviour {
 					UpdateInput( ); // Update input
 					CheckAtEnd( ); // Check if the player has reached the end of the level
 				}
+
+				// Check for ground
+				Collider2D[ ] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Constants.CHECK_RADIUS, whatIsGround);
+				for (int i = 0; i < colliders.Length; i++) {
+					if (colliders[i].gameObject != gameObject) {
+						isGrounded = true;
+					}
+				}
 			} else {
 				transform.position = Vector3.Lerp(transform.position, objective.position, Time.deltaTime * 3);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime * 3);
@@ -120,14 +128,6 @@ public class Player : MonoBehaviour {
 	}
 
 	void Move ( ) {
-		// Check for ground
-		Collider2D[ ] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Constants.CHECK_RADIUS, whatIsGround);
-		for (int i = 0; i < colliders.Length; i++) {
-			if (colliders[i].gameObject != gameObject) {
-				isGrounded = true;
-			}
-		}
-
 		// Move horizontally
 		Vector3 targetVelocity = new Vector2(xMove * Time.fixedDeltaTime * 10f, rBody2D.velocity.y);
 		Vector3 zero = Vector3.zero;

@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupID: 0
   isActive: 0
-  connection: {fileID: 0}
+  connection: {fileID: 3907074245739957824}
   variations:
   - {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -4430392651179603617, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
@@ -646,3 +646,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4493529913788516457}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3907074245739957824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 604765434681263657, guid: 52e91cfb4b54f3e4da7b91ea33c3c4c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4493529913788516457}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63e41378f7924142a65a693c0607cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

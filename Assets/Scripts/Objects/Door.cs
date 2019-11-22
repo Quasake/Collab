@@ -7,8 +7,10 @@ public class Door : WireComponent {
 	[SerializeField] Sprite[ ] variations = null; // 0 = off, 1 = on
 	[Header("Children")]
 	[SerializeField] Transform door = null;
+	[Header("Variables")]
+	[SerializeField] bool isHorizontal = false;
 
-	private void Start ( ) {
+	void Start ( ) {
 		SetActive(isActive);
 	}
 
@@ -16,8 +18,8 @@ public class Door : WireComponent {
 		spriteRenderer.sprite = variations[(isActive ? 1 : 0)];
 	}
 
-	private void Update ( ) {
-		Vector3 doorMove = (isActive ? -1 : 1) * new Vector3(0, Constants.DOOR_MOVESPEED);
-		door.position = new Vector3(door.position.x, Utils.Limit(door.position.y + doorMove.y, -1.5f, 1.5f));
+	void Update ( ) {
+		Vector3 doorMove = (isActive ? 1 : -1) * new Vector3(0, Constants.DOOR_MOVESPEED);
+		door.localPosition = new Vector3(door.localPosition.x, Utils.Limit(door.localPosition.y + doorMove.y, -2, 1));
 	}
 }

@@ -97,8 +97,6 @@ MonoBehaviour:
   groupID: 0
   isActive: 0
   connection: {fileID: 0}
-  isBackground: 0
-  formation: 0
   shortVariations:
   - {fileID: 4444980147945960928, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -6580861909127892675, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
@@ -114,3 +112,5 @@ MonoBehaviour:
   - {fileID: 7206194005228167239, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 8753186556605219898, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 2002165265138813586, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
+  isBackground: 0
+  formation: 0

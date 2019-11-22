@@ -10,7 +10,7 @@ public abstract class WireComponent : MonoBehaviour {
 
 	protected SpriteRenderer spriteRenderer;
 
-	private void Awake ( ) {
+	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 	}
 
