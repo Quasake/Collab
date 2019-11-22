@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,5 +18,9 @@ public class LevelMenu : Menu {
 		for (int i = 0; i < levels.childCount; i++) {
 			levels.GetChild(i).GetComponent<Image>( ).sprite = completedLevels[i] ? uiBoxComp : uiBox;
 		}
+	}
+
+	public void DeleteSave ( ) {
+		File.Delete(Application.persistentDataPath + "/gamedata.collab");
 	}
 }

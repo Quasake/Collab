@@ -36,11 +36,8 @@ public static class SaveManager {
 			stream.Close( );
 
 			return completedLevels;
-		} else {
-			Debug.Log("Save file not found at: " + path);
-
-			return new bool[Constants.NUM_LEVELS];
 		}
-	}
 
+		return new bool[Constants.NUM_LEVELS];
+	}
 }
