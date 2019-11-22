@@ -104,6 +104,7 @@ public class Player : MonoBehaviour {
 		if (Utils.GetDistance(transform.position, objective.position) < Constants.OBJECTIVE_DIST) {
 			isAtEnd = true;
 			rBody2D.gravityScale = 0;
+			rBody2D.velocity = Vector3.zero;
 		}
 	}
 
