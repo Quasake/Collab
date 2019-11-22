@@ -3,29 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
-	[Header("Environment")]
-	[SerializeField] Transform spawnpoint = null;
-	[Header("Player")]
-	[SerializeField] Player player1 = null;
-	[SerializeField] Player player2 = null;
+	[Header("Players")]
+	[SerializeField] Player[ ] players = null;
 
-	void Start ( ) {
-		transform.position = new Vector3(spawnpoint.position.x, spawnpoint.position.y, transform.position.z);
+	Camera cam;
+
+	Vector3 velocity;
+
+	void Update ( ) {
+		cam = GetComponent<Camera>( );
 	}
 
 	void LateUpdate ( ) {
-		Vector3 player1Pos = (player1.IsDead( ) ? player2.transform.position : player1.transform.position);
-		Vector3 player2Pos = (player2.IsDead( ) ? player1.transform.position : player2.transform.position);
+		if (players.Length > 0) {
+			Move( );
+			Zoom( );
+		}
+	}
 
-		Vector3 toPos = spawnpoint.position;
-		if (!player1.IsDead( ) || !player2.IsDead( )) {
-			toPos = Utils.GetMidpoint(player1Pos, player2Pos);
+	void Move ( ) {
+		Vector3 move = Utils.NoZ(GetBounds( ).center, transform.position.z);
+
+		transform.position = Vector3.SmoothDamp(transform.position, move, ref velocity, 0.5f);
+	}
+
+	void Zoom ( ) {
+		float zoom = Mathf.Lerp(Constants.CAMERA_ZOOM_MIN, Constants.CAMERA_ZOOM_MAX, GetBounds( ).size.x / 20f);
+
+		cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, zoom, Time.deltaTime);
+	}
+
+	Bounds GetBounds ( ) {
+		Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+		bool foundAlivePlayer = false;
+
+		for (int i = 0; i < players.Length; i++) {
+			if (!players[i].IsDead( )) {
+				if (!foundAlivePlayer) {
+					bounds = new Bounds(players[i].transform.position, Vector3.zero);
+					foundAlivePlayer = true;
+				} else {
+					bounds.Encapsulate(players[i].transform.position);
+				}
+			}
 		}
 
-		toPos.z = transform.position.z;
-		transform.position = Vector3.Lerp(transform.position, toPos, Constants.PLAYER_SMOOTHING);
-
-		float toZoom = Mathf.Lerp(Constants.CAMERA_ZOOM_MIN, Constants.CAMERA_ZOOM_MAX, Utils.GetHorizontalDistance(player1Pos, player2Pos) / Constants.CAMERA_ZOOM_LIMITER);
-		Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, toZoom, Time.deltaTime);
+		return bounds;
 	}
 }

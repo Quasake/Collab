@@ -41,7 +41,7 @@ public class ModeSelectionMenu : MonoBehaviour {
 			}
 		}
 
-		if (!gameManager.IsPaused( ) && !gameManager.IsOutOfMoves( ) && Utils.GetButtonValue("Y", player.GetID( ))) {
+		if (!gameManager.IsPaused( ) && !gameManager.IsOutOfMoves( ) && Utils.GetButtonValue("Y", player.GetID( )) && !player.IsDead( ) && !player.IsAtEnd( )) {
 			ToggleModeSelect( );
 		}
 	}

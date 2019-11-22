@@ -7,8 +7,6 @@ public class Door : WireComponent {
 	[SerializeField] Sprite[ ] variations = null; // 0 = off, 1 = on
 	[Header("Children")]
 	[SerializeField] Transform door = null;
-	[Header("Variables")]
-	[SerializeField] bool isHorizontal = false;
 
 	void Start ( ) {
 		SetActive(isActive);

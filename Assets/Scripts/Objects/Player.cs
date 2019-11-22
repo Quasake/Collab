@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	bool doJump;
 	bool isGrounded;
 	bool isSmall;
+	bool isEnabled;
 
 	Rigidbody2D rBody2D;
 	Animator anim;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour {
 						isGrounded = true;
 					}
 				}
-			} else {
+			} else if (isEnabled) {
 				transform.position = Vector3.Lerp(transform.position, objective.position, Time.deltaTime * 3);
 				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 360), Time.deltaTime * 3);
 
@@ -205,11 +206,21 @@ public class Player : MonoBehaviour {
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
 	}
 
-	void SetEnabled (bool isEnabled) {
+	void SetColliders (bool isEnabled) {
 		rBody2D.isKinematic = !isEnabled;
+
+		Collider2D[ ] colls = GetComponentsInChildren<Collider2D>( );
+		for (int i = 0; i < colls.Length; i++) {
+			colls[i].isTrigger = !isEnabled;
+		}
+	}
+
+	void SetEnabled (bool isEnabled) {
+		this.isEnabled = isEnabled;
+
 		spriteRenderer.enabled = isEnabled;
-		coll2D.isTrigger = !isEnabled;
-		rBody2D.velocity = Vector3.zero;
+
+		SetColliders(isEnabled);
 
 		if (!isEnabled) {
 			modeSelectMenu.SetEnabled(false);

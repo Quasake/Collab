@@ -139,4 +139,12 @@ public static class Utils {
 
 		return new Vector3(eulerAngles.x, eulerAngles.y, Mathf.Rad2Deg * angle);
 	}
+
+	public static Vector3 NoZ (Vector3 vector, float z) {
+		/* Return a vector without a different z value */
+
+		vector.z = z;
+
+		return vector;
+	}
 }
