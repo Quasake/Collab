@@ -48,10 +48,6 @@ public class ModeSelectionMenu : MonoBehaviour {
 
 	void ToggleModeSelect ( ) {
 		if (isEnabled) {
-			if (selectedMode != player.GetMode( )) {
-				gameManager.DecrementMoves( );
-			}
-
 			player.SetMode(selectedMode);
 		} else {
 			boostRenderer.sprite = boost[Utils.BoolToInt(player.CanChangeBoost( ))];

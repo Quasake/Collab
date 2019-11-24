@@ -87,15 +87,17 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SwapPlayers ( ) {
-		isSwappingPlayers = true;
+		if (!player1.IsDead( ) && !player1.IsAtEnd( ) && !player2.IsDead( ) && !player2.IsAtEnd( )) {
+			isSwappingPlayers = true;
 
-		player1.SetColliders(false);
-		player2.SetColliders(false);
-		player1.SetSortingLayer("Mini-UI");
-		player2.SetSortingLayer("Mini-UI");
+			player1.SetColliders(false);
+			player2.SetColliders(false);
+			player1.SetSortingLayer("Mini-UI");
+			player2.SetSortingLayer("Mini-UI");
 
-		player1SwapPos = player1.transform.position;
-		player2SwapPos = player2.transform.position;
+			player1SwapPos = player1.transform.position;
+			player2SwapPos = player2.transform.position;
+		}
 	}
 
 	void SetWireGroup (bool isActive, int groupID) {

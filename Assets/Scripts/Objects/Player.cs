@@ -20,6 +20,10 @@ public class Player : MonoBehaviour {
 	[Header("Children")] // Children GameObjects
 	[SerializeField] Transform groundCheck = null;
 	[SerializeField] ModeSelectionMenu modeSelectMenu = null;
+	[Header("Sounds")]
+	[SerializeField] AudioClip jump = null;
+	[SerializeField] AudioClip death = null;
+	[SerializeField] AudioClip changePower = null;
 
 	float jumpSpeed;
 	float xMove;
@@ -32,6 +36,7 @@ public class Player : MonoBehaviour {
 	Animator anim;
 	SpriteRenderer spriteRenderer;
 	Collider2D coll2D;
+	AudioSource audioSource;
 
 	GameManager gameManager;
 	Transform spawnpoint;
@@ -43,6 +48,7 @@ public class Player : MonoBehaviour {
 		rBody2D = GetComponent<Rigidbody2D>( );
 		anim = GetComponent<Animator>( );
 		coll2D = GetComponent<Collider2D>( );
+		audioSource = GetComponent<AudioSource>( );
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
@@ -110,6 +116,8 @@ public class Player : MonoBehaviour {
 
 	void Death ( ) {
 		if (!isDead) {
+			Utils.PlaySound(audioSource, death);
+
 			// Disable the player
 			SetEnabled(false);
 
@@ -139,6 +147,8 @@ public class Player : MonoBehaviour {
 		if (isGrounded && doJump) {
 			isGrounded = false;
 			rBody2D.AddForce(new Vector2(0f, jumpSpeed));
+
+			Utils.PlaySound(audioSource, jump);
 		}
 
 		// Reset moving variables so the player doesnt move indefinitely
@@ -199,12 +209,18 @@ public class Player : MonoBehaviour {
 	#region Setters
 
 	public void SetMode (int mode) {
-		this.mode = mode;
-		anim.SetInteger("mode", mode);
+		if (this.mode != mode) {
+			Utils.PlaySound(audioSource, changePower);
 
-		// Set variables based on modes
-		isSmall = false;
-		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
+			this.mode = mode;
+			anim.SetInteger("mode", mode);
+
+			// Set variables based on modes
+			isSmall = false;
+			jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
+
+			gameManager.DecrementMoves( );
+		}
 	}
 
 	public void SetColliders (bool isEnabled) {

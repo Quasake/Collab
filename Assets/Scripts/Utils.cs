@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class Utils {
+	public static void PlaySound (AudioSource audioSource, AudioClip clip) {
+		/* Play a sound */
+
+		audioSource.clip = clip;
+		audioSource.loop = false;
+		audioSource.Play( );
+	}
+
 	public static GameObject[ ] GetAllChildren (Transform transform) {
 		/* Get an array with all the children of a transform */
 

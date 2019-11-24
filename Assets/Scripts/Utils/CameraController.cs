@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour {
-	[Header("Players")]
+public class CameraController : MonoBehaviour {
+	[SerializeField] bool canMove = true;
 	[SerializeField] Player[ ] players = null;
 
 	Camera cam;
@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour {
 	}
 
 	void LateUpdate ( ) {
-		if (players.Length > 0) {
+		if (players.Length > 0 && canMove) {
 			Move( );
 			Zoom( );
 		}
@@ -28,7 +28,7 @@ public class CameraMovement : MonoBehaviour {
 	}
 
 	void Zoom ( ) {
-		float zoom = Mathf.Lerp(Constants.CAMERA_ZOOM_MIN, Constants.CAMERA_ZOOM_MAX, GetBounds( ).size.x / 20f);
+		float zoom = Mathf.Lerp(Constants.CAMERA_ZOOM_MIN, Constants.CAMERA_ZOOM_MAX, Mathf.Max(GetBounds( ).size.x, GetBounds( ).size.y) / 20f);
 
 		cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, zoom, Time.deltaTime);
 	}

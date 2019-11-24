@@ -6,7 +6,7 @@ public static class Constants {
 	public static System.Random RANDOM = new System.Random( );
 
 	public static Vector3 SPAWNPOINT_OFFSET = new Vector3(0, 0.5f);
-	public static Vector3 DEATH_POS = new Vector3(0, 20);
+	public static Vector3 DEATH_POS = new Vector3(0, 40);
 
 	public const float CHECK_RADIUS = 0.05f;
 	public const float DEADZONE = 0.05f;
