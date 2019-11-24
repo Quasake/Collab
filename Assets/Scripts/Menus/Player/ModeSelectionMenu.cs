@@ -65,7 +65,7 @@ public class ModeSelectionMenu : MonoBehaviour {
 	public void SetEnabled (bool isEnabled) {
 		this.isEnabled = isEnabled;
 
-		player.GetComponent<SpriteRenderer>( ).sortingLayerName = isEnabled ? "Mini-UI" : "Player";
+		player.SetSortingLayer(isEnabled ? "Mini-UI" : "Player");
 
 		SetTagEnabled(!isEnabled);
 

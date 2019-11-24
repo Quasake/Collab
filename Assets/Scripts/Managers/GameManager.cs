@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour {
 
 	static Player player1;
 	static Player player2;
+	Vector3 player1SwapPos;
+	Vector3 player2SwapPos;
+	bool isSwappingPlayers;
 
 	#region Unity Methods
 
@@ -30,6 +33,22 @@ public class GameManager : MonoBehaviour {
 
 		player1 = GameObject.Find("Player 1").GetComponent<Player>( );
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
+	}
+
+	void Update ( ) {
+		if (isSwappingPlayers) {
+			player1.transform.position = Vector3.Lerp(player1.transform.position, player2SwapPos, Constants.SMOOTHING);
+			player2.transform.position = Vector3.Lerp(player2.transform.position, player1SwapPos, Constants.SMOOTHING);
+
+			if (Utils.AlmostEqual(player1.transform.position, player2SwapPos, 0.05f) && Utils.AlmostEqual(player2.transform.position, player1SwapPos, 0.05f)) {
+				isSwappingPlayers = false;
+
+				player1.SetColliders(true);
+				player2.SetColliders(true);
+				player1.SetSortingLayer("Player");
+				player2.SetSortingLayer("Player");
+			}
+		}
 	}
 
 	#endregion
@@ -67,6 +86,18 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void SwapPlayers ( ) {
+		isSwappingPlayers = true;
+
+		player1.SetColliders(false);
+		player2.SetColliders(false);
+		player1.SetSortingLayer("Mini-UI");
+		player2.SetSortingLayer("Mini-UI");
+
+		player1SwapPos = player1.transform.position;
+		player2SwapPos = player2.transform.position;
+	}
+
 	void SetWireGroup (bool isActive, int groupID) {
 		for (int i = 0; i < wires.Length; i++) {
 			Wire wire = wires[i].GetComponent<Wire>( );
@@ -101,6 +132,10 @@ public class GameManager : MonoBehaviour {
 
 	public static Player GetPlayer2 ( ) {
 		return player2;
+	}
+
+	public bool IsSwappingPlayers ( ) {
+		return isSwappingPlayers;
 	}
 
 	#endregion

@@ -61,7 +61,7 @@ public class Player : MonoBehaviour {
 	void Update ( ) {
 		if (!isDead) {
 			if (!isAtEnd) {
-				if (!modeSelectMenu.IsEnabled( )) {
+				if (!modeSelectMenu.IsEnabled( ) && !gameManager.IsSwappingPlayers( )) {
 					UpdateInput( ); // Update input
 					CheckAtEnd( ); // Check if the player has reached the end of the level
 				}
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour {
 		// Move horizontally
 		Vector3 targetVelocity = new Vector2(xMove * Time.fixedDeltaTime * 10f, rBody2D.velocity.y);
 		Vector3 zero = Vector3.zero;
-		rBody2D.velocity = Vector3.SmoothDamp(rBody2D.velocity, targetVelocity, ref zero, Constants.PLAYER_SMOOTHING);
+		rBody2D.velocity = Vector3.SmoothDamp(rBody2D.velocity, targetVelocity, ref zero, Constants.SMOOTHING);
 
 		// If grounded and the player wants to jump, then... well, jump
 		if (isGrounded && doJump) {
@@ -169,9 +169,9 @@ public class Player : MonoBehaviour {
 			if (Utils.GetButtonValue("X", playerID) && isGrounded) {
 				if (mode == Constants.PLAYER_SHRINK_MODE) {
 					isSmall = !isSmall;
-					jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SHRINK_SMALL_AMOUNT : 1);
+					jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SMALL_AMOUNT : 1);
 				} else if (mode == Constants.PLAYER_SWAP_MODE) {
-					// DO THIS
+					gameManager.SwapPlayers( );
 				}
 			}
 		}
@@ -207,13 +207,17 @@ public class Player : MonoBehaviour {
 		jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((mode == Constants.PLAYER_BOOST_MODE) ? Constants.BOOST_AMOUNT : 1);
 	}
 
-	void SetColliders (bool isEnabled) {
+	public void SetColliders (bool isEnabled) {
 		rBody2D.isKinematic = !isEnabled;
 
 		Collider2D[ ] colls = GetComponentsInChildren<Collider2D>( );
 		for (int i = 0; i < colls.Length; i++) {
 			colls[i].isTrigger = !isEnabled;
 		}
+	}
+
+	public void SetSortingLayer (string layer) {
+		spriteRenderer.sortingLayerName = layer;
 	}
 
 	void SetEnabled (bool isEnabled) {

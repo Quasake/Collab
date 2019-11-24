@@ -12,7 +12,7 @@ public class ChunkCannon : MonoBehaviour {
 	}
 
 	void Update ( ) {
-		if (Time.time - timer >= Constants.CHUNK_CANNON_TIME) {
+		if (Time.time - timer >= Constants.CANNON_SPAWNRATE) {
 			timer = Time.time;
 
 			GameObject chunk = Instantiate(chunkPref, transform.position, new Quaternion(0, 0, Utils.GetRandomAngle( ), 0));
