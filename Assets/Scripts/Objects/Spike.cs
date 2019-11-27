@@ -8,6 +8,8 @@ public class Spike : MonoBehaviour {
 
 	SpriteRenderer spriteRenderer;
 
+	#region Unity Methods
+
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 	}
@@ -15,4 +17,6 @@ public class Spike : MonoBehaviour {
 	void Start ( ) {
 		spriteRenderer.sprite = variations[Utils.GetRandomInteger(0, variations.Length - 1)];
 	}
+
+	#endregion
 }

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class CompletedMenu : Menu {
 	bool isCompleted = false;
 
+	#region Unity Methods
+
 	void Start ( ) {
 		SetEnabled(false);
 	}
@@ -22,4 +24,6 @@ public class CompletedMenu : Menu {
 			}
 		}
 	}
+
+	#endregion
 }

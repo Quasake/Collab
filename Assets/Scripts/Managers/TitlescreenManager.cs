@@ -45,7 +45,10 @@ public class TitlescreenManager : MonoBehaviour {
 		optionsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_OPTIONS);
 		creditsMenu.SetEnabled(TITLESCREEN_STATE == Constants.MENU_CREDTIS);
 
-		enabledMenu = titleMenu.IsEnabled( ) ? titleMenu : (levelMenu.IsEnabled( ) ? levelMenu : (optionsMenu.IsEnabled( ) ? optionsMenu : (creditsMenu.IsEnabled( ) ? (Menu) creditsMenu : null)));
+		enabledMenu = titleMenu.IsEnabled( ) ? titleMenu : enabledMenu;
+		enabledMenu = levelMenu.IsEnabled( ) ? levelMenu : enabledMenu;
+		enabledMenu = optionsMenu.IsEnabled( ) ? optionsMenu : enabledMenu;
+		enabledMenu = creditsMenu.IsEnabled( ) ? creditsMenu : enabledMenu;
 
 		Menu.SetInputs(Constants.PLAYER_1_ID, enabledMenu.GetFirstButton( ));
 	}

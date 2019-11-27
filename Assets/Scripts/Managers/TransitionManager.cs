@@ -8,9 +8,17 @@ public class TransitionManager : MonoBehaviour {
 
 	int sceneToLoad = 0; // The scene to load after transition
 
+	#region Unity Methods
+
 	void Awake ( ) {
 		anim = GetComponent<Animator>( );
 	}
+
+	#endregion
+
+	#region Methods
+
+	#region Public
 
 	public void RestartScene ( ) {
 		FadeToScene(SceneManager.GetActiveScene( ).buildIndex);
@@ -22,7 +30,15 @@ public class TransitionManager : MonoBehaviour {
 		anim.SetTrigger("fade");
 	}
 
+	#endregion
+
+	#region Private
+
 	void LoadScene ( ) {
 		SceneManager.LoadScene(sceneToLoad);
 	}
+
+	#endregion
+
+	#endregion
 }

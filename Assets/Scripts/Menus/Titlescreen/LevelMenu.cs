@@ -11,16 +11,24 @@ public class LevelMenu : Menu {
 
 	Transform levels;
 
+	#region Unity Methods
+
 	void Start ( ) {
 		levels = transform.Find("Levels");
-		bool[ ] completedLevels = SaveManager.LoadGame( );
+		bool[ ] completedLevels = SaveManager.LoadLevels( );
 
 		for (int i = 0; i < levels.childCount; i++) {
 			levels.GetChild(i).GetComponent<Image>( ).sprite = completedLevels[i] ? uiBoxComp : uiBox;
 		}
 	}
 
+	#endregion
+
+	#region Methods
+
 	public void DeleteSave ( ) {
-		File.Delete(Application.persistentDataPath + "/gamedata.collab");
+		File.Delete(Constants.PATH_LEVELS);
 	}
+
+	#endregion
 }

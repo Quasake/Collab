@@ -6,30 +6,28 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-	[Header("Environment")] // Environment GameObjects
-	[SerializeField] Transform leverParent = null;
-	[SerializeField] Transform doorParent = null;
-	[SerializeField] Transform wireParent = null;
-	[Header("Menus")]
+	[Header("Children")]
 	[SerializeField] PauseMenu pauseMenu = null;
 	[SerializeField] InGameUI inGameUI = null;
+
+	static Player player1;
+	static Player player2;
 
 	GameObject[ ] levers;
 	GameObject[ ] doors;
 	GameObject[ ] wires;
 
-	static Player player1;
-	static Player player2;
 	Vector3 player1SwapPos;
 	Vector3 player2SwapPos;
+
 	bool isSwappingPlayers;
 
 	#region Unity Methods
 
 	void Awake ( ) {
-		levers = Utils.GetAllChildren(leverParent);
-		doors = Utils.GetAllChildren(doorParent);
-		wires = Utils.GetAllChildren(wireParent);
+		levers = Utils.GetAllChildren(GameObject.Find("Levers").GetComponent<Transform>( ));
+		doors = Utils.GetAllChildren(GameObject.Find("Doors").GetComponent<Transform>( ));
+		wires = Utils.GetAllChildren(GameObject.Find("Wires").GetComponent<Transform>( ));
 
 		player1 = GameObject.Find("Player 1").GetComponent<Player>( );
 		player2 = GameObject.Find("Player 2").GetComponent<Player>( );
@@ -37,10 +35,10 @@ public class GameManager : MonoBehaviour {
 
 	void Update ( ) {
 		if (isSwappingPlayers) {
-			player1.transform.position = Vector3.Lerp(player1.transform.position, player2SwapPos, Constants.SMOOTHING);
-			player2.transform.position = Vector3.Lerp(player2.transform.position, player1SwapPos, Constants.SMOOTHING);
+			player1.SetPosition(Vector3.MoveTowards(player1.GetPosition( ), player2SwapPos, Constants.SMOOTHING));
+			player2.SetPosition(Vector3.MoveTowards(player2.GetPosition( ), player1SwapPos, Constants.SMOOTHING));
 
-			if (Utils.AlmostEqual(player1.transform.position, player2SwapPos, 0.05f) && Utils.AlmostEqual(player2.transform.position, player1SwapPos, 0.05f)) {
+			if (Utils.AlmostEqual(player1.GetPosition( ), player2SwapPos, Constants.CHECK_RADIUS) && Utils.AlmostEqual(player2.GetPosition( ), player1SwapPos, Constants.CHECK_RADIUS)) {
 				isSwappingPlayers = false;
 
 				player1.SetColliders(true);
@@ -55,18 +53,12 @@ public class GameManager : MonoBehaviour {
 
 	#region Methods
 
+	#region Public
+
 	#region Menu Methods
 
 	public void Pause (int playerID) {
 		pauseMenu.Pause(playerID);
-	}
-
-	public bool IsPaused ( ) {
-		return pauseMenu.IsPaused( );
-	}
-
-	public bool IsOutOfMoves ( ) {
-		return inGameUI.IsOutOfMoves( );
 	}
 
 	public void DecrementMoves ( ) {
@@ -87,7 +79,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SwapPlayers ( ) {
-		if (!player1.IsDead( ) && !player1.IsAtEnd( ) && !player2.IsDead( ) && !player2.IsAtEnd( )) {
+		if (player1.IsAble( ) && player2.IsAble( )) {
 			isSwappingPlayers = true;
 
 			player1.SetColliders(false);
@@ -95,10 +87,14 @@ public class GameManager : MonoBehaviour {
 			player1.SetSortingLayer("Mini-UI");
 			player2.SetSortingLayer("Mini-UI");
 
-			player1SwapPos = player1.transform.position;
-			player2SwapPos = player2.transform.position;
+			player1SwapPos = player1.GetPosition( );
+			player2SwapPos = player2.GetPosition( );
 		}
 	}
+
+	#endregion
+
+	#region Private
 
 	void SetWireGroup (bool isActive, int groupID) {
 		for (int i = 0; i < wires.Length; i++) {
@@ -120,13 +116,21 @@ public class GameManager : MonoBehaviour {
 
 	#endregion
 
-	#region Setters
-
-
-
 	#endregion
 
 	#region Getters
+
+	public bool IsPaused ( ) {
+		return pauseMenu.IsPaused( );
+	}
+
+	public bool IsOutOfMoves ( ) {
+		return inGameUI.IsOutOfMoves( );
+	}
+
+	public bool IsAble ( ) {
+		return !IsPaused( ) && !IsOutOfMoves( );
+	}
 
 	public static Player GetPlayer1 ( ) {
 		return player1;

@@ -14,23 +14,16 @@ public class Player : MonoBehaviour {
 	[SerializeField] bool canChangeBoost = false;
 	[SerializeField] bool canChangeShrink = false;
 	[SerializeField] bool canChangeSwap = false;
-	[Header("Environment")] // Environment GameObjects
-	[SerializeField] GameObject chunkPref = null;
-	[SerializeField] LayerMask whatIsGround = -1;
 	[Header("Children")] // Children GameObjects
 	[SerializeField] Transform groundCheck = null;
 	[SerializeField] ModeSelectionMenu modeSelectMenu = null;
+	[Header("Environment")] // Environment GameObjects
+	[SerializeField] GameObject chunkPref = null;
+	[SerializeField] LayerMask whatIsGround = -1;
 	[Header("Sounds")]
 	[SerializeField] AudioClip jump = null;
 	[SerializeField] AudioClip death = null;
 	[SerializeField] AudioClip changePower = null;
-
-	float jumpSpeed;
-	float xMove;
-	bool doJump;
-	bool isGrounded;
-	bool isSmall;
-	bool isEnabled;
 
 	Rigidbody2D rBody2D;
 	Animator anim;
@@ -41,6 +34,13 @@ public class Player : MonoBehaviour {
 	GameManager gameManager;
 	Transform spawnpoint;
 	Transform objective;
+
+	float jumpSpeed;
+	float xMove;
+	bool doJump;
+	bool isGrounded;
+	bool isSmall;
+	bool isEnabled;
 
 	#region Unity Methods
 
@@ -249,9 +249,21 @@ public class Player : MonoBehaviour {
 		modeSelectMenu.SetTagEnabled(isEnabled);
 	}
 
+	public void SetPosition (Vector3 newPos) {
+		transform.position = newPos;
+	}
+
 	#endregion
 
 	#region Getters
+
+	public Vector3 GetPosition ( ) {
+		return transform.position;
+	}
+
+	public bool IsAble ( ) {
+		return !isDead && !isAtEnd;
+	}
 
 	public bool IsDead ( ) {
 		return isDead;

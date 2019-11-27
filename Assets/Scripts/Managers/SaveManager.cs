@@ -7,29 +7,25 @@ using UnityEngine;
 
 public static class SaveManager {
 	public static void UpdateLevel (int index) {
-		bool[ ] completedLevels = LoadGame( );
+		bool[ ] completedLevels = LoadLevels( );
 
 		completedLevels[index] = true;
 
-		SaveGame(completedLevels);
+		SaveLevels(completedLevels);
 	}
 
-	public static void SaveGame (bool[ ] completedLevels) {
-		string path = Application.persistentDataPath + "/gamedata.collab";
-
+	public static void SaveLevels (bool[ ] completedLevels) {
 		BinaryFormatter formatter = new BinaryFormatter( );
-		FileStream stream = new FileStream(path, FileMode.Create);
+		FileStream stream = new FileStream(Constants.PATH_LEVELS, FileMode.Create);
 
 		formatter.Serialize(stream, completedLevels);
 		stream.Close( );
 	}
 
-	public static bool[ ] LoadGame ( ) {
-		string path = Application.persistentDataPath + "/gamedata.collab";
-
-		if (File.Exists(path)) {
+	public static bool[ ] LoadLevels ( ) {
+		if (File.Exists(Constants.PATH_LEVELS)) {
 			BinaryFormatter formatter = new BinaryFormatter( );
-			FileStream stream = new FileStream(path, FileMode.Open);
+			FileStream stream = new FileStream(Constants.PATH_LEVELS, FileMode.Open);
 
 			bool[ ] completedLevels = formatter.Deserialize(stream) as bool[ ];
 

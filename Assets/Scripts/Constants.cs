@@ -1,8 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+/*	ORDER OF SERIALIZATION:
+
+	0. Superclass
+	1. Variables
+	2. Children
+	3. Environment
+	4. Sprites
+	5. Sounds
+	4. Other
+
+*/
+
+#region Unity Methods
+
+#endregion
+
+#region Methods
+
+#endregion
+
+#region Coroutines
+
+#endregion
+
+#region Setters
+
+#endregion
+
+#region Getters
+
+#endregion
 
 public static class Constants {
+	public static string PATH_LEVELS = Application.persistentDataPath + "/levels.collab";
+
 	public static System.Random RANDOM = new System.Random( );
 
 	public static Vector3 SPAWNPOINT_OFFSET = new Vector3(0, 0.5f);

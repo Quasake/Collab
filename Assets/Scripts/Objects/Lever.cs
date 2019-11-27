@@ -6,9 +6,15 @@ public class Lever : WireComponent {
 	[Header("Sprites")]
 	[SerializeField] private Sprite[ ] variations = null;
 
+	#region Unity Methods
+
 	private void Start ( ) {
 		SetActive(isActive);
 	}
+
+	#endregion
+
+	#region Methods
 
 	protected override void UpdateSprites ( ) {
 		spriteRenderer.sprite = variations[isActive ? 1 : 0];
@@ -17,4 +23,6 @@ public class Lever : WireComponent {
 	public void Toggle ( ) {
 		SetActive(!isActive);
 	}
+
+	#endregion
 }

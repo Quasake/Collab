@@ -5,15 +5,26 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public abstract class Menu : MonoBehaviour {
+	[Header("Superclass [Menu]")]
 	[SerializeField] protected GameObject firstButton = null;
+
+	Image image;
 
 	protected bool isEnabled = true;
 
-	Image image;
+	#region Unity Methods
 
 	void Awake ( ) {
 		image = GetComponent<Image>( );
 	}
+
+	#endregion
+
+	#region Methods
+
+	#endregion
+
+	#region Setters
 
 	public static void SetInputs (int playerID, GameObject firstButton) {
 		playerID++;
@@ -37,6 +48,10 @@ public abstract class Menu : MonoBehaviour {
 		}
 	}
 
+	#endregion
+
+	#region Getters
+
 	public bool IsEnabled ( ) {
 		return isEnabled;
 	}
@@ -44,4 +59,6 @@ public abstract class Menu : MonoBehaviour {
 	public GameObject GetFirstButton ( ) {
 		return firstButton;
 	}
+
+	#endregion
 }

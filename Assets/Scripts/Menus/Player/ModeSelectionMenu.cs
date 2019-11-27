@@ -17,10 +17,12 @@ public class ModeSelectionMenu : MonoBehaviour {
 	[SerializeField] SpriteRenderer tagRenderer = null;
 	[SerializeField] Animator arrowAnim = null;
 
+	GameManager gameManager;
+
 	bool isEnabled;
 	int selectedMode;
 
-	GameManager gameManager;
+	#region Unity Methods
 
 	void Awake ( ) {
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>( );
@@ -41,9 +43,29 @@ public class ModeSelectionMenu : MonoBehaviour {
 			}
 		}
 
-		if (!gameManager.IsPaused( ) && !gameManager.IsOutOfMoves( ) && Utils.GetButtonValue("Y", player.GetID( )) && !player.IsDead( ) && !player.IsAtEnd( )) {
+		if (gameManager.IsAble( ) && Utils.GetButtonValue("Y", player.GetID( )) && player.IsAble( )) {
 			ToggleModeSelect( );
 		}
+	}
+
+	#endregion
+
+	#region Methods
+	void UpdateModeSelection ( ) {
+		float horiAxis = Utils.GetAxisRawValue("Horizontal", player.GetID( ));
+		float vertAxis = Utils.GetAxisRawValue("Vertical", player.GetID( ));
+
+		if (horiAxis > 0 && player.CanChangeBoost( )) { // Right
+			selectedMode = Constants.PLAYER_BOOST_MODE;
+		} else if (horiAxis < 0 && player.CanChangeSwap( )) { // Left
+			selectedMode = Constants.PLAYER_SWAP_MODE;
+		} else if (vertAxis > 0) { // Up
+			selectedMode = Constants.PLAYER_NORM_MODE;
+		} else if (vertAxis < 0 && player.CanChangeShrink( )) { // Down
+			selectedMode = Constants.PLAYER_SHRINK_MODE;
+		}
+
+		arrowAnim.SetInteger("selectedMode", selectedMode);
 	}
 
 	void ToggleModeSelect ( ) {
@@ -57,6 +79,10 @@ public class ModeSelectionMenu : MonoBehaviour {
 
 		SetEnabled(!isEnabled);
 	}
+
+	#endregion
+
+	#region Setters
 
 	public void SetEnabled (bool isEnabled) {
 		this.isEnabled = isEnabled;
@@ -74,24 +100,13 @@ public class ModeSelectionMenu : MonoBehaviour {
 		tagRenderer.enabled = isEnabled;
 	}
 
-	void UpdateModeSelection ( ) {
-		float horiAxis = Utils.GetAxisRawValue("Horizontal", player.GetID( ));
-		float vertAxis = Utils.GetAxisRawValue("Vertical", player.GetID( ));
+	#endregion
 
-		if (horiAxis > Constants.DEADZONE && player.CanChangeBoost( )) { // Right
-			selectedMode = Constants.PLAYER_BOOST_MODE;
-		} else if (horiAxis < -Constants.DEADZONE && player.CanChangeSwap( )) { // Left
-			selectedMode = Constants.PLAYER_SWAP_MODE;
-		} else if (vertAxis > Constants.DEADZONE) { // Up
-			selectedMode = Constants.PLAYER_NORM_MODE;
-		} else if (vertAxis < -Constants.DEADZONE && player.CanChangeShrink( )) { // Down
-			selectedMode = Constants.PLAYER_SHRINK_MODE;
-		}
-
-		arrowAnim.SetInteger("selectedMode", selectedMode);
-	}
+	#region Getters
 
 	public bool IsEnabled ( ) {
 		return isEnabled;
 	}
+
+	#endregion
 }

@@ -10,11 +10,14 @@ public class Chunk : MonoBehaviour {
 	[SerializeField] Sprite[ ] swapChunks = null;
 
 	SpriteRenderer spriteRenderer;
+
 	Sprite[ ][ ] chunks;
 
 	float startTime; // The time that the chunk was spawned
 	float disappearTime; // The lifetime of the chunk
 	int type;
+
+	#region Unity Methods
 
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
@@ -30,12 +33,16 @@ public class Chunk : MonoBehaviour {
 
 		spriteRenderer.sprite = chunks[type][Utils.GetRandomInteger(0, Constants.CHUNK_COUNT - 1)];
 	}
-	
+
 	void Update ( ) {
 		if (Time.time - startTime >= disappearTime) {
 			StartCoroutine(FadeOut( ));
 		}
 	}
+
+	#endregion
+
+	#region Coroutines
 
 	IEnumerator FadeOut ( ) {
 		/* Fade out the chunk and then destroy it after a certain amount of time */
@@ -54,7 +61,13 @@ public class Chunk : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
+	#endregion
+
+	#region Setters
+
 	public void SetType (int type) {
 		this.type = type;
 	}
+
+	#endregion
 }

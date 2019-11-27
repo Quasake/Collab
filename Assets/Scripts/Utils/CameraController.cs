@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
+	[Header("Variables")]
 	[SerializeField] bool canMove = true;
 	[SerializeField] Player[ ] players = null;
 
 	Camera cam;
 
 	Vector3 velocity;
+
+	#region Unity Methods
 
 	void Update ( ) {
 		cam = GetComponent<Camera>( );
@@ -20,6 +23,10 @@ public class CameraController : MonoBehaviour {
 			Zoom( );
 		}
 	}
+
+	#endregion
+
+	#region Methods
 
 	void Move ( ) {
 		Vector3 move = Utils.NoZ(GetBounds( ).center, transform.position.z);
@@ -50,4 +57,6 @@ public class CameraController : MonoBehaviour {
 
 		return bounds;
 	}
+
+	#endregion
 }

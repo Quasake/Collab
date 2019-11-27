@@ -9,10 +9,12 @@ public class ButtonController : MonoBehaviour {
 	[SerializeField] AudioClip select = null;
 	[SerializeField] AudioClip press = null;
 
-	bool pressed;
-
 	AudioSource audioSource;
 	Animator anim;
+
+	bool pressed;
+
+	#region Unity Methods
 
 	void Awake ( ) {
 		audioSource = GetComponent<AudioSource>( );
@@ -34,4 +36,6 @@ public class ButtonController : MonoBehaviour {
 			}
 		}
 	}
+
+	#endregion
 }

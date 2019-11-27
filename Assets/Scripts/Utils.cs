@@ -66,12 +66,6 @@ public static class Utils {
 		return GetRandomFloat(minAngle, maxAngle);
 	}
 
-	public static Vector3Int WorldPosToTilemapPos (Vector3 vector) {
-		/* Convert an objects position in the world to a tile position on a tilemap */
-
-		return new Vector3Int((int) (vector.x - 0.5f), (int) (vector.y - 0.5f), 0);
-	}
-
 	public static Vector3 GetMidpoint (Vector3 point1, Vector3 point2) {
 		/* Get the midpoint between two points */
 
@@ -79,21 +73,6 @@ public static class Utils {
 		float y = (point1.y + point2.y) / 2;
 
 		return new Vector3(x, y);
-	}
-
-	public static void ChangeTileTexture (Tilemap tilemap, Vector3Int coord, Sprite sprite) {
-		/* Set the texture of a tile in a tilemap */
-
-		Tile tile = ScriptableObject.CreateInstance<Tile>( );
-		tile.sprite = sprite;
-
-		tilemap.SetTile(coord, tile);
-	}
-
-	public static Vector3Int Vec3ToVec3Int (Vector3 vector) {
-		/* Convert a regular Vector3 to a Vector3Int */
-
-		return new Vector3Int((int) vector.x, (int) vector.y, (int) vector.z);
 	}
 
 	public static float Limit (float value, float min, float max) {
@@ -109,15 +88,6 @@ public static class Utils {
 		return value;
 	}
 
-	public static float GetHorizontalDistance (Vector3 pos1, Vector3 pos2) {
-		/* Get the x distance that the objects are apart */
-
-		Bounds bounds = new Bounds(pos1, Vector3.zero);
-		bounds.Encapsulate(pos2);
-
-		return bounds.size.x;
-	}
-
 	public static bool GetButtonValue (string name, int playerID) {
 		/* Get joystick button value */
 
@@ -127,7 +97,13 @@ public static class Utils {
 	public static float GetAxisRawValue (string name, int playerID) {
 		/* Get joystick axis value */
 
-		return Input.GetAxisRaw(name + "-" + (playerID + 1));
+		float value = Input.GetAxisRaw(name + "-" + (playerID + 1));
+
+		if (value < Constants.DEADZONE && value > -Constants.DEADZONE) {
+			value = 0;
+		}
+
+		return value;
 	}
 
 	public static bool InRange (float value, float min, float max) {

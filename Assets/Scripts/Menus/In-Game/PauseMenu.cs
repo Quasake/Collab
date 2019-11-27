@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class PauseMenu : Menu {
 	bool isPaused = false;
-	int pausedPlayerID = -1;
+
+	#region Unity Methods 
 
 	void Start ( ) {
 		SetEnabled(false);
 	}
 
+	#endregion
+
+	#region Methods
+
 	public void Pause (int playerID) {
-		pausedPlayerID = playerID;
 		isPaused = true;
 
 		SetInputs(playerID, firstButton);
@@ -19,13 +23,22 @@ public class PauseMenu : Menu {
 	}
 
 	public void UnPause ( ) {
-		pausedPlayerID = -1;
 		isPaused = false;
 
 		SetEnabled(false);
 	}
 
+	#endregion
+
+	#region Setters
+
+	#endregion
+
+	#region Getters
+
 	public bool IsPaused ( ) {
 		return isPaused;
 	}
+
+	#endregion
 }

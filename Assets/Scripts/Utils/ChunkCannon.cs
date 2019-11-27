@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChunkCannon : MonoBehaviour {
+	[Header("Environment")]
 	[SerializeField] GameObject chunkPref = null;
 
 	float timer;
+
+	#region Unity Methods
 
 	void Start ( ) {
 		timer = Time.time;
@@ -26,4 +29,6 @@ public class ChunkCannon : MonoBehaviour {
 			chunk.transform.SetParent(transform, true);
 		}
 	}
+
+	#endregion
 }
