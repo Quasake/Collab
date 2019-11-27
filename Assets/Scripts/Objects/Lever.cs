@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Lever : WireComponent {
 	[Header("Sprites")]
-	[SerializeField] private Sprite[ ] variations = null;
+	[SerializeField] Sprite[ ] variations = null;
+	[Header("Sounds")]
+	[SerializeField] AudioClip toggleLever = null;
 
 	#region Unity Methods
 
-	private void Start ( ) {
+	void Start ( ) {
 		SetActive(isActive);
 	}
 
@@ -21,6 +23,8 @@ public class Lever : WireComponent {
 	}
 
 	public void Toggle ( ) {
+		Utils.PlaySound(audioSource, toggleLever);
+
 		SetActive(!isActive);
 	}
 

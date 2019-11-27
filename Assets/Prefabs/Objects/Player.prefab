@@ -696,16 +696,17 @@ MonoBehaviour:
   canChangeBoost: 0
   canChangeShrink: 0
   canChangeSwap: 0
+  groundCheck: {fileID: 3488026114760241110}
+  modeSelectMenu: {fileID: 2867185345087485013}
   chunkPref: {fileID: 2183190527887127589, guid: 3abb95c8a4327074f861c23bb00a54ef,
     type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2561
-  groundCheck: {fileID: 3488026114760241110}
-  modeSelectMenu: {fileID: 2867185345087485013}
   jump: {fileID: 8300000, guid: 603bad9a431fb4643a54cb62cb26dfd9, type: 3}
   death: {fileID: 8300000, guid: 29a973512c14e2641811b2f1f9e2f1f3, type: 3}
   changePower: {fileID: 8300000, guid: 4eb76983a6926d44590150a91db2e13f, type: 3}
+  end: {fileID: 8300000, guid: 18ec53ae60549cb449fb00eff98a1209, type: 3}
 --- !u!1 &3488026114551613631
 GameObject:
   m_ObjectHideFlags: 0

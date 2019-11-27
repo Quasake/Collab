@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] AudioClip jump = null;
 	[SerializeField] AudioClip death = null;
 	[SerializeField] AudioClip changePower = null;
+	[SerializeField] AudioClip end = null;
 
 	Rigidbody2D rBody2D;
 	Animator anim;
@@ -111,6 +112,8 @@ public class Player : MonoBehaviour {
 			isAtEnd = true;
 			rBody2D.gravityScale = 0;
 			rBody2D.velocity = Vector3.zero;
+
+			Utils.PlaySound(audioSource, end);
 		}
 	}
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : WireComponent {
-	[Header("Sprites")]
-	[SerializeField] Sprite[ ] variations = null; // 0 = off, 1 = on
 	[Header("Children")]
 	[SerializeField] Transform door = null;
+	[Header("Sprites")]
+	[SerializeField] Sprite[ ] variations = null; // 0 = off, 1 = on
 
 	#region Unity Methods
 

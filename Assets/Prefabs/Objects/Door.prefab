@@ -566,11 +566,13 @@ MonoBehaviour:
   groupID: 0
   isActive: 0
   connection: {fileID: 3907074245739957824}
+  door: {fileID: 7995114569444670064}
   variations:
   - {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -4430392651179603617, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  door: {fileID: 7995114569444670064}
+  openDoor: {fileID: 8300000, guid: fc31046bc854f134dabf5833dc8ae6b5, type: 3}
+  closeDoor: {fileID: 8300000, guid: 010928b4c74e35340a1a2d0a6f96216e, type: 3}
 --- !u!1001 &4493529913788516457
 PrefabInstance:
   m_ObjectHideFlags: 0

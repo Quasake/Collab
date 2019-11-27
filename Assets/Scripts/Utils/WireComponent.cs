@@ -9,11 +9,13 @@ public abstract class WireComponent : MonoBehaviour {
 	[SerializeField] protected Connection connection;
 
 	protected SpriteRenderer spriteRenderer;
+	protected AudioSource audioSource;
 
 	#region Unity Methods
 
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
+		audioSource = GetComponent<AudioSource>( );
 	}
 
 	#endregion
