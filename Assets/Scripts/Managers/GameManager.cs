@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
 
 	Vector3 player1SwapPos;
 	Vector3 player2SwapPos;
+	Vector3 velocity1;
+	Vector3 velocity2;
 
 	bool isSwappingPlayers;
 
@@ -35,8 +37,8 @@ public class GameManager : MonoBehaviour {
 
 	void Update ( ) {
 		if (isSwappingPlayers) {
-			player1.SetPosition(Vector3.MoveTowards(player1.GetPosition( ), player2SwapPos, Constants.SMOOTHING));
-			player2.SetPosition(Vector3.MoveTowards(player2.GetPosition( ), player1SwapPos, Constants.SMOOTHING));
+			player1.SetPosition(Vector3.SmoothDamp(player1.GetPosition( ), player2SwapPos, ref velocity1, 0.5f));
+			player2.SetPosition(Vector3.SmoothDamp(player2.GetPosition( ), player1SwapPos, ref velocity2, 0.5f));
 
 			if (Utils.AlmostEqual(player1.GetPosition( ), player2SwapPos, Constants.CHECK_RADIUS) && Utils.AlmostEqual(player2.GetPosition( ), player1SwapPos, Constants.CHECK_RADIUS)) {
 				isSwappingPlayers = false;

@@ -113,7 +113,7 @@ public class Player : MonoBehaviour {
 			rBody2D.gravityScale = 0;
 			rBody2D.velocity = Vector3.zero;
 
-			Utils.PlaySound(audioSource, end);
+			// Utils.PlaySound(audioSource, end);
 		}
 	}
 

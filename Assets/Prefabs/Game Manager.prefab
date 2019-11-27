@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.39215687}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -476,9 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe9f3f26e605954b9158a7fae399d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverParent: {fileID: 0}
-  doorParent: {fileID: 0}
-  wireParent: {fileID: 0}
   pauseMenu: {fileID: 2563028708384392197}
   inGameUI: {fileID: 1150510991448671575}
 --- !u!1 &7061437342153809745

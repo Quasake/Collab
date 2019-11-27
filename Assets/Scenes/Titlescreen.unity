@@ -746,7 +746,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v 0.7.2
+  m_Text: v 0.9.1
 --- !u!222 &301368897
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -942,6 +942,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8714518560095141307, guid: b8dd3dbff386cb24194593fb79e2725e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1096,21 +1111,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_MinSize
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757009731935468508, guid: b8dd3dbff386cb24194593fb79e2725e,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8dd3dbff386cb24194593fb79e2725e, type: 3}
