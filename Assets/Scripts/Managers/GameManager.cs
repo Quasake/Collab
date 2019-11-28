@@ -72,11 +72,19 @@ public class GameManager : MonoBehaviour {
 			if (collider.bounds.Intersects(levers[i].GetComponent<Collider2D>( ).bounds)) {
 				Lever lever = levers[i].GetComponent<Lever>( );
 
+				lever.Toggle( );
+
 				for (int j = 0; j < doors.Length; j++) {
-					Door door = doors[i].GetComponent<Door>( );
+					Door door = doors[j].GetComponent<Door>( );
 
 					if (door.GetID( ) == lever.GetID( )) {
-						if (collider.bounds.Intersects(door.GetComponent<Collider2D>( ).bounds)) {
+						Bounds player1Bounds = player1.GetComponent<Collider2D>( ).bounds;
+						Bounds player2Bounds = player2.GetComponent<Collider2D>( ).bounds;
+						Bounds doorBounds = door.GetComponent<Collider2D>( ).bounds;
+
+						if (player1Bounds.Intersects(doorBounds) || player2Bounds.Intersects(doorBounds)) {
+							lever.Toggle( );
+
 							return;
 						}
 
@@ -84,10 +92,8 @@ public class GameManager : MonoBehaviour {
 					}
 				}
 
-				lever.Toggle( );
-
 				for (int j = 0; j < wires.Length; j++) {
-					Wire wire = wires[i].GetComponent<Wire>( );
+					Wire wire = wires[j].GetComponent<Wire>( );
 
 					if (wire.GetID( ) == lever.GetID( )) {
 						wire.SetActive(lever.IsActive( ));
