@@ -16,6 +16,8 @@ public abstract class WireComponent : MonoBehaviour {
 	void Awake ( ) {
 		spriteRenderer = GetComponent<SpriteRenderer>( );
 		audioSource = GetComponent<AudioSource>( );
+
+		name += " [" + groupID + "]";
 	}
 
 	#endregion

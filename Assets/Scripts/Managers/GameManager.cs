@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	[Header("Children")]
@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour {
 
 	#region Methods
 
-	#region Public
-
 	#region Menu Methods
 
 	public void Pause (int playerID) {
@@ -74,8 +72,29 @@ public class GameManager : MonoBehaviour {
 			if (collider.bounds.Intersects(levers[i].GetComponent<Collider2D>( ).bounds)) {
 				Lever lever = levers[i].GetComponent<Lever>( );
 
+				for (int j = 0; j < doors.Length; j++) {
+					Door door = doors[i].GetComponent<Door>( );
+
+					if (door.GetID( ) == lever.GetID( )) {
+						if (collider.bounds.Intersects(door.GetComponent<Collider2D>( ).bounds)) {
+							return;
+						}
+
+						door.SetActive(lever.IsActive( ));
+					}
+				}
+
 				lever.Toggle( );
-				SetWireGroup(lever.IsActive( ), lever.GetID( ));
+
+				for (int j = 0; j < wires.Length; j++) {
+					Wire wire = wires[i].GetComponent<Wire>( );
+
+					if (wire.GetID( ) == lever.GetID( )) {
+						wire.SetActive(lever.IsActive( ));
+					}
+				}
+
+				return;
 			}
 		}
 	}
@@ -93,30 +112,6 @@ public class GameManager : MonoBehaviour {
 			player2SwapPos = player2.GetPosition( );
 		}
 	}
-
-	#endregion
-
-	#region Private
-
-	void SetWireGroup (bool isActive, int groupID) {
-		for (int i = 0; i < wires.Length; i++) {
-			Wire wire = wires[i].GetComponent<Wire>( );
-
-			if (wire.GetID( ) == groupID) {
-				wire.SetActive(isActive);
-			}
-		}
-
-		for (int i = 0; i < doors.Length; i++) {
-			Door door = doors[i].GetComponent<Door>( );
-
-			if (door.GetID( ) == groupID) {
-				door.SetActive(isActive);
-			}
-		}
-	}
-
-	#endregion
 
 	#endregion
 

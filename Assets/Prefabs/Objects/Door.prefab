@@ -475,6 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7995114569681459536}
   - component: {fileID: 2923219263660235224}
+  - component: {fileID: 9101067254719530898}
   - component: {fileID: 7995114569681459551}
   m_Layer: 10
   m_Name: Door
@@ -551,6 +552,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &9101067254719530898
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995114569681459537}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.625, y: 3}
+  m_EdgeRadius: 0
 --- !u!114 &7995114569681459551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,8 +598,6 @@ MonoBehaviour:
   - {fileID: 8333231276030249781, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: -4430392651179603617, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
   - {fileID: 2654447934904345190, guid: 7acfb4b235c9f1a45949a890eec69fc7, type: 3}
-  openDoor: {fileID: 8300000, guid: fc31046bc854f134dabf5833dc8ae6b5, type: 3}
-  closeDoor: {fileID: 8300000, guid: 010928b4c74e35340a1a2d0a6f96216e, type: 3}
 --- !u!1001 &4493529913788516457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -580,11 +605,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7995114569681459536}
     m_Modifications:
-    - target: {fileID: 604765434681263662, guid: 52e91cfb4b54f3e4da7b91ea33c3c4c7,
-        type: 3}
-      propertyPath: m_Name
-      value: Connection
-      objectReference: {fileID: 0}
     - target: {fileID: 604765434681263656, guid: 52e91cfb4b54f3e4da7b91ea33c3c4c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,6 +659,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 604765434681263662, guid: 52e91cfb4b54f3e4da7b91ea33c3c4c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Connection
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52e91cfb4b54f3e4da7b91ea33c3c4c7, type: 3}
