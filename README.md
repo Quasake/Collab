@@ -1,6 +1,5 @@
 <p align="center">
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/title.png">
-  <img src="https://github.com/Quasake/Collab/blob/master/Pictures/quasar-logo.png">
 </p>
 
 # About
