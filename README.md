@@ -1,5 +1,5 @@
 <p align="center">
-  <img scr="https://github.com/Quasake/Collab/blob/master/Pictures/title.png" alt="Collab">
+  <img scr="https://raw.githubusercontent.com/Quasake/Collab/master/Pictures/title.png" alt="Collab">
 </p>
 
 # About
