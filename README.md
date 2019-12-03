@@ -1,6 +1,5 @@
 <p align="center">
-  <img scr="https://raw.githubusercontent.com/Quasake/Collab/master/Pictures/title.png" alt="Collab">
-</p>
+  <img scr="https://raw.githubusercontent.com/Quasake/Collab/master/Pictures/title.png" width="640px" height="256px"/></p>
 
 # About
 > Creator: Frank Alfano
