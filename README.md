@@ -1,5 +1,7 @@
 <p align="center">
-  <img scr="https://raw.githubusercontent.com/Quasake/Collab/master/Pictures/title.png" width="640px" height="256px"/></p>
+  <img src="https://github.com/Quasake/Collab/blob/master/Pictures/title.png">
+  <img src="https://github.com/Quasake/Collab/blob/master/Pictures/quasar-logo.png">
+</p>
 
 # About
 > Creator: Frank Alfano
