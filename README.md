@@ -19,15 +19,21 @@ There are 4 different modes that the players can become while playing the game t
 
 Now, this game would not be very challenging if both players could change into each of the 4 modes. That is why there is a rule that each player can only change into certain powerups in each level. For example, Player 1 could only be able to change into the *Boost Mode*, whereas Player 2 would be able to change into *Shrink Mode* and *Swap Mode*. Both players will never be in the same mode, with the exception of the *Normal Mode*. Each level also has a certain amount of times the players can change their mode. The means that the players need to be more strategic and work together rather than doing everything themselves. These 2 rules combine to form a challenging yet fun experience.
 
+<p align="center">
+  <img src="https://github.com/Quasake/Collab/blob/master/Pictures/modeselectmenu.png">
+</p>
+
+> This shows how the player selects what mode they want to become. The players can use the up, down, left, and right buttons to choose the mode. As you can see, some of the modes are tinted darker, and that is because, for this certain level, the player cannot change into those modes. The mode on top is the *Normal Mode*, to the right is *Boost Mode*, down is *Shrink Mode*, and the left mode is *Swap Mode*.
+
 There are 5 main obstacles currently in the game that creates the puzzles: 
 
-- *Levers* - Levers are used to open and close doors, and are toggles using the "B" button on the gamepad. The levers are connected to doors through a series of wires which gives the players a visual hint as to what the levers do.
+- *Levers* - Levers are used to open and close doors, and are toggled using the "B" button on the gamepad. The levers are connected to doors through a series of wires which gives the players a visual hint as to what doors the lever open.
 - *Doors* - As stated, doors are opened and closed through levers, and allow the player to get into new areas once opened.
 - *Spikes* - Spikes are dangerous because if the player touches them, they go back to the beginning to the level. They can be strategically placed to make certain levels more challenging.
-- *Small Corridors* - Small corridors are only able to be passed in the player has shrunken down to half its size with the *Shrink Mode*.
+- *Small Corridors* - Small corridors are only able to be passed if the player has shrunken down to half its size with the *Shrink Mode*.
 - *High Ledges* - High ledges are only able to be passed by a player who has the *Boost Mode* equipped. Any other mode cannot jump high enough to get over them.
 
-The more of these obstacles that are in a level, the harder and more intricate they become, which is how I was able to make the levels get harder and harder over time.
+The more of these obstacles that are in a level, the harder and more intricate they become, which is how I was able to make the levels get harder and harder over time. There are also spawnpoints for each player in a level, which is where they start. WHen they die from spikes, they are sent back to that position, which may cause the players to have to restart the level.
 
 # Screenshots
 <p align="center">
@@ -40,7 +46,7 @@ The more of these obstacles that are in a level, the harder and more intricate t
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/levelselectmenu.png">
 </p>
 
-> This is the level selection screen that appears when the "Play" button is pressed on the titlescreen. Currently there are 10 levels, each of them getting harder and harder to complete. The level button appears gold when you have completed that level, and the delete save button resets your progress.
+> This is the level selection screen that appears when the "Play" button is pressed on the titlescreen. Currently there are 10 levels, each of them getting harder and harder to complete. The level button appears gold when you have completed that level, and the "Delete Save" button resets your progress.
 
 <p align="center">
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/level3ingame.png">
@@ -52,7 +58,7 @@ The more of these obstacles that are in a level, the harder and more intricate t
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/20191128_180835.jpg">
 </p>
 
-> This is my entended family play-testing my game on Thanksgiving! It was really cool to see everyone have fun playing something that I made.
+> This is my extended family play-testing this game on Thanksgiving! It was really cool to see everyone have fun playing something that I made as well as see them break it in all sorts of ways I did not know were even possible.
 
 <p align="center">
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/unnamed.jpg">
