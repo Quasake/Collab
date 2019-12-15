@@ -23,7 +23,7 @@ Now, this game would not be very challenging if both players could change into e
   <img src="https://github.com/Quasake/Collab/blob/master/Pictures/modeselectmenu.png">
 </p>
 
-> This shows how the player selects what mode they want to become. The players can use the up, down, left, and right buttons to choose the mode. As you can see, some of the modes are tinted darker, and that is because, for this certain level, the player cannot change into those modes. The mode on top is the *Normal Mode*, to the right is *Boost Mode*, down is *Shrink Mode*, and the left mode is *Swap Mode*.
+> This shows how the player selects what mode they want to become in a level. The players can access this mode by pressing the "Y" button on the gamepad. The players can use the up, down, left, and right buttons to choose the mode. As you can see, some of the modes are tinted darker, and that is because, for this certain level, the player cannot change into those modes. The mode on top is the *Normal Mode*, to the right is *Boost Mode*, down is *Shrink Mode*, and the left mode is *Swap Mode*.
 
 There are 5 main obstacles currently in the game that creates the puzzles: 
 
