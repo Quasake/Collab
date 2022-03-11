@@ -43,7 +43,13 @@ public class ModeSelectionMenu : MonoBehaviour {
 			}
 		}
 
+		/*
 		if (gameManager.IsAble( ) && Utils.GetButtonValue("Y", player.GetID( )) && player.IsAble( )) {
+			ToggleModeSelect( );
+		}
+		*/
+
+		if (gameManager.IsAble( ) && Input.GetButtonDown("Key-Menu-" + (player.GetID() + 1)) && player.IsAble( )) {
 			ToggleModeSelect( );
 		}
 	}
@@ -52,8 +58,11 @@ public class ModeSelectionMenu : MonoBehaviour {
 
 	#region Methods
 	void UpdateModeSelection ( ) {
-		float horiAxis = Utils.GetAxisRawValue("Horizontal", player.GetID( ));
-		float vertAxis = Utils.GetAxisRawValue("Vertical", player.GetID( ));
+		// float horiAxis = Utils.GetAxisRawValue("Horizontal", player.GetID( ));
+		// float vertAxis = Utils.GetAxisRawValue("Vertical", player.GetID( ));
+
+		float horiAxis = Input.GetAxisRaw("Key-Horizontal-" + (player.GetID( ) + 1));
+		float vertAxis = Input.GetAxisRaw("Key-Vertical-" + (player.GetID( ) + 1));
 
 		if (horiAxis > 0 && player.CanChangeBoost( )) { // Right
 			selectedMode = Constants.PLAYER_BOOST_MODE;

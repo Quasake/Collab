@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
 	void Death ( ) {
 		if (!isDead) {
 			Utils.PlaySound(audioSource, death);
-
+			
 			// Disable the player
 			SetEnabled(false);
 
@@ -170,6 +170,7 @@ public class Player : MonoBehaviour {
 
 	void UpdateInput ( ) {
 		if (!gameManager.IsPaused( )) {
+			/*
 			xMove = Utils.GetAxisRawValue("Horizontal", playerID) * Constants.PLAYER_DEF_MOVESPEED;
 			doJump = Utils.GetButtonValue("A", playerID);
 
@@ -189,9 +190,36 @@ public class Player : MonoBehaviour {
 					gameManager.SwapPlayers( );
 				}
 			}
+			*/
+
+			xMove = Input.GetAxisRaw("Key-Horizontal-" + (playerID + 1)) * Constants.PLAYER_DEF_MOVESPEED;
+			doJump = Input.GetButton("Key-Jump-" + (playerID + 1));
+
+			if (Input.GetButtonDown("Key-Death-" + (playerID + 1))) {
+				Death( );
+			}
+
+			if (Input.GetButtonDown("Key-Interact-" + (playerID + 1))) {
+				gameManager.Interact(coll2D);
+			}
+
+			if (Input.GetButtonDown("Key-Ability-" + (playerID + 1)) && isGrounded) {
+				if (mode == Constants.PLAYER_SHRINK_MODE) {
+					isSmall = !isSmall;
+					jumpSpeed = Constants.PLAYER_DEF_JUMPSPEED * ((isSmall) ? Constants.SMALL_AMOUNT : 1);
+				} else if (mode == Constants.PLAYER_SWAP_MODE) {
+					gameManager.SwapPlayers( );
+				}
+			}
 		}
 
+		/*
 		if (Utils.GetButtonValue("Start", playerID)) {
+			gameManager.Pause(playerID);
+		}
+		*/
+
+		if (Input.GetButtonDown("Key-Pause")) {
 			gameManager.Pause(playerID);
 		}
 	}

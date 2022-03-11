@@ -32,16 +32,18 @@ public abstract class Menu : MonoBehaviour {
 		EventSystem eventSystem = EventSystem.current;
 		StandaloneInputModule inputModule = eventSystem.GetComponent<StandaloneInputModule>( );
 
-		inputModule.horizontalAxis = "Horizontal-" + playerID;
-		inputModule.verticalAxis = "Vertical-" + playerID;
-		inputModule.submitButton = "A-" + playerID;
-		inputModule.cancelButton = "B-" + playerID;
-		eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
+		// inputModule.horizontalAxis = "Horizontal-" + playerID;
+		// inputModule.verticalAxis = "Vertical-" + playerID;
+		// inputModule.submitButton = "A-" + playerID;
+		// inputModule.cancelButton = "B-" + playerID;
+		// eventSystem.SetSelectedGameObject(firstButton, new BaseEventData(eventSystem));
 	}
 
 	public void SetEnabled (bool isEnabled) {
 		this.isEnabled = isEnabled;
-		image.enabled = isEnabled;
+		if (image != null) {
+			image.enabled = isEnabled;
+		}
 
 		for (int i = 0; i < transform.childCount; i++) {
 			transform.GetChild(i).gameObject.SetActive(isEnabled);

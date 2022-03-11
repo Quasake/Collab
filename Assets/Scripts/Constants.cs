@@ -67,7 +67,7 @@ public static class Constants {
 	public const float CHUNK_FORCE_MAX = 30f;
 	public const int CHUNK_COUNT = 6;
 
-	public const float CANNON_SPAWNRATE = 0.2f;
+	public const float CANNON_SPAWNRATE = 0.1f;
 
 	public const float BOOST_AMOUNT = 1.4f;
 	public const float SMALL_AMOUNT = 0.6f;
